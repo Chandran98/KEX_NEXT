@@ -1,3 +1,4 @@
+import ThemeSwitcher from "@/utils/themes/themes";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -14,25 +15,23 @@ const header = () => {
 
   return (
     <div className=" sticky top-0">
-      <header class="bg-white ">
-        <div class="px-4 mx-auto sm:px-6 lg:px-8">
-          <div class="flex items-center justify-between h-16 lg:h-20">
-            <div class="flex-shrink-0">
-              <a href="#" title="" class="flex">
-                <Link href={"/"}>
+      <header className="bg-white ">
+        <div className="px-4 mx-auto sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16 lg:h-20">
+            <div className="flex-shrink-0">
+            <Link href={"/"}>
                 <Image src={"/kex.png"} width={50} height={50} alt="" /></Link>
-              </a>
             </div>
            
             <div className=" flex gap-24">
-              <div class="hidden lg:flex lg:items-center lg:justify-center lg:space-x-10">
+              <div className="hidden lg:flex lg:items-center lg:justify-center lg:space-x-10">
                 {headerData.map((e, i) => {
                   return (
                     // <a
                     //   key={i}
                     //   href="#"
                     //   title=""
-                    //   class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80"
+                    //   className="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80"
                     // >
                     //   {e.toUpperCase()}
                     // </a>
@@ -40,11 +39,12 @@ const header = () => {
                   );
                 })}
               </div>
-              <div className="flex gap-8">
+              <div className="flex gap-8 items-center">
+                <ThemeSwitcher/>
                 <a
                   href="#"
                   title=""
-                  class="hidden lg:inline-flex items-center justify-center px-5 py-2.5 text-base transition-all duration-200 hover:bg-yellow-300 hover:text-black focus:text-black focus:bg-yellow-300 font-semibold text-white bg-black rounded-full"
+                  className="hidden lg:inline-flex items-center justify-center px-5 py-2.5 text-base transition-all duration-200 hover:bg-yellow-300 hover:text-black focus:text-black focus:bg-yellow-300 font-semibold text-white bg-black rounded-full"
                   role="button"
                 >
                   Join Now
