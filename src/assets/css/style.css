@@ -28535,13 +28535,13 @@ table.dataTable thead .sorting_asc {
   justify-content: space-around;
   border-color: var(--rgba-secondary-1); }
   .buy-sell .nav-tabs .nav-link {
-    font-size: 24px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 500;
     text-transform: uppercase;
     color: var(--secondary);
     background: transparent;
     border: 0;
-    width: 50%;
+    width: 40%;
     position: relative;
     padding-bottom: 13px; }
     .buy-sell .nav-tabs .nav-link:after {
