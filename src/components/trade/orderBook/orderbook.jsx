@@ -29,8 +29,8 @@ const orderbook = () => {
     ];
     
   return (
-    <div className= "relative col-xl-12 col-sm-6 ">
-      <div className="card">
+    <div className= "  ">
+      <div className="">
         {/* <div className="card-header py-2">
           <h2 className="heading">
             Order Book <span>(BTC/USDT)</span>
@@ -61,7 +61,8 @@ const orderbook = () => {
             <Tab.Content>
               <Tab.Pane eventKey="Openorder">
              <div className="p-1">
-             <div className="list-row-head">
+             {/* flex overflow-y-auto text-blue-500 font-semibold justify-between */}
+             <div className="list-row-head overflow-y-auto">
                   <span>Price</span>
                   <span>Amount</span>
                   <span className="text-end">Total</span>

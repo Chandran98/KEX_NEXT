@@ -280,12 +280,12 @@ const banner = () => {
           {/* grid items-center grid-cols-1 gap-12 lg:grid-cols-2 */}
           <div className="  p-5  grid grid-cols-1 lg:grid-cols-2">
             <div className=" flex flex-col sm:items-center lg:items-start  justify-center">
-              <h5 className=" text-blue-600 font-medium mb-5 ">
+            
+              <h2 className="text-3xl font-bold leading-tight text-black sm:text-4xl lg:text-5xl">
+                Trade on the go. Anywhere, anytime.
+              </h2>  <h5 className=" text-blue-600 font-medium mb-1 ">
                 KAIRAA EXCHANGE APP
               </h5>
-              <h2 className="text-xl font-bold leading-tight text-black sm:text-4xl lg:text-2xl">
-                Trade on the go. Anywhere, anytime.
-              </h2>
               <p className=" text-black pr-8 mt-5">
                 Seize market opportunities and manage your portfolio on the go.
                 Gain access to advanced charts, real-time data, and much more.

@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import MainChart from "../../components/trade/chart/mainchart";
 import OrderBook from "../../components/trade/orderBook/orderbook";
 import OrderStatus from "../../components/trade/orderstatus/orderstatus";
@@ -9,16 +9,13 @@ import Watchlist from "../../components/trade/watchlist/watchlist";
 
 const page = () => {
   return (
-    // grid xl:grid-cols-3 sm:grid-cols-2
-      <div className="relative flex bg-white">
-      {/* <div className=" w-[30vw] bg-red-400">dsafdsf</div> */}
-
-      <div className="w-[25vw] h-[80vh]  "><Watchlist/></div>
-      <div className="w-full relative">
+    <div className="relative grid lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-2 gap-4 ">
+      <div className="col-span-1  h-[80vh]"><Watchlist /></div>
+      <div className="lg:col-span-2 w-full relative">
         <MainChart />
         <OrderStatus />
       </div>
-      <div className="w-[25vw]  bg-white">
+      <div className="relative col-span-1  ">
         <OrderBook />
         <BuySell2 />
       </div>
