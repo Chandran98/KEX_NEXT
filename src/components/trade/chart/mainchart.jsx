@@ -4,19 +4,17 @@ import { useState } from "react";
 import Script from "next/script";
 import TVChartContainer from "./TVChartContainer/index";
 
-
-
-export default function mainchart() {
+export default function mainchart({ frst, secnd }) {
   const [isScriptReady, setIsScriptReady] = useState(false);
+  const pair = `${frst}/${secnd}`;
   const defaultWidgetProps = {
-    symbol: "BTC/USDT",
+    symbol: pair == "/" ? "KAITCOIN/INR" : pair,
     interval: "15",
     library_path: "/static/charting_library/",
     locale: "en",
     // charts_storage_url: "https://saveload.tradingview.com",
     // charts_storage_api_version: "1.1",
     client_id: "tradingview.com",
-    // user_id: "public_user_id",
     fullscreen: false,
     autosize: true,
   };
