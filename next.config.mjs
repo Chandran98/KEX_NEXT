@@ -1,7 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["cdn.rareblocks.xyz", "kairaaexchange.s3.amazonaws.com"],
+    remotePatterns: [
+      { protocol: 'https', hostname: 'cdn.rareblocks.xyz', pathname: '**' },
+      {
+        protocol: 'https',
+        pathname: '**',
+        hostname: 'kairaaexchange.s3.amazonaws.com',
+      },
+    ],
   },
 };
 

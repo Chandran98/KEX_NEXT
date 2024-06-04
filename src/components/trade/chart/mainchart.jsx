@@ -4,11 +4,13 @@ import { useState } from "react";
 import Script from "next/script";
 import TVChartContainer from "./TVChartContainer/index";
 
-export default function mainchart({ frst, secnd }) {
+export default function mainchart({ crypto }) {
   const [isScriptReady, setIsScriptReady] = useState(false);
-  const pair = `${frst}/${secnd}`;
+  console.log(crypto,"dsfadf");
+
+  const pair =crypto===null?"/": `${crypto.firstcurrency}/${crypto.secondcurrency}`;
   const defaultWidgetProps = {
-    symbol: pair == "/" ? "KAITCOIN/INR" : pair,
+    symbol: pair == "/" ? "BTC/USDT" : pair,
     interval: "15",
     library_path: "/static/charting_library/",
     locale: "en",

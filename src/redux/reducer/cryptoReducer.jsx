@@ -2,10 +2,19 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import io from "socket.io-client";
 
-export const fetchList = createAsyncThunk("fetchList", async () => {
+export const fetchCryptoList = createAsyncThunk("fetchCryptoList", async () => {
   console.log("adfsfdas fetch start");
   const res = await axios.get(
     "https://bxnzaopdi.kairaaexchange.com/api/v1/pair-list"
+  );
+  const response = await res.data;
+  console.log(response);
+  return response;
+});
+export const fetchUsdtPrice = createAsyncThunk("fetchUsdtPrice", async () => {
+  console.log("adfsfdas fetch start");
+  const res = await axios.get(
+    "https://api-gcp.binance.com/api/v3/ticker/24hr"
   );
   const response = await res.data;
   console.log(response);
@@ -62,7 +71,7 @@ export const marketDepthSell = createAsyncThunk("marketDepthSell", async (data) 
 const cryptoSlice = createSlice({
   initialState: {
     loading: false,
-    buysocket: null,
+    usdt: null,
     sellsocket: null,
     coin:null,
     error: null,
@@ -70,27 +79,27 @@ const cryptoSlice = createSlice({
   name: "crypto",
   extraReducers: (builders) => {
     builders
-      .addCase(fetchList.pending, (state) => {
+      .addCase(fetchCryptoList.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchList.fulfilled, (state, action) => {
+      .addCase(fetchCryptoList.fulfilled, (state, action) => {
         state.loading = false;
         state.coin = action.payload;
         console.log('action.payload',state.coin)
       })
-      .addCase(fetchList.rejected, (state, action) => {
+      .addCase(fetchCryptoList.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
-      .addCase(marketDepthBuy.pending, (state) => {
+      .addCase(fetchUsdtPrice.pending, (state) => {
         state.loading = true;
       })
-      .addCase(marketDepthBuy.fulfilled, (state, action) => {
+      .addCase(fetchUsdtPrice.fulfilled, (state, action) => {
         state.loading = false;
         state.buysocket = action.payload;
-        console.log("state.data  buy order  ", action.payload);
+        console.log("state.data fetchUsdtPrice  ", action.payload);
       })
-      .addCase(marketDepthBuy.rejected, (state, action) => {
+      .addCase(fetchUsdtPrice.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

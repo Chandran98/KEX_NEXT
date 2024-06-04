@@ -4,12 +4,11 @@ import * as io from "socket.io-client";
 import { Dropdown, Nav, Tab } from "react-bootstrap";
 import "../../../assets/css/style.css";
 
-const Orderbook = ({ frst, secnd, amount }) => {
+const Orderbook = ({crypto}) => {
   const [recentTrades, setRecentTrades] = useState([]);
   const [buyOrder, setBuyOrder] = useState([]);
   const [sellOrder, setSellOrder] = useState([]);
-  const pair = `${frst}/${secnd}`;
-  console.log("dsfdsfa", frst, secnd);
+  const pair =crypto===null?"/": `${crypto.firstcurrency}/${crypto.secondcurrency}`;
 
   useEffect(() => {
     try {
@@ -18,13 +17,10 @@ const Orderbook = ({ frst, secnd, amount }) => {
       });
       const pairData = pair === "/" ? "BTC/USDT" : pair;
 
-      // Emit the joinRoom event to join the room for the current trading pair
       socket.emit("joinRoom", { message: pairData });
 
-      // Clear the recent trades whenever the pair changes
       setRecentTrades([]);
 
-      // Listen for buy_order events and update the buy orders state
       socket.on("buy_order", (data) => {
         if (data && data.status) {
           const buyOrders = data.data.filter((order) => order.type === "buy");
@@ -32,7 +28,6 @@ const Orderbook = ({ frst, secnd, amount }) => {
         }
       });
 
-      // Listen for sell_order events and update the sell orders state
       socket.on("sell_order", (data) => {
         if (data && data.status) {
           const sellOrders = data.data.filter((order) => order.type === "sell");
@@ -44,19 +39,17 @@ const Orderbook = ({ frst, secnd, amount }) => {
         }
       });
 
-      // Listen for trade-order-response events and update the recent trades state
       socket.on("trade-order-response", (data) => {
         setRecentTrades((prevTrades) => [data, ...prevTrades].slice(0, 30));
       });
 
-      // Cleanup function to disconnect the socket when the component unmounts or when the pair changes
       return () => {
         socket.disconnect();
       };
     } catch (error) {
       console.log(error, "err");
     }
-  }, [pair]); // Run the effect whenever the pair changes
+  }, [pair]);
 
   return (
     <div className="card-body pt-0 pb-3 px-2 bg-white">
@@ -109,7 +102,8 @@ const Orderbook = ({ frst, secnd, amount }) => {
               </div>
               <div className="list-bottom-info">
                 <h6 className="text-danger mb-0">
-                  {amount && amount.lastprice} <i className="fa-solid fa-caret-up"></i>
+                  {crypto && crypto.lastprice}
+                  <i className="fa-solid fa-caret-up"></i>
                 </h6>
               </div>
               <div className="list-table success h-[27vh] overflow-y-auto">
