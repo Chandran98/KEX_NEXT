@@ -2,12 +2,16 @@
 
 "use client";
 import React, { useEffect, useState } from "react";
-import { fetchCryptoList,fetchUsdtPrice } from "../../redux/reducer/cryptoReducer";
+import {
+  fetchCryptoList,
+  fetchUsdtPrice,
+} from "../../redux/reducer/crypto/cryptoApi";
 import { useDispatch, useSelector } from "react-redux";
 import MainChart from "../../components/trade/chart/mainchart";
 import OrderBook from "../../components/trade/orderBook/orderbook";
 import OrderStatus from "../../components/trade/orderstatus/orderstatus";
 import BuySell2 from "../../components/trade/buysell/buysell2";
+import { myOrderDetails } from "@/redux/reducer/order/orderApi";
 
 const page = () => {
   const dispatch = useDispatch();
@@ -15,6 +19,7 @@ const page = () => {
   useEffect(() => {
     dispatch(fetchCryptoList());
     dispatch(fetchUsdtPrice());
+    dispatch(myOrderDetails());
   }, [dispatch]);
 
   const data = useSelector((state) => state.crypto);
@@ -29,23 +34,23 @@ const page = () => {
     { title: "KAITCOIN", value: "kaitcoin" },
   ];
 
-  const filteredPairs = 
+  const filteredPairs =
     data.coin?.data?.filter(
       (pair) => pair.secondcurrency.toUpperCase() === tabValue
     ) || [];
 
   const filteredCryptos = searchTerm
-    ? filteredPairs.filter((crypto) =>
-    {
-      const searchLower = searchTerm.toLowerCase();
-    const matchesFirstCurrency = crypto.firstcurrency.toLowerCase().startsWith(searchLower);
-    // const matchesSecondCurrency = crypto.secondcurrency.toLowerCase().includes(searchLower);
-    // const matchesAmount = Number(crypto.lastprice)>=parseFloat(searchLower);
+    ? filteredPairs.filter((crypto) => {
+        const searchLower = searchTerm.toLowerCase();
+        const matchesFirstCurrency = crypto.firstcurrency
+          .toLowerCase()
+          .startsWith(searchLower);
+        // const matchesSecondCurrency = crypto.secondcurrency.toLowerCase().includes(searchLower);
+        // const matchesAmount = Number(crypto.lastprice)>=parseFloat(searchLower);
 
-    return matchesFirstCurrency ;
-    // || matchesSecondCurrency || matchesAmount;
-    }
-      )
+        return matchesFirstCurrency;
+        // || matchesSecondCurrency || matchesAmount;
+      })
     : filteredPairs;
 
   return (
@@ -67,24 +72,7 @@ const page = () => {
               </div>
             ))}
           </div>
-          <div class="relative bg-[#F4F0FF] flex w-full p-3">
-            <div class=" bg-white inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-              <svg
-                class="w-4 h-4 text-gray-500 dark:text-gray-400"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 18 20"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M3 5v10M3 5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm12 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0V6a3 3 0 0 0-3-3H9m1.5-2-2 2 2 2"
-                />
-              </svg>
-            </div>
+          <div class="relative bg-[#F4F0FF] flex w-full p-2">
             <input
               type="text"
               id="simple-search"

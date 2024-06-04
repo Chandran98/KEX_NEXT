@@ -2,7 +2,7 @@
 
 "use client";
 import React, { useEffect, useState } from "react";
-import { fetchList } from "../../../redux/reducer/cryptoReducer";
+import { fetchList } from "../../../redux/reducer/crypto/cryptoReducer";
 import { useDispatch, useSelector } from "react-redux";
 
 const watchlist = () => {
