@@ -140,7 +140,7 @@ const Orderbook = ({crypto}) => {
                   {recentTrades.map((order, i) => (
                     <div className="list-row" key={i}>
                       <span className="text-end">
-                        {new Date(order.date).toLocaleTimeString()}
+                        {new Date(order.date).toLocaleDateString()}
                       </span>
                       <span>{Number(order.price).toFixed(2)}</span>
                       <span>{Number(order.amount).toFixed(4)}</span>

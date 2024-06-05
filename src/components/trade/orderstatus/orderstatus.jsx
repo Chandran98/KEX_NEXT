@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 const orderstatus = () => {
   const { loading, orderDetails, error } = useSelector((state) => state.order);
   const [currentPage, setCurrentPage] = useState(1  );
-  const ordersPerPage = 2;
+  const ordersPerPage = 5;
 
   const totalPages = Math.ceil(orderDetails?.data?.active.length / ordersPerPage);
 

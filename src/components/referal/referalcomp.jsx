@@ -5,7 +5,7 @@ export const GlobalFilter = ( {filter, setFilter} ) =>{
 		<div>
 			Search : {' '}
 			<input className="ml-2 input-search form-control"
-				value={filter || ''}  onChange={e => setFilter(e.target.value)} style={{width: "20%"}}
+				value={filter || ''}  onChange={e => setFilter(e.target.value)} style={{width: "150%"}}
             />
 		</div>
 	)
@@ -15,9 +15,9 @@ export const ColumnFilter = ( { column } ) => {
 	
 	const {filterValue, setFilter} = column
 	return(
-		<div>
+		<div className=''>
 		
-			<input className="form-control input-search"
+			<input className="form-control input-search "
 				value={filterValue || ''}  onChange={e => setFilter(e.target.value)} />
 		</div>
 	)
