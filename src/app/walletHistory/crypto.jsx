@@ -5,13 +5,12 @@ import { useSelector } from "react-redux";
 import React, { useState, useEffect, useRef } from "react";
 
 const AllOrder = () => {
-  const { loading, fiatHistoryData, error } = useSelector(
+  const { loading, cryptoHistoryData, error } = useSelector(
     (state) => state.wallet
   );
   const [currentpage, setCurrentPage] = useState(0);
   const historyperPage = 10;
-  const fiatFilterData=fiatHistoryData===null?[]: fiatHistoryData?.data.filter((e)=>e.type==="deposit");
-  const totalPages = Math.ceil(fiatFilterData.length / historyperPage);
+  const totalPages = Math.ceil(cryptoHistoryData?.data.length / historyperPage);
   function handelSetPage(page) {
     setCurrentPage(page);
   }
@@ -37,7 +36,7 @@ const AllOrder = () => {
               </tr>
             </thead>
             <tbody>
-              {fiatFilterData
+              {cryptoHistoryData?.data
                 ?.slice(
                   currentpage * historyperPage,
                   (currentpage + 1) * historyperPage
@@ -75,10 +74,10 @@ const AllOrder = () => {
             <div className="dataTables_info">
               Showing {currentpage * historyperPage + 1} to{" "}
               {Math.min(
-                fiatFilterData.length,
+                cryptoHistoryData?.data.length,
                 (currentpage + 1) * historyperPage
               )}{" "}
-              of {fiatFilterData.length} entries
+              of {cryptoHistoryData?.data.length} entries
             </div>
             <div
               className="dataTables_paginate paging_simple_numbers mb-0"
