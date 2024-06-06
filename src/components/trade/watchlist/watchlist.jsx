@@ -35,11 +35,13 @@ const watchlist = () => {
           <div
             key={i}
             onClick={() => setTab(e.title.toUpperCase())}
-            className={`rounded-lg p-2 cursor-pointer flex-1 text-center font-semibold mx-3 ${
+            className={`rounded-lg p-2 cursor-pointer flex-1 text-center font-semibold mx-3
+             ${
               tabValue === e.title
-                ? "bg-blue-500 text-white"
+                ? "bg-[#004DEC!important] text-white"
                 : " bg-gray-200  text-black"
-            }`}
+            }
+            `}
           >
             {e.title}
           </div>

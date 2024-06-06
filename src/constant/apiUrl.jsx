@@ -9,7 +9,7 @@ export const BaseUrl = "http://localhost:8290/api/v1/";
 
 export const headers = {
   headers: {
-    Authorization: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvcHRpb24iOiJ1c2VyX2xvZ2luIiwiaWQiOiI2MzhhYzkyYjFlMmNmZDQwNDZmNjMxMzYiLCJzdGF0dXMiOnRydWUsImlhdCI6MTcxNzU3MzUwNywiZXhwIjoxNzE3NjU5OTA3fQ.qlBys7CzpF4je4LEP6RO9QH8YGAbWxHSTl33WZ-bsmw`,
+    Authorization: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvcHRpb24iOiJ1c2VyX2xvZ2luIiwiaWQiOiI2MzhhYzkyYjFlMmNmZDQwNDZmNjMxMzYiLCJzdGF0dXMiOnRydWUsImlhdCI6MTcxNzY3NjE0MiwiZXhwIjoxNzE3NzYyNTQyfQ.JYdQd_38Q7JboXHqR9mMr7v647jk8I8uEa46xfxYRSA`,
   },
 };
 

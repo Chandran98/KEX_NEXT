@@ -64,7 +64,7 @@ const page = () => {
                 onClick={() => setTab(e.title.toUpperCase())}
                 className={`rounded-lg p-2 cursor-pointer flex-1 text-center font-semibold mx-3 ${
                   tabValue === e.title
-                    ? "bg-blue-500 text-white"
+                    ? "bg-[#004DEC] text-white"
                     : " bg-gray-200  text-black"
                 }`}
               >

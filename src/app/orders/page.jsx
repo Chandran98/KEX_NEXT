@@ -2,10 +2,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Tab, Nav } from "react-bootstrap";
-import AllOrder from "./comp";
-import CryptoHistory from "./crypto";
-import { useDispatch } from "react-redux";
-import { cryptoHistory, fiatHistory } from "@/redux/reducer/wallet/walletApi";
+import OrderData from "./ordertab";
+// import CryptoHistory from "./crypto";
+import { useDispatch, useSelector } from "react-redux";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,39 +13,37 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { myOrderDetails } from "@/redux/reducer/order/orderApi";
 import DashBoardHeader from "@/components/header";
 
 const page = () => {
   const [checked, setChecked] = useState("");
 
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(fiatHistory());
-    dispatch(cryptoHistory());
+    dispatch(myOrderDetails());
   }, [dispatch]);
-  const filerData = ["All","Deposit", "Withdraw"];
-  const statusData = ["All","Pending", "Completed","Cancelled"];
+  const { loading, orderDetails, error } = useSelector((state) => state.order);
+  const filerData = ["All", "Deposit", "Withdraw"];
+  const statusData = ["All", "Pending", "Completed", "Cancelled"];
   console.log(checked, "checked");
   return (
     <>
-     <DashBoardHeader/>
+    <DashBoardHeader/>
       <div className=" m-4  ">
         <div className=" ">
-        <div className="card p-5">
+          <div className="card p-5">
             <Tab.Container defaultActiveKey="All">
               <div className="card-border-0 pb-2 flex-wrap">
-                <h4 className="heading me-2">Wallet History</h4>
+                <h4 className="heading me-2">Order History</h4>
                 <nav className=" sm:flex mx-4 ">
-                  <Nav
-                    as="div"
-                    className="order nav nav-tabs "
-                    role="tablist"
-                  >
+                  <Nav as="div" className="order nav nav-tabs " role="tablist">
                     <Nav.Link as="button" eventKey="All">
-                      Fiat
+                      Open Orders
                     </Nav.Link>
                     <Nav.Link as="button" eventKey="Nav-History">
-                      Crypto
+                      Closed Orders
                     </Nav.Link>
                   </Nav>
                   <DropdownMenu>
@@ -62,7 +59,8 @@ const page = () => {
                         </DropdownMenuItem>
                       ))}
                     </DropdownMenuContent>
-                  </DropdownMenu> <DropdownMenu>
+                  </DropdownMenu>{" "}
+                  <DropdownMenu>
                     <DropdownMenuTrigger className="ml-10 bg-[#004dec] border border-blue-500 rounded-lg text-white p-3">
                       {checked === "" ? "Status" : checked}
                     </DropdownMenuTrigger>
@@ -81,10 +79,10 @@ const page = () => {
               <div className="card-body pt-2">
                 <Tab.Content>
                   <Tab.Pane eventKey="All">
-                    <AllOrder />
-                  </Tab.Pane>
+                     {loading?<span>loading</span>: <OrderData e={orderDetails?.data?.order} />}
+                    </Tab.Pane>
                   <Tab.Pane eventKey="Nav-History">
-                    <CryptoHistory />
+                     {loading?<span>loading</span>: <OrderData e={orderDetails?.data?.active} />}
                   </Tab.Pane>
                 </Tab.Content>
               </div>
