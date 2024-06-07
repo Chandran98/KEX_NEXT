@@ -8,8 +8,7 @@ const DashBoardHeader = () => {
     { page: "/banks", title: "Banks" },
     { page: "/walletHistory", title: "Wallet history" },
     { page: "/orders", title: " Orders History" },
-    { page: "/tickets", title: "Tickets" },
-    { page: "/security", title: "Security" },
+    { page: "/ticket", title: "Tickets" },
   ];
   return (
     <div>

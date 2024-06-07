@@ -291,8 +291,8 @@ const page = () => {
   const { globalFilter, pageIndex } = state;
 
   return (
-    <div className="bg-white ">
-      <section className="py-10 p-5 bg-white sm:py-16 lg:py-24">
+    <div className=" m-4 ">
+      <section className="card py-10 p-5 m-2 mb-4 bg-white sm:py-16 lg:py-24">
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="text-xl font-bold text-gray-900">Number of Referrals</h2>
@@ -411,7 +411,7 @@ const page = () => {
       </section>
 
       {/* <PageTitle activeMenu="Sorting" motherMenu="Table" /> */}
-      <div className="card">
+      <div className="card m-2 ">
         <div className="card-header">
           <h4 className="card-title">Table Filtering</h4>
         </div>
