@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import {
   useTable,
   useGlobalFilter,
@@ -290,6 +290,9 @@ const page = () => {
 
   const { globalFilter, pageIndex } = state;
 
+
+
+
   return (
     <div className=" m-4 ">
       <section className="card py-10 p-5 m-2 mb-4 bg-white sm:py-16 lg:py-24">
@@ -508,6 +511,7 @@ const page = () => {
           </div>
         </div>
       </div>
+
     </div>
   );
 };

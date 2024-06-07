@@ -6,20 +6,14 @@ import React, { useEffect } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { bankFormSchema } from "@/utils/formSchema";
+import { bankFormSchema, ticketFormSchema } from "@/utils/formSchema";
 import BankForm from "@/utils/form/bankForm";
 import OrderTab from "./ticketComp";
 import { useDispatch } from "react-redux";
 import { getProfile } from "@/redux/reducer/user/userApi";
 
 const page = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: zodResolver(bankFormSchema),
-  });
+ 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProfile());
@@ -32,39 +26,31 @@ const page = () => {
 
   const formFieldData = [
     // { id: "1", name: "username", title: "Username", placeholder: "username" },
-    {
-      id: "1",
-      name: "issueType",
-      title: "Issue Type",
-      placeholder: "manjukairaa@gmail.com",
-    },
+    { id: "8", name: "issueType", title: "Issue Type", type:"drop" },
+
     {
       id: "2",
       name: "subject",
-      title: "Subject",
-      placeholder: "7092774422",
+      title: "Subject",type:"drop"
     },
     {
       id: "3",
       name: "description",
-      title: "Description",
-      placeholder: "7092774422",
+      title: "Description",type:"adf"
     },
-    // { id: "4", name: "ifsc", title: " IFSC Code ", placeholder: "MSJS8900" },
-    // {
-    //   id: "5",
-    //   name: "branch",
-    //   title: " Branch Name ",
-    //   placeholder: "Medavakkam",
-    // },
-    // { id: "6", name: "bank", title: " Bank Name ", placeholder: "IOB" },
-    // { id: "7", name: "upi", title: " UPI ", placeholder: "7668687768@okaxis" },
+   
+  ];
+  const dropdownOptions = [
+    { value: "", label: "Select issue type" },
+    { value: "Technical", label: "Technical" },
+    { value: "Billing", label: "Billing" },
+    { value: "General", label: "General" },
   ];
   return (
     <>
       <DashBoardHeader />
       <div className="card m-4  ">
-        <div className="card-body">
+        <div className="card-body p-4">
           <h1>Create a Ticket</h1>
           <div className=" grid lg:grid-cols-3  gap-4">
             <div className=" col-span-1 ">
@@ -72,8 +58,10 @@ const page = () => {
                 onSubmit={() => onSubmit}
                 loading={loading}
                 formFieldData={formFieldData}
-                // fileUpload={true}
-                formSchema={bankFormSchema}
+                fileUpload={true}
+                formSchema={ticketFormSchema}
+                dropdownOptions={dropdownOptions}
+
                 // defaultValues={defaultValues}
                 classBame={"w-full px-5"}
               />

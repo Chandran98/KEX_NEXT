@@ -1,19 +1,29 @@
-import React, { useState } from "react";
-//import { Dropdown } from 'react-bootstrap';
+/* eslint-disable react/jsx-key */
+/* eslint-disable react-hooks/rules-of-hooks */
+"use client";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Select from "react-select";
-
-import user from "../../assets/images/avatar/1.jpg";
-
-import profile from "../../assets/images/avatar/1.jpg";
 import Image from "next/image";
 import { Dropdown } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { getProfile, getlogHistory } from "@/redux/reducer/user/userApi";
+import { UtilsData } from "./utils/utils";
+import { MdVerified, MdError, MdEmail, MdLocationCity } from "react-icons/md";
+import { RiBankLine } from "react-icons/ri";
+import { MdMobileFriendly } from "react-icons/md";
+import { AiOutlineFileProtect } from "react-icons/ai";
+import { IoLocationSharp } from "react-icons/io5";
 
 const inputBlog = [
-  { label: "Name", value: "John" },
-  { label: "Surname", value: "Brahim" },
-  { label: "Specialty", value: "Developer" },
-  { label: "Skills", value: "HTML,  JavaScript,  PHP" },
+  { label: "User Name", value: "John" },
+  { label: "First Name", value: "John" },
+  { label: "Last Name", value: "Brahim" },
+  { label: "Age", value: "25" },
+  { label: "Address", value: "Developer" },
+  { label: "City", value: "Chennai" },
+  { label: "State", value: "Tamil nadu" },
+  { label: "Postal Code", value: "Tamil nadu" },
 ];
 
 const options2 = [
@@ -36,7 +46,15 @@ const options4 = [
 ];
 
 const EditProfile = () => {
-  // const [selectOption , setSelectOption] = useState('Gender');
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getProfile());
+    dispatch(getlogHistory());
+  }, [dispatch]);
+  const { loading, error, logData, userData } = useSelector(
+    (state) => state.user
+  );
   return (
     <>
       <div className="m-4">
@@ -44,8 +62,9 @@ const EditProfile = () => {
           <div className="card-body d-flex">
             <div className="">
               <Image
-                src={profile}
-                className=" rounded-full"
+                src={userData?.data?.avatar}
+                className=" rounded-full object-height"
+                // fill={true}
                 height={200}
                 width={150}
                 alt=""
@@ -54,9 +73,11 @@ const EditProfile = () => {
             <div className="w-100 ps-4">
               <div className="flex justify-content-between">
                 <div className="">
-                  <h4 className="font-w700"> Nadila Adja </h4>
-                  <h5> UI Designer </h5>
-                  <span> London, United Kingdom </span>
+                  <h4 className="font-w700"> {userData?.data?.username} </h4>
+                  <h5> {userData?.data?.unique_id} </h5>
+                  <span>
+                    {userData?.data?.address}, {userData?.data?.country}{" "}
+                  </span>
                 </div>
                 <div className="d-flex">
                   <div className="icon-box icon-box-sm bg-primary-light me-2 btn-edit">
@@ -140,8 +161,8 @@ const EditProfile = () => {
                 </div>
               </div>
               <div className="d-flex flex-wrap pt-4">
-                <div className="d-flex align-items-center pe-4 mb-2">
-                  <div className="pe-2">
+                <UtilsData
+                  icon={
                     <svg
                       width="24"
                       height="25"
@@ -154,11 +175,11 @@ const EditProfile = () => {
                         fill="#F79F19"
                       />
                     </svg>
-                  </div>
-                  <h5 className="font-w400 mb-0">demo@gmail.com</h5>
-                </div>
-                <div className="d-flex align-items-center pe-4 mb-2">
-                  <div className="pe-2">
+                  }
+                  title={userData?.data?.email}
+                />{" "}
+                <UtilsData
+                  icon={
                     <svg
                       width="24"
                       height="25"
@@ -171,30 +192,9 @@ const EditProfile = () => {
                         fill="#FF5B5B"
                       />
                     </svg>
-                  </div>
-                  <h5 className="font-w400 mb-0">+012 345 689</h5>
-                </div>
-                <div className="d-flex align-items-center pe-4 mb-2">
-                  <div className="pe-2">
-                    <svg
-                      width="24"
-                      height="25"
-                      viewBox="0 0 24 25"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M5.97117 23.5767H18.0289C20.8125 23.5767 23.0769 21.3123 23.0769 18.5286V6.47093C23.0769 3.68727 20.8125 1.42285 18.0289 1.42285H5.97117C3.18752 1.42285 0.923096 3.68727 0.923096 6.47093V18.5286C0.923096 21.3123 3.18752 23.5767 5.97117 23.5767ZM2.76925 6.47093C2.76925 4.70545 4.20525 3.26901 5.97117 3.26901H18.0289C19.7948 3.26901 21.2308 4.70545 21.2308 6.47093V18.5286C21.2308 20.2941 19.7948 21.7305 18.0289 21.7305H5.97117C4.20525 21.7305 2.76925 20.2941 2.76925 18.5286V6.47093Z"
-                        fill="#00A389"
-                      />
-                      <path
-                        d="M7.0557 19.2014H16.9454C17.544 19.2014 18.1011 18.9328 18.4752 18.4649C18.852 17.9935 18.9917 17.385 18.8583 16.7954C18.3441 14.5292 16.7943 12.7479 14.7709 11.8879C15.3334 11.2406 15.6861 10.4062 15.6861 9.4834C15.6861 7.4511 14.0329 5.79785 12.0001 5.79785C9.96736 5.79785 8.31412 7.4511 8.31412 9.4834C8.31412 10.4062 8.66681 11.2406 9.22931 11.8879C7.20591 12.7479 5.6561 14.5294 5.14194 16.7959C5.00853 17.385 5.14825 17.993 5.52505 18.4645C5.89915 18.9328 6.45715 19.2014 7.0557 19.2014ZM10.1603 9.4834C10.1603 8.46928 10.986 7.64401 12.0001 7.64401C13.0142 7.64401 13.84 8.46928 13.84 9.4834C13.84 10.4975 13.0142 11.3228 12.0001 11.3228C10.986 11.3228 10.1603 10.4975 10.1603 9.4834ZM12.0001 13.1689C14.4385 13.1689 16.5181 14.828 17.0572 17.2034C17.0689 17.2538 17.05 17.2903 17.0329 17.3124C16.9986 17.3552 16.9589 17.3552 16.9454 17.3552H7.0557C7.04218 17.3552 7.00162 17.3552 6.96736 17.3124C6.95024 17.2903 6.9313 17.2538 6.94302 17.2038C7.48209 14.828 9.56171 13.1689 12.0001 13.1689Z"
-                        fill="#00A389"
-                      />
-                    </svg>
-                  </div>
-                  <h5 className="font-w400 mb-0">Frize Studios</h5>
-                </div>
+                  }
+                  title={userData?.data?.phone}
+                />
               </div>
             </div>
           </div>
@@ -221,35 +221,88 @@ const EditProfile = () => {
                                     </div>
                                 </div> */}
                 <div className="info-list ">
-                <div className="card-header">
-              <h6 className="title">Verification</h6>
-            </div>
-                  <ul>
+                  <div className="card-header">
+                    <h6 className="title">Verification</h6>
+                  </div>
+                  <ul className=" font-semibold m-2">
                     <li>
-                      <Link href={"/app-profile"}>Email</Link>
-                      <span>36</span>
+                      <Link href={"/app-profile"}>
+                        <div className="flex items-center  ">
+                          <MdEmail size={20} className="mr-3 text-[#004DEC] " />{" "}
+                          Email
+                        </div>
+                      </Link>
+                      {userData?.data?.emailVerified ? (
+                        <MdVerified className=" text-green-600" />
+                      ) : (
+                        <MdError className=" text-orange-600" />
+                      )}{" "}
                     </li>
                     <li>
-                      <Link href={"/uc-lightgallery"}>Bank Details</Link>
-                      <span>3</span>
+                      <Link
+                        href={"/uc-lightgallery"}
+                        className="flex items-center  "
+                      >
+                        <div className="flex items-center  ">
+                          <RiBankLine
+                            size={20}
+                            className="text-[#004DEC] mr-3"
+                          />{" "}
+                          Bank Details
+                        </div>
+                      </Link>
+
+                      {userData?.data?.bank_status ? (
+                        <MdVerified className=" text-green-600" />
+                      ) : (
+                        <MdError className=" text-orange-600" />
+                      )}
                     </li>
                     <li>
-                      <Link href={"/app-profile"}>Mobile Verification</Link>
-                      <span>1</span>
+                      <Link
+                        href={"/app-profile"}
+                        className="flex items-center "
+                      >
+                        <div className="flex items-center">
+                          <MdMobileFriendly
+                            size={20}
+                            className="text-[#004DEC] mr-3 "
+                          />{" "}
+                          Mobile Verification
+                        </div>
+                      </Link>
+
+                      {userData?.data?.phoneVerified ? (
+                        <MdVerified className=" text-green-600" />
+                      ) : (
+                        <MdError className=" text-orange-600" />
+                      )}
                     </li>
                     <li>
-                      <Link href={"/app-profile"}>Funds PassCode</Link>
-                      <span>1</span>
+                      <Link
+                        href={"/app-profile"}
+                        className="flex items-center "
+                      >
+                        <div className="flex items-center ">
+                          <AiOutlineFileProtect
+                            size={20}
+                            className="text-[#004DEC] mr-3"
+                          />{" "}
+                          Funds PassCode
+                        </div>
+                      </Link>
+
+                      {userData?.data?.passcodeStatus ? (
+                        <MdVerified className=" text-green-600" />
+                      ) : (
+                        <MdError className=" text-orange-600" />
+                      )}
                     </li>
                   </ul>
                 </div>
               </div>
               <div className="card-footer">
-                <div className="input-group mb-3">
-                  <div className="form-control rounded text-center bg-white">
-                    Portfolio
-                  </div>
-                </div>
+                
                 <div className="input-group">
                   <a
                     href="https://www.dexignzone.com/"
@@ -263,15 +316,23 @@ const EditProfile = () => {
             </div>
             <div className="card card-bx profile-card author-profile m-b30">
               <div className="card-body">
-          
                 <div className="info-list ">
-                <div className="card-header">
-              <h6 className="title">Recent Activity</h6>
-            </div>
-                  <ul>
-                    <li>
+                  <div className="card-header">
+                    <h6 className="title">Recent Activity</h6>
+                  </div>
+                  <ul className="">
+                    {logData?.data.length === 0 ? (
+                      <span> No recent records</span>
+                    ) : (
+                      logData?.data.map((e, i) => (
+                        <div className="flex flex-col border-b-2 ml-3 p-3 items-start justify-start">
+                        <span className=" flex  items-center justify-center text-[#004DEC] font-semibold" ><IoLocationSharp scale={20}/> {e.location}</span>
+                         <span className=" text-sm ml-5">{ new Date(e.date).toLocaleDateString()} @ {new Date(e.date).toLocaleTimeString()}</span>
+                        </div>
+                      ))
+                    )}
+                    {/* <li>
                       <Link href={"/app-profile"}>Email</Link>
-                      <span>36</span>
                     </li>
                     <li>
                       <Link href={"/uc-lightgallery"}>Bank Details</Link>
@@ -284,27 +345,11 @@ const EditProfile = () => {
                     <li>
                       <Link href={"/app-profile"}>Funds PassCode</Link>
                       <span>1</span>
-                    </li>
+                    </li> */}
                   </ul>
                 </div>
               </div>
-              <div className="card-footer">
-                <div className="input-group mb-3">
-                  <div className="form-control rounded text-center bg-white">
-                    Portfolio
-                  </div>
-                </div>
-                <div className="input-group">
-                  <a
-                    href="https://www.dexignzone.com/"
-                    target="blank"
-                    className="form-control text-primary rounded text-start bg-white"
-                  >
-                    https://www.dexignzone.com/
-                  </a>
-                </div>
-              </div>
-            </div>  
+            </div>
           </div>
         </div>
         <div className="col-xl-9 col-lg-8">
@@ -314,9 +359,9 @@ const EditProfile = () => {
             </div>
             <form className="profile-form">
               <div className="card-body">
-                <div className="row">
+                <div className="grid grid-cols-3">
                   {inputBlog.map((item, ind) => (
-                    <div className="col-sm-6 m-b30" key={ind}>
+                    <div className=" m-3" key={ind}>
                       <label className="form-label">{item.label}</label>
                       <input
                         type="text"
@@ -325,41 +370,7 @@ const EditProfile = () => {
                       />
                     </div>
                   ))}
-
-                  <div className="col-sm-6 m-b30">
-                    <label className="form-label">Gender</label>
-                    <Select
-                      options={options2}
-                      className="custom-react-select"
-                      defaultValue={options2[0]}
-                      isSearchable={false}
-                    />
-                  </div>
-                  <div className="col-sm-6 m-b30">
-                    <label className="form-label">Birth</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="dd. mm .yyyy"
-                    />
-                  </div>
-                  <div className="col-sm-6 m-b30">
-                    <label className="form-label">Phone</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      defaultValue="+123456789"
-                    />
-                  </div>
-                  <div className="col-sm-6 m-b30">
-                    <label className="form-label">Email address</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      defaultValue="demo@gmail.com"
-                    />
-                  </div>
-                  <div className="col-sm-6 m-b30">
+                  <div className="m-3">
                     <label className="form-label">Country</label>
                     <Select
                       options={options3}
@@ -368,22 +379,31 @@ const EditProfile = () => {
                       isSearchable={false}
                     />
                   </div>
-                  <div className="col-sm-6 m-b30">
-                    <label className="form-label">City</label>
+                  <div className="m-3">
+                    <label className="form-label">Gender</label>
                     <Select
-                      options={options4}
+                      options={options2}
                       className="custom-react-select"
-                      defaultValue={options4[0]}
+                      defaultValue={options2[0]}
+                      isSearchable={false}
+                    />
+                  </div>{" "}
+                  <div className="m-3">
+                    <label className="form-label">DOB</label>
+                    <Select
+                      options={options2}
+                      className="custom-react-select"
+                      defaultValue={options2[0]}
                       isSearchable={false}
                     />
                   </div>
                 </div>
               </div>
               <div className="card-footer">
-                <button className="btn btn-primary">UPDATE</button>
-                <Link href={"#"} className="btn-link">
+                <button className="btn btn-primary ">UPDATE</button>
+                {/* <Link href={"#"} className="btn-link">
                   Forgot your password?
-                </Link>
+                </Link> */}
               </div>
             </form>
           </div>

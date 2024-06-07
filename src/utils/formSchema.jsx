@@ -17,18 +17,28 @@ export const bankFormSchema = z
     ifsc: z.string().trim().min(1, { message: "Required" }),
     confirmaccount: z.string().trim().min(1, { message: "Required" }),
     upi: z.string().optional(),
-    //   image: z
-    //     .any()
-    //     .refine(
-    //       (files) => files?.length > 0 && ACCEPTED_IMAGE_TYPES.includes(files[0]?.type),
-    //       ".jpg, .jpeg, .png and .webp files are accepted."
-    //     )
-    //     .refine(
-    //       (files) => files?.length > 0 && files[0]?.size <= MAX_FILE_SIZE,
-    //       "Max image size is 5MB."
-    //     ),
+    image: z.instanceof(File)
+      .refine((file) => ACCEPTED_IMAGE_TYPES.includes(file.type), {
+        message: ".jpg, .jpeg, .png and .webp files are accepted.",
+      })
+      .refine((file) => file.size <= MAX_FILE_SIZE, {
+        message: "Max image size is 5MB.",
+      }),
   })
   .refine(({ account, confirmaccount }) => account === confirmaccount, {
     message: "Account doesn't match confirm Account",
     path: ["confirmaccount"],
   });
+
+export const ticketFormSchema = z.object({
+  issueType: z.string({ message: "Required" }).trim(),
+  subject: z.string().trim().min(1, { message: "Required" }),
+  description: z.string().trim().min(1, { message: "Required" }),
+  image: z.instanceof(File)
+    .refine((file) => ACCEPTED_IMAGE_TYPES.includes(file.type), {
+      message: ".jpg, .jpeg, .png and .webp files are accepted.",
+    })
+    .refine((file) => file.size <= MAX_FILE_SIZE, {
+      message: "Max image size is 5MB.",
+    }),
+});

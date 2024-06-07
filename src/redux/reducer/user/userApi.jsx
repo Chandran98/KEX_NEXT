@@ -1,4 +1,4 @@
-import { headers, loginUrl, profileUrl, registerUrl } from "@/constant/apiUrl";
+import { headers, logHistoryUrl, loginUrl, profileUrl, registerUrl } from "@/constant/apiUrl";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -31,6 +31,18 @@ export const signUp = createAsyncThunk("signUp", async (data) => {
 export const getProfile = createAsyncThunk("profile", async () => {
     try {
       const res = await axios.get(profileUrl, headers);
+      const response = res.data;
+  
+      console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+  export const getlogHistory = createAsyncThunk("logHistory", async () => {
+    try {
+      const res = await axios.get(logHistoryUrl, headers);
       const response = res.data;
   
       console.log(response);

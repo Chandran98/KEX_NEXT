@@ -13,13 +13,7 @@ import { useDispatch } from "react-redux";
 import { getProfile } from "@/redux/reducer/user/userApi";
 
 const page = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: zodResolver(bankFormSchema),
-  });
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProfile());
@@ -72,7 +66,7 @@ const page = () => {
                 onSubmit={() => onSubmit}
                 loading={loading}
                 formFieldData={formFieldData}
-                // fileUpload={true}
+                fileUpload={true}
                 formSchema={bankFormSchema}
                 // defaultValues={defaultValues}
                 classBame={"w-full px-5"}

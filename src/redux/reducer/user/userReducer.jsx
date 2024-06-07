@@ -1,5 +1,5 @@
 import {  createSlice } from "@reduxjs/toolkit";
-import { signIn,getProfile,signUp } from "./userApi";
+import { signIn,getProfile,signUp, getlogHistory } from "./userApi";
 
 
 const userSlice = createSlice({
@@ -8,6 +8,7 @@ const userSlice = createSlice({
     authData: null,
     loading: false,
     userData:null,
+    logData:null,
     error: null,
   },
   extraReducers: (builder) => {
@@ -40,6 +41,16 @@ const userSlice = createSlice({
         state.userData = action.payload;
       })
       .addCase(getProfile.rejected, (state) => {
+        state.loading = false;
+        state.error = null;
+      }).addCase(getlogHistory.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getlogHistory.fulfilled, (state, action) => {
+        state.loading = false;
+        state.logData = action.payload;
+      })
+      .addCase(getlogHistory.rejected, (state) => {
         state.loading = false;
         state.error = null;
       });
