@@ -8,6 +8,12 @@ const ACCEPTED_IMAGE_TYPES = [
   "image/webp",
 ];
 
+export const signInFormSchema = z.object({
+  email: z.string({ message: "Required" }).trim(),
+  password: z.string().trim().min(1, { message: "Required" }),
+ 
+});
+
 export const bankFormSchema = z
   .object({
     holder: z.string().trim().min(1, { message: "Required" }),
@@ -44,6 +50,7 @@ export const ticketFormSchema = z.object({
       message: "Max image size is 5MB.",
     }),
 });
+
 
 export const kycFormSchema = z.object({
   aadhar: z.string().trim().min(1, { message: "Required" }),

@@ -20,7 +20,7 @@ const OrderTab = () => {
                 <th>Issue Category</th>
                 <th>Bank Name</th>
                 <th>Description </th>
-                 <th>Status</th>
+                <th>Status</th>
                 <th className="text-end">Action</th>
               </tr>
             </thead>
@@ -35,7 +35,7 @@ const OrderTab = () => {
                         <td>{index + 1}</td>
                         <td>{item.holder}</td>
                         <td>{item.accNumber}</td>
-                        
+
                         <td>{item.ibanCode}</td>
                         <td>{item.branch}</td>
                         <td
@@ -70,107 +70,12 @@ const OrderTab = () => {
             </tbody>
           </table>
           <div className="d-sm-flex text-center justify-content-between align-items-center mt-3 mb-3">
-            {/* <div className="dataTables_info">
-                                        Showing {activePag.current * sort + 1} to{" "}
-                                        {data.length > (activePag.current + 1) * sort
-                                            ? (activePag.current + 1) * sort
-                                            : data.length}{" "}
-                                        of {data.length} entries
-                                    </div> */}
             <div></div>
-            {/* <div
-                                        className="dataTables_paginate paging_simple_numbers mb-0"
-                                        id="application-tbl1_paginate"
-                                    >
-                                        <Link
-                                            className="paginate_button previous "
-                                            href="/future"
-                                            onClick={() =>
-                                                activePag.current > 0 &&
-                                                onClick(activePag.current - 1)
-                                            }
-                                            >
-                                            <i className="fa fa-angle-double-left" ></i> 
-                                        </Link>
-                                        <span>
-                                            {paggination.map((number, i) => (
-                                                <Link
-                                                    key={i}
-                                                    href="/future"
-                                                    className={`paginate_button  ${
-                                                        activePag.current === i ? "current" : ""
-                                                    } `}
-                                                    onClick={() => onClick(i)}
-                                                >
-                                                    {number}
-                                                </Link>
-                                            ))}
-                                        </span>
 
-                                        <Link
-                                            className="paginate_button next"
-                                            href="/future"
-                                            onClick={() =>
-                                                activePag.current + 1 < paggination.length &&
-                                                onClick(activePag.current + 1)
-                                            }
-                                        >
-                                            <i className="fa fa-angle-double-right" ></i>
-                                        </Link>
-                                    </div> */}
             <Link className="text-blue-500 font-semibold " href={"/"}>
               view all
             </Link>
           </div>
-          {/* <div className="d-sm-flex text-center justify-content-between align-items-center mt-3 mb-3">
-                        <div className="dataTables_info">
-                            Showing {activePag.current * sort + 1} to{" "}
-                            {data.length > (activePag.current + 1) * sort
-                                ? (activePag.current + 1) * sort
-                                : data.length}{" "}
-                            of {data.length} entries
-                        </div>
-                        <div
-                            className="dataTables_paginate paging_simple_numbers mb-0"
-                            id="application-tbl1_paginate"
-                        >
-                            <Link
-                                className="paginate_button previous "
-                                href="/future"
-                                onClick={() =>
-                                    activePag.current > 0 &&
-                                    onClick(activePag.current - 1)
-                                }
-                                >
-                                <i className="fa fa-angle-double-left" ></i> 
-                            </Link>
-                            <span>
-                                {paggination.map((number, i) => (
-                                    <Link
-                                        key={i}
-                                        href="/future"
-                                        className={`paginate_button  ${
-                                            activePag.current === i ? "current" : ""
-                                        } `}
-                                        onClick={() => onClick(i)}
-                                    >
-                                        {number}
-                                    </Link>
-                                ))}
-                            </span>
-
-                            <Link
-                                className="paginate_button next"
-                                href="/future"
-                                onClick={() =>
-                                    activePag.current + 1 < paggination.length &&
-                                    onClick(activePag.current + 1)
-                                }
-                            >
-                                <i className="fa fa-angle-double-right" ></i>
-                            </Link>
-                        </div>
-                    </div> */}
         </div>
       </div>
     </>

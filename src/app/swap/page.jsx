@@ -1,17 +1,15 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-"use client";
-import { openOrders } from '@/redux/reducer/order/orderApi';
-import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+"use client";// pages/otp.js
+import React, { useState } from 'react';
+import OtpModal from './otpmodal';
 
-const page = () => {
-  const disptach=useDispatch();
-  useEffect(()=>{
-    disptach(openOrders());
-  },[])
+const OtpPage = () => {
+
   return (
-    <div>swap</div>
-  )
-}
+    <div className="flex items-center justify-center h-screen">
+     
+    </div>
+  );
+};
 
-export default page
+export default OtpPage;

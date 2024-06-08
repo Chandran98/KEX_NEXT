@@ -1,16 +1,8 @@
 export const BaseUrl = "http://localhost:8290/api/v1/";
 
-// export const headers = {
-//   "Content-Type": "application/json",
-//   // "origin": "https://kairaaexchange.com",
-//   "Authorization":
-//     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvcHRpb24iOiJ1c2VyX2xvZ2luIiwiaWQiOiI2MzhhMDBkYjU2Y2Q4MzM2YmE0OWQ0NjEiLCJzdGF0dXMiOnRydWUsImlhdCI6MTcxNzQ4NjgyMSwiZXhwIjoxNzE3NTczMjIxfQ.W2vlfhKXZ7cFzZP4Xx6Ms3qSZdKKzsFMSxiY62fAhyc",
-// };
-
 export const headers = {
   headers: {
-    Authorization: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvcHRpb24iOiJ1c2VyX2xvZ2luIiwiaWQiOiI2MzhhYzkyYjFlMmNmZDQwNDZmNjMxMzYiLCJzdGF0dXMiOnRydWUsImlhdCI6MTcxNzc2NDI0MCwiZXhwIjoxNzE3ODUwNjQwfQ.FdKmk-0CsdRZzXlkqTL4EVjvvKrvbR-e6cPmL28XsRU`,
-  },
+    Authorization: localStorage.getItem("auth-token") },
 };
 
 // USER API //

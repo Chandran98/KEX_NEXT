@@ -80,7 +80,7 @@ const  onSubmit=(data)=>{
 }
   return (
     <>
-      <div className="m-4">
+      <div className="mx-4">
         <div className=" grid lg:grid-cols-2 grid-cols-1 gap-3">
         <div className="card ">
           <div className="card-body d-flex">
@@ -103,12 +103,12 @@ const  onSubmit=(data)=>{
                     {userData?.data?.address}, {userData?.data?.country}{" "}
                   </span>
                 </div>
-                <div className="d-flex">
-                  <div className="icon-box icon-box-sm bg-primary-light me-2 btn-edit">
+                <div className="">
+                  <div className=" p-2 rounded-lg  bg-primary-light text-center">
                     <Link href={"#"}>
                       <svg
-                        width="32"
-                        height="32"
+                        width="24"
+                        height="24"
                         viewBox="0 0 32 32"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
@@ -135,7 +135,7 @@ const  onSubmit=(data)=>{
                       </svg>
                     </Link>
                   </div>
-                  <Dropdown className="dropdown ms-auto">
+                  {/* <Dropdown className="dropdown ms-auto">
                     <Dropdown.Toggle
                       as="div"
                       className="icon-box icon-box-sm bg-primary-light i-false"
@@ -181,7 +181,7 @@ const  onSubmit=(data)=>{
                         </Link>
                       </li>
                     </Dropdown.Menu>
-                  </Dropdown>
+                  </Dropdown> */}
                 </div>
               </div>
               <div className="d-flex flex-wrap pt-4">
@@ -226,7 +226,7 @@ const  onSubmit=(data)=>{
         <div className="card"></div>
         </div>
       </div>
-      <div className="    md:flex gap-4 m-4">
+      <div className="    md:flex gap-4 mx-4 ">
         <div className="    ">
           <div className="clearfix">
             <div className="card card-bx profile-card author-profile m-b30">
@@ -341,7 +341,7 @@ const  onSubmit=(data)=>{
               </div>
             </div>
             <div className="card card-bx profile-card author-profile m-b30">
-              <div className="card-body">
+              <div className="card-body pb-5">
                 <div className="info-list ">
                   <div className="card-header">
                     <h6 className="title">Recent Activity</h6>
@@ -350,14 +350,15 @@ const  onSubmit=(data)=>{
                     {logData?.data.length === 0 ? (
                       <span> No recent records</span>
                     ) : (
-                      logData?.data.map((e, i) => (
-                        <div className="flex flex-col border-b-2 ml-3 p-3 items-start justify-start">
+                      logData?.data.slice(0,2).map((e, i) => (
+                        <div className="flex flex-col border-b-1 ml-3 p-3 items-start justify-start">
                         <span className=" flex  items-center justify-center text-[#004DEC] font-semibold" ><IoLocationSharp scale={20}/> {e.location}</span>
                          <span className=" text-sm ml-5">{ new Date(e.date).toLocaleDateString()} @ {new Date(e.date).toLocaleTimeString()}</span>
                         </div>
                       ))
                     )}
                   </ul>
+                 
                 </div>
               </div>
             </div>
@@ -420,8 +421,8 @@ const  onSubmit=(data)=>{
           </div>
         </div>
       </div>
-          <div className="card mx-4">
-      <div className="card profile-card card-bx m-b30">
+          <div className=" card mx-4">
+      <div className=" profile-card card-bx m-b30">
         <div className="card-header">
           <h6 className="title">KYC Verification</h6>
         </div>

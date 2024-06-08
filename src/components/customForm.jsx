@@ -1,11 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller } from "react-hook-form";
-import { z } from "zod";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -16,18 +14,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-} from "@radix-ui/react-dropdown-menu";
+import axios from "axios";
 
 const customForm = ({
   onSubmit,
   formFieldData,
   formSchema,
-  defaultValues,
   dropdownOptions,
   classBame,
   loading,
@@ -37,7 +29,32 @@ const customForm = ({
     resolver: zodResolver(formSchema),
     // defaultValues: defaultValues,
   });
-  console.log(fileUpload, "fileUpload");
+
+
+  const myupload = async (data) => {
+console.log(data);
+    const formData = new FormData();
+    formData.append("fileKey", data);
+    console.log(formData, "formData");
+    try {
+      const response = await axios
+        .post("http://localhost:8290/upload-file", formData, {
+          headers: {
+            Authorization: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvcHRpb24iOiJ1c2VyX2xvZ2luIiwiaWQiOiI2MzhhYzkyYjFlMmNmZDQwNDZmNjMxMzYiLCJzdGF0dXMiOnRydWUsImlhdCI6MTcxNzc2NDI0MCwiZXhwIjoxNzE3ODUwNjQwfQ.FdKmk-0CsdRZzXlkqTL4EVjvvKrvbR-e6cPmL28XsRU`,
+          },
+        })
+        .then((res) => {
+          const data= form.setValue("image", res.data);
+   console.log("asdfasfsad",data);
+        });
+
+      console.log("Success:", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <Form className="" {...form}>
       <form
@@ -89,25 +106,52 @@ const customForm = ({
           );
         })}
         {fileUpload === true ? (
-          <FormField
-            control={form.control}
-            name="image"
-            render={({ field: { onChange } }) => (
-              <FormItem>
-                <FormLabel>Image</FormLabel>
-                <FormControl>
-                  <Input
-                    type="file"
-                    onChange={(e) => {
-                      onChange(e.target.files[0]);
-                    }}
-                  />
-                </FormControl>
+          // <FormField
+          //   control={form.control}
+          //   name="image"
+          //   render={({ field: { onChange, } }) => (
+          //     <FormItem>
+          //       <FormLabel>Image</FormLabel>
+          //       <FormControl>
+          //         <Input
+          //           type="file"
+          //           onChange={(e) => {
+          //             onChange(e.target.files[0]);
+          //             myupload(e.target.files[0]);
+          //           }}
+          //         />
+          //       </FormControl>
 
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          //       <FormMessage />
+          //     </FormItem>
+          //   )}
+          // />
+          <FormField
+          control={form.control}
+          name="image"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Image</FormLabel>
+              <FormControl>
+                <Controller
+                  control={form.control}
+                  name="image"
+                  render={({ field: { onChange } }) => (
+                    <Input
+                      type="file"
+                      onChange={(e) => {
+                        const file = e.target.files[0];
+                        onChange(file); // Update form state with file
+                        myupload(file); // Call upload function
+                      }}
+                    />
+                  )}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         ) : (
           <></>
         )}

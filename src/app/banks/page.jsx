@@ -11,17 +11,34 @@ import BankForm from "@/utils/form/bankForm";
 import OrderTab from "./comp";
 import { useDispatch } from "react-redux";
 import { getProfile } from "@/redux/reducer/user/userApi";
+import axios from "axios";
+import { headers, uploadFile } from "@/constant/apiUrl";
 
 const page = () => {
-
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProfile());
   }, [dispatch]);
-  const onSubmit = (data) => {
-    console.log("Form data", data);
-  };
+  const onSubmit = async (data) => {
+    
 
+    const formData = new FormData();
+    formData.append('fileKey', data.image);
+    console.log(formData,"formData");
+    try {
+      const response = await axios.post(
+   "http://localhost:8290/upload-file",formData,{ headers: {
+    
+    Authorization: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvcHRpb24iOiJ1c2VyX2xvZ2luIiwiaWQiOiI2MzhhYzkyYjFlMmNmZDQwNDZmNjMxMzYiLCJzdGF0dXMiOnRydWUsImlhdCI6MTcxNzc2NDI0MCwiZXhwIjoxNzE3ODUwNjQwfQ.FdKmk-0CsdRZzXlkqTL4EVjvvKrvbR-e6cPmL28XsRU`,
+  }}
+      ).then((res)=>{console.log(res.data)});
+      console.log("Success:", response.status);
+      console.log("Success:", response.data);
+    } catch (error) {
+      console.error("Error:", error);
+      console.error("Error:", error.response?.data || error.message);
+    }
+  };
   const loading = false;
 
   const formFieldData = [
@@ -45,14 +62,13 @@ const page = () => {
       title: " Confirm Account ",
       // placeholder: "7092774422",
     },
-    { id: "4", name: "ifsc", title: " IFSC Code ",
-     },
+    { id: "4", name: "ifsc", title: " IFSC Code " },
     {
       id: "5",
       name: "branch",
       title: " Branch Name ",
     },
-    {id:"8",name:"accountType",title:"Account Type",type:"drop"},
+    { id: "8", name: "accountType", title: "Account Type", type: "drop" },
     { id: "7", name: "upi", title: " UPI (Optional) " },
   ];
   const dropdownOptions = [
@@ -75,7 +91,6 @@ const page = () => {
                 fileUpload={true}
                 formSchema={bankFormSchema}
                 dropdownOptions={dropdownOptions}
-
                 // defaultValues={defaultValues}
                 classBame={"w-full px-5"}
               />
@@ -104,7 +119,7 @@ const page = () => {
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 
