@@ -62,7 +62,7 @@ const customForm = ({
                           render={({ field }) => (
                             <select
                               {...field}
-                              className="border-blue-100 border-2 rounded-md block w-full p-2.5 "
+                              className="border-gray-200 border-2 rounded-md block w-full p-2.5 "
                             >
                               {dropdownOptions.map((option) => (
                                 <option key={option.value} value={option.value}>
@@ -70,27 +70,11 @@ const customForm = ({
                                 </option>
                               ))}
                             </select>
-                            // <DropdownMenu
-                            //   {...field}
-                            //   className="border-blue-700"
-                            // >
-                            //   <DropdownMenuContent>
-                            //     {/* <DropdownMenuSeparator /> */}
-                            //     {dropdownOptions.map((option) => (
-                            //       <DropdownMenuItem
-                            //         key={option.value}
-                            //         value={option.value}
-                            //       >
-                            //         {option.label}
-                            //       </DropdownMenuItem>
-                            //     ))}
-                            //   </DropdownMenuContent>
-                            // </DropdownMenu>
                           )}
                         />
                       ) : (
                         <Input
-                          className="border-blue-700"
+                          className="border-gray-200 border-2"
                           placeholder={field.placeholder}
                           {...field}
                         />

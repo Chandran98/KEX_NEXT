@@ -14,6 +14,18 @@ import { RiBankLine } from "react-icons/ri";
 import { MdMobileFriendly } from "react-icons/md";
 import { AiOutlineFileProtect } from "react-icons/ai";
 import { IoLocationSharp } from "react-icons/io5";
+import { Input } from "@/components/ui/input";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { kycFormSchema } from "@/utils/formSchema";import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+// import { Input } from "@/components/ui/input";
 
 const inputBlog = [
   { label: "User Name", value: "John" },
@@ -38,16 +50,24 @@ const options3 = [
   { value: "3", label: "China" },
   { value: "4", label: "India" },
 ];
-const options4 = [
-  { value: "1", label: "Krasnodar" },
-  { value: "2", label: "Tyumen" },
-  { value: "3", label: "Chelyabinsk" },
-  { value: "4", label: "Moscow" },
-];
+   {/* <Select
+                      options={options2}
+                      className="custom-react-select"
+                      defaultValue={options2[0]}
+                      isSearchable={false}
+                    /> */}
 
 const EditProfile = () => {
   const dispatch = useDispatch();
 
+  
+  const handleFileChange = (e, name) => {
+    const file = e.target.files[0];
+    setValue(name, file);
+  };
+  const form=useForm({
+    resolver:zodResolver(kycFormSchema)
+  })
   useEffect(() => {
     dispatch(getProfile());
     dispatch(getlogHistory());
@@ -55,9 +75,13 @@ const EditProfile = () => {
   const { loading, error, logData, userData } = useSelector(
     (state) => state.user
   );
+const  onSubmit=(data)=>{
+  console.log("e.target.value",data);
+}
   return (
     <>
       <div className="m-4">
+        <div className=" grid lg:grid-cols-2 grid-cols-1 gap-3">
         <div className="card ">
           <div className="card-body d-flex">
             <div className="">
@@ -199,6 +223,8 @@ const EditProfile = () => {
             </div>
           </div>
         </div>
+        <div className="card"></div>
+        </div>
       </div>
       <div className="    md:flex gap-4 m-4">
         <div className="    ">
@@ -331,21 +357,6 @@ const EditProfile = () => {
                         </div>
                       ))
                     )}
-                    {/* <li>
-                      <Link href={"/app-profile"}>Email</Link>
-                    </li>
-                    <li>
-                      <Link href={"/uc-lightgallery"}>Bank Details</Link>
-                      <span>3</span>
-                    </li>
-                    <li>
-                      <Link href={"/app-profile"}>Mobile Verification</Link>
-                      <span>1</span>
-                    </li>
-                    <li>
-                      <Link href={"/app-profile"}>Funds PassCode</Link>
-                      <span>1</span>
-                    </li> */}
                   </ul>
                 </div>
               </div>
@@ -359,7 +370,7 @@ const EditProfile = () => {
             </div>
             <form className="profile-form">
               <div className="card-body">
-                <div className="grid grid-cols-3">
+                <div className="grid lg:grid-cols-3 grid-cols-2">
                   {inputBlog.map((item, ind) => (
                     <div className=" m-3" key={ind}>
                       <label className="form-label">{item.label}</label>
@@ -409,6 +420,129 @@ const EditProfile = () => {
           </div>
         </div>
       </div>
+          <div className="card mx-4">
+      <div className="card profile-card card-bx m-b30">
+        <div className="card-header">
+          <h6 className="title">KYC Verification</h6>
+        </div>
+        <Form className="" {...form}>
+
+        <form className="profile-form" onSubmit={form.handleSubmit(onSubmit)}>
+          <div className="p-4">
+            <div className="grid lg:grid-cols-3 grid-cols-1 gap-3">
+              <div>
+              <FormField   
+                control={form.control}
+                name="aadhar"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Aadhar Card</FormLabel>
+                    <FormControl>
+                    <Input
+                          className="border-gray-200 border-2"
+                          // placeholder={field.placeholder}
+                          {...field}
+                        />
+                    </FormControl>
+
+                    <FormMessage />
+                 
+                  </FormItem>
+                )}
+              />
+               <FormField className="mt-5"
+            control={form.control}
+            name="aadharImage"
+            render={({ field: { onChange } }) => (
+              <FormItem>
+                <FormLabel>Aadhar Image</FormLabel>
+                <FormControl>
+                  <Input
+                    type="file"
+                    onChange={(e) => {
+                      onChange(e.target.files[0]);
+                    }}
+                  />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+              </div>
+              <div>
+              <FormField   
+                control={form.control}
+                name="panCard"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Pan Card</FormLabel>
+                    <FormControl>
+                    <Input
+                          className="border-gray-200 border-2"
+                          // placeholder={field.placeholder}
+                          {...field}
+                        />
+                    </FormControl>
+
+                    <FormMessage />
+                 
+                  </FormItem>
+                )}
+              />
+               <FormField className="mt-5"
+            control={form.control}
+            name="panImage"
+            render={({ field: { onChange } }) => (
+              <FormItem>
+                <FormLabel>Pan Card Image</FormLabel>
+                <FormControl>
+                  <Input
+                    type="file"
+                    onChange={(e) => {
+                      onChange(e.target.files[0]);
+                    }}
+                  />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+              </div>
+              <div>
+              <FormField className="mt-5"
+            control={form.control}
+            name="selfieImage"
+            render={({ field: { onChange } }) => (
+              <FormItem>
+                <FormLabel>Selfie</FormLabel>
+                <FormControl>
+                  <Input
+                    type="file"
+                    onChange={(e) => {
+                      onChange(e.target.files[0]);
+                    }}
+                  />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+              </div>
+            </div>
+          </div>
+          <div className="card-footer">
+            <button type="submit" className="btn btn-primary">
+              Proceed
+            </button>
+          </div>
+        </form>
+            </Form>
+
+      </div>
+    </div>
     </>
   );
 };

@@ -17,7 +17,8 @@ export const bankFormSchema = z
     ifsc: z.string().trim().min(1, { message: "Required" }),
     confirmaccount: z.string().trim().min(1, { message: "Required" }),
     upi: z.string().optional(),
-    image: z.instanceof(File)
+    image: z
+      .instanceof(File)
       .refine((file) => ACCEPTED_IMAGE_TYPES.includes(file.type), {
         message: ".jpg, .jpeg, .png and .webp files are accepted.",
       })
@@ -34,7 +35,34 @@ export const ticketFormSchema = z.object({
   issueType: z.string({ message: "Required" }).trim(),
   subject: z.string().trim().min(1, { message: "Required" }),
   description: z.string().trim().min(1, { message: "Required" }),
-  image: z.instanceof(File)
+  image: z
+    .instanceof(File)
+    .refine((file) => ACCEPTED_IMAGE_TYPES.includes(file.type), {
+      message: ".jpg, .jpeg, .png and .webp files are accepted.",
+    })
+    .refine((file) => file.size <= MAX_FILE_SIZE, {
+      message: "Max image size is 5MB.",
+    }),
+});
+
+export const kycFormSchema = z.object({
+  aadhar: z.string().trim().min(1, { message: "Required" }),
+  panCard: z.string().trim().min(1, { message: "Required" }),
+  aadharImage: z.instanceof(File)
+    .refine((file) => ACCEPTED_IMAGE_TYPES.includes(file.type), {
+      message: ".jpg, .jpeg, .png and .webp files are accepted.",
+    })
+    .refine((file) => file.size <= MAX_FILE_SIZE, {
+      message: "Max image size is 5MB.",
+    }),
+  panImage: z.instanceof(File)
+    .refine((file) => ACCEPTED_IMAGE_TYPES.includes(file.type), {
+      message: ".jpg, .jpeg, .png and .webp files are accepted.",
+    })
+    .refine((file) => file.size <= MAX_FILE_SIZE, {
+      message: "Max image size is 5MB.",
+    }),
+  selfieImage: z.instanceof(File)
     .refine((file) => ACCEPTED_IMAGE_TYPES.includes(file.type), {
       message: ".jpg, .jpeg, .png and .webp files are accepted.",
     })

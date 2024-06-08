@@ -31,20 +31,23 @@ const page = () => {
     {
       id: "2",
       name: "subject",
-      title: "Subject",type:"drop"
+      title: "Subject"
     },
     {
       id: "3",
       name: "description",
-      title: "Description",type:"adf"
+      title: "Description"
     },
    
   ];
   const dropdownOptions = [
     { value: "", label: "Select issue type" },
-    { value: "Technical", label: "Technical" },
-    { value: "Billing", label: "Billing" },
-    { value: "General", label: "General" },
+    { value: "deposit", label: "Deposit" },
+    { value: "withdrawal", label: "Withdrawal" },
+    { value: "accountSecurity", label: "Account Security" },
+    { value: "kycVerification", label: "KYC Verification" },
+    { value: "complaints", label: "Complaints" },
+    { value: "bugReports", label: "Bug Reports" },
   ];
   return (
     <>
@@ -52,7 +55,7 @@ const page = () => {
       <div className="card m-4  ">
         <div className="card-body p-4">
           <h1>Create a Ticket</h1>
-          <div className=" grid lg:grid-cols-3  gap-4">
+          <div className=" grid lg:grid-cols-3 grid-cols-1   gap-4">
             <div className=" col-span-1 ">
               <CustomForm
                 onSubmit={() => onSubmit}
