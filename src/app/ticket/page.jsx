@@ -1,13 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
-import CustomForm from "@/components/customForm";
+import Inform from "@/utils/form/customForm";
 import DashBoardHeader from "@/components/header";
 import React, { useEffect } from "react";
 import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { bankFormSchema, ticketFormSchema } from "@/utils/formSchema";
-import BankForm from "@/utils/form/bankForm";
 import OrderTab from "./ticketComp";
 import { useDispatch } from "react-redux";
 import { getProfile } from "@/redux/reducer/user/userApi";
@@ -18,29 +14,12 @@ const page = () => {
     dispatch(getProfile());
   }, [dispatch]);
   const onSubmit = async (data) => {
-    console.log(data,"adsfdafas");
-    // const formData = new FormData();
-    // formData.append("fileKey", data.image);
-    // try {
-    //   const response = await axios.post(
-    //     "http://localhost:8290/upload-file",
-    //     formData,
-    //     {
-    //       headers: {
-    //         Authorization: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvcHRpb24iOiJ1c2VyX2xvZ2luIiwiaWQiOiI2MzhhYzkyYjFlMmNmZDQwNDZmNjMxMzYiLCJzdGF0dXMiOnRydWUsImlhdCI6MTcxNzc2NDI0MCwiZXhwIjoxNzE3ODUwNjQwfQ.FdKmk-0CsdRZzXlkqTL4EVjvvKrvbR-e6cPmL28XsRU`,
-    //       },
-    //     }
-    //   );
-    // } catch (error) {
-    //   console.error("Error:", error);
-    //   console.error("Error:", error.response?.data || error.message);
-    // }
+    console.log(data, "adsfdafas");
   };
 
   const loading = false;
 
   const formFieldData = [
-    // { id: "1", name: "username", title: "Username", placeholder: "username" },
     { id: "8", name: "issueType", title: "Issue Type", type: "drop" },
 
     {
@@ -63,6 +42,12 @@ const page = () => {
     { value: "complaints", label: "Complaints" },
     { value: "bugReports", label: "Bug Reports" },
   ];
+  const schema = z.object({
+    issueType: z.string().nonempty({ message: "Issue type is required" }),
+    subject: z.string().nonempty({ message: "Subject is required" }),
+    description: z.string().nonempty({ message: "Description is required" }),
+    image: z.any().optional(),
+  });
   return (
     <>
       <DashBoardHeader />
@@ -71,12 +56,12 @@ const page = () => {
           <h1>Create a Ticket</h1>
           <div className=" grid lg:grid-cols-3 grid-cols-1   gap-4">
             <div className=" col-span-1 ">
-              <CustomForm
+              <Inform
                 onSubmit={() => onSubmit}
                 loading={loading}
-                formFieldData={formFieldData}
+                formFiledData={formFieldData}
                 fileUpload={true}
-                formSchema={ticketFormSchema}
+                formSchema={schema}
                 dropdownOptions={dropdownOptions}
                 // defaultValues={defaultValues}
                 classBame={"w-full px-5"}

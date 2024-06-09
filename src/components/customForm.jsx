@@ -40,12 +40,12 @@ console.log(data);
       const response = await axios
         .post("http://localhost:8290/upload-file", formData, {
           headers: {
-            Authorization: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvcHRpb24iOiJ1c2VyX2xvZ2luIiwiaWQiOiI2MzhhYzkyYjFlMmNmZDQwNDZmNjMxMzYiLCJzdGF0dXMiOnRydWUsImlhdCI6MTcxNzc2NDI0MCwiZXhwIjoxNzE3ODUwNjQwfQ.FdKmk-0CsdRZzXlkqTL4EVjvvKrvbR-e6cPmL28XsRU`,
+            Authorization: localStorage.getItem("auth-token"),
           },
         })
         .then((res) => {
           const data= form.setValue("image", res.data);
-   console.log("asdfasfsad",data);
+   console.log("asdfasfsad",res.data);
         });
 
       console.log("Success:", response.data);

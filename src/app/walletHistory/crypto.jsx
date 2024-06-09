@@ -10,7 +10,7 @@ const AllOrder = () => {
   );
   const [currentpage, setCurrentPage] = useState(0);
   const historyperPage = 10;
-  const totalPages = Math.ceil(cryptoHistoryData?.data.length / historyperPage);
+  const totalPages = (cryptoHistoryData && Math.ceil(cryptoHistoryData?.data?.length / historyperPage));
   function handelSetPage(page) {
     setCurrentPage(page);
   }
@@ -74,10 +74,10 @@ const AllOrder = () => {
             <div className="dataTables_info">
               Showing {currentpage * historyperPage + 1} to{" "}
               {Math.min(
-                cryptoHistoryData?.data.length,
+                cryptoHistoryData?.data?.length,
                 (currentpage + 1) * historyperPage
               )}{" "}
-              of {cryptoHistoryData?.data.length} entries
+              of {cryptoHistoryData?.data?.length} entries
             </div>
             <div
               className="dataTables_paginate paging_simple_numbers mb-0"

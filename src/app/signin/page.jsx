@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Authform from "./loginComp";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,6 +18,9 @@ const page = () => {
         password: z.string().min(6).max(20),
       });
 
+      useEffect(()=>{
+        localStorage.clear();
+      },[])
     const defaultValues = {
         email: "",
         password: "",

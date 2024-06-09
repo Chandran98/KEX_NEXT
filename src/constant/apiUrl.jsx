@@ -1,3 +1,4 @@
+"use client"
 export const BaseUrl = "http://localhost:8290/api/v1/";
 
 export const headers = {
@@ -12,7 +13,7 @@ export const registerUrl = `${BaseUrl}register`;
 export const banner = `${BaseUrl}banner-content-get`;
 export const uploadFile = `${BaseUrl}upload-file`;
 export const profileUrl = `${BaseUrl}user/profile`;
-export const supportTicketUrl = `${BaseUrl}user/tickets`;
+export const supportTicketUrl = `${BaseUrl}user/tickets`; 
 export const logHistoryUrl = `${BaseUrl}user/log-history`;
 export const updateBankUrl = `${BaseUrl}user/update-bank`;
 export const sendOtpUrl = `${BaseUrl}user/send-otp?o=`;

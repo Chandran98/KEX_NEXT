@@ -1,18 +1,13 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
-import CustomForm from "@/components/customForm";
+import Inform from "@/utils/form/customForm";
 import DashBoardHeader from "@/components/header";
 import React, { useEffect } from "react";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { bankFormSchema } from "@/utils/formSchema";
-import BankForm from "@/utils/form/bankForm";
 import OrderTab from "./comp";
 import { useDispatch } from "react-redux";
 import { getProfile } from "@/redux/reducer/user/userApi";
-import axios from "axios";
-import { headers, uploadFile } from "@/constant/apiUrl";
+
 
 const page = () => {
   const dispatch = useDispatch();
@@ -20,24 +15,8 @@ const page = () => {
     dispatch(getProfile());
   }, [dispatch]);
   const onSubmit = async (data) => {
-    
+    console.log(data,"mydata");
 
-    const formData = new FormData();
-    formData.append('fileKey', data.image);
-    console.log(formData,"formData");
-    try {
-      const response = await axios.post(
-   "http://localhost:8290/upload-file",formData,{ headers: {
-    
-    Authorization: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvcHRpb24iOiJ1c2VyX2xvZ2luIiwiaWQiOiI2MzhhYzkyYjFlMmNmZDQwNDZmNjMxMzYiLCJzdGF0dXMiOnRydWUsImlhdCI6MTcxNzc2NDI0MCwiZXhwIjoxNzE3ODUwNjQwfQ.FdKmk-0CsdRZzXlkqTL4EVjvvKrvbR-e6cPmL28XsRU`,
-  }}
-      ).then((res)=>{console.log(res.data)});
-      console.log("Success:", response.status);
-      console.log("Success:", response.data);
-    } catch (error) {
-      console.error("Error:", error);
-      console.error("Error:", error.response?.data || error.message);
-    }
   };
   const loading = false;
 
@@ -84,10 +63,11 @@ const page = () => {
           <h1>Add Bank</h1>
           <div className=" grid lg:grid-cols-3 grid-cols-1 gap-4">
             <div className=" col-span-1 ">
-              <CustomForm
+              
+                 <Inform
                 onSubmit={() => onSubmit}
                 loading={loading}
-                formFieldData={formFieldData}
+                formFiledData={formFieldData}
                 fileUpload={true}
                 formSchema={bankFormSchema}
                 dropdownOptions={dropdownOptions}
