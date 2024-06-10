@@ -10,12 +10,18 @@ import { Provider } from "react-redux";
 import { store } from "../redux/store";
 
 import "../assets/css/style.css";
+import AuthGuard from "@/utils/authRoute";
 const rootlayout = ({ children }) => {
   return (
-    <ThemeProviders attribute="class" defaultTheme="dark" enableSystem>
+    <ThemeProviders attribute="class" defaultTheme="light" enableSystem>
       <Provider store={store}>
+      {/* <AuthGuard> */}
+
         <Header />
+
         {children}
+        {/* </AuthGuard> */}
+
       </Provider>
     </ThemeProviders>
   );

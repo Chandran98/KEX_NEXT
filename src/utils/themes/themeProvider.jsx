@@ -6,7 +6,7 @@ import React from "react";
 
 const ThemeProviders = ({ children }) => {
   return (
-    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+    <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
       {children}
     </ThemeProvider>
   );
