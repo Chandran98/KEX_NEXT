@@ -1,5 +1,5 @@
 import {  createSlice } from "@reduxjs/toolkit";
-import { signIn,getProfile,signUp, getlogHistory } from "./userApi";
+import { signIn,getProfile,signUp, getlogHistory, removeBank, updateBank, bankDetails, updateProfile, kycUpdate } from "./userApi";
 
 
 const userSlice = createSlice({
@@ -51,6 +51,45 @@ const userSlice = createSlice({
         state.logData = action.payload;
       })
       .addCase(getlogHistory.rejected, (state) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(removeBank.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(removeBank.fulfilled, (state, action) => {
+        state.loading = false;
+        // state.logData = action.payload;
+      })
+      .addCase(removeBank.rejected, (state) => {
+        state.loading = false;
+        state.error = null;
+      }).addCase(updateBank.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateBank.fulfilled, (state, action) => {
+        state.loading = false;
+        state.logData = action.payload;
+      })
+      .addCase(updateBank.rejected, (state) => {
+        state.loading = false;
+        state.error = null;
+      }).addCase(updateProfile.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateProfile.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(updateProfile.rejected, (state) => {
+        state.loading = false;
+        state.error = null;
+      }).addCase(kycUpdate.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(kycUpdate.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(kycUpdate.rejected, (state) => {
         state.loading = false;
         state.error = null;
       });

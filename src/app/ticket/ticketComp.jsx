@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 
 const OrderTab = () => {
-  const { loading, userData, error } = useSelector((state) => state.user);
+  const { loading, ticketData, error } = useSelector((state) => state.utils);
   return (
     <>
       <div className="table-responsive dataTabletrade ">
@@ -18,7 +18,6 @@ const OrderTab = () => {
                 <th>S.No</th>
                 <th>Ticket No.</th>
                 <th>Issue Category</th>
-                <th>Bank Name</th>
                 <th>Description </th>
                 <th>Status</th>
                 <th className="text-end">Action</th>
@@ -29,23 +28,23 @@ const OrderTab = () => {
                 <div className="text-center w-full">Loading</div>
               ) : (
                 <>
-                  {userData &&
-                    userData?.data?.bank_info.map((item, index) => (
+                  {ticketData &&
+                    ticketData?.data?.slice(0,4).map((item, index) => (
                       <tr key={index}>
                         <td>{index + 1}</td>
-                        <td>{item.holder}</td>
-                        <td>{item.accNumber}</td>
+                        <td>{item.ticket_id}</td>
+                        <td>{item.issue_type}</td>
 
-                        <td>{item.ibanCode}</td>
-                        <td>{item.branch}</td>
+                        <td>{item.description}</td>
+                     
                         <td
                           className={` text-white${
-                            item.verifystatus === 1
+                            item.status === "true"
                               ? "bg-green-700"
                               : "bg-red-700"
                           }`}
                         >
-                          {item.verifystatus === 1 ? "Verified" : "Pending"}
+                          {    item.status  ?   "Closed":"Open"}
                         </td>
                         <td className="text-end">
                           <div className="d-flex justify-content-end">
@@ -55,12 +54,12 @@ const OrderTab = () => {
                             >
                               <i className="fas fa-pencil-alt"></i>
                             </Link>
-                            <Link
+                            {/* <Link
                               href={"#"}
                               className="btn btn-danger shadow btn-xs sharp"
                             >
                               <i className="fa fa-trash"></i>
-                            </Link>
+                            </Link> */}
                           </div>
                         </td>
                       </tr>

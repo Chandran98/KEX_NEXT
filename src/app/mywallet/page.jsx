@@ -7,6 +7,7 @@ import { cryptoBalance, fiatBalance } from "@/redux/reducer/wallet/walletApi";
 import { GlobalFilter } from "@/components/referal/referalcomp";
 import Image from "next/image";
 import DashBoardHeader from "@/components/header";
+import Inform from "@/utils/form/customForm";
 
 const Page = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const Page = () => {
   }, [dispatch]);
 
   const [globalFilter, setGlobalFilter] = useState("");
+  const [openInrDeposit, setOpenInrDeposit] = useState(false);
   const [openDeposit, setOpenDeposit] = useState(-1);
   const [hideZero, setHideZero] = useState(false);
 
@@ -39,6 +41,13 @@ const Page = () => {
     const matchesAmount = !hideZero || item.amount > 0;
     return matchesName && matchesAmount;
   });
+  const formFieldData = [
+    { name: "issue_type", title: "Issue Type", type: "drop" },
+    { name: "query", title: "Query" },
+    {name: "subject",title: "Subject"  },
+    {name: "description",
+      title: "Description"},
+  ];
 
   return (
     <>
@@ -78,7 +87,7 @@ const Page = () => {
                         <td className="gap-2 flex justify-center text-white">
                           <div
                             className="bg-green-500 rounded-md px-3"
-                            onClick={() => setOpenDeposit(index)}
+                            onClick={() => setOpenInrDeposit(!openInrDeposit)}
                           >
                             Deposit
                           </div>
@@ -87,6 +96,26 @@ const Page = () => {
                           </div>
                         </td>
                       </tr>
+                      {openInrDeposit && (
+                              <tr className="bg-blue-200 col-span-6">
+                                <td colSpan="4">
+                                  <div className="flex flex-col items-start justify-start">
+                                    <strong>DESTINATION ADDRESS</strong>
+                                    <Inform
+                onSubmit={() => onSubmit}
+                loading={loading}
+                formFiledData={formFieldData}
+                fileUpload={true}
+                formSchema={schema}
+                dropdownOptions={dropdownOptions}
+                imgName="images"
+                // defaultValues={defaultValues}
+                classBame={"w-full px-5"}
+              />
+                                  </div>
+                                </td>
+                              </tr>
+                            )}
                     </tbody>
                   </table>
                 </div>

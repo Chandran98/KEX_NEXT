@@ -1,7 +1,19 @@
-import { activateAccountUrl, headers, logHistoryUrl, loginUrl, profileUrl, registerUrl } from "@/constant/apiUrl";
+import {
+  activateAccountUrl,
+  bankDetailsUrl,
+  headers,
+  kycUpdateUrl,
+  logHistoryUrl,
+  loginUrl,
+  profileUrl,
+  registerUrl,
+  removeBankUrl,
+  updateBankUrl,
+  updateProfileUrl,
+} from "@/constant/apiUrl";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-
+import { toast } from "react-toastify";
 
 export const signIn = createAsyncThunk("signIn", async (data) => {
   console.log(`dfsfasf${data}`);
@@ -18,7 +30,7 @@ export const signIn = createAsyncThunk("signIn", async (data) => {
 });
 export const signUp = createAsyncThunk("signUp", async (data) => {
   console.log(`dfsfasf${data}`);
-  
+
   try {
     const res = await axios.post(registerUrl, data);
     const response = res.data;
@@ -29,10 +41,25 @@ export const signUp = createAsyncThunk("signUp", async (data) => {
   }
 });
 
-export const activateAccount = createAsyncThunk("activateAccount", async (data) => {
-  console.log(`dfsfasf${data}`);
+export const activateAccount = createAsyncThunk(
+  "activateAccount",
+  async (data) => {
+    console.log(`dfsfasf${data}`);
+    try {
+      const res = await axios.post(activateAccountUrl, data);
+      const response = res.data;
+
+      console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const getProfile = createAsyncThunk("profile", async () => {
   try {
-    const res = await axios.post(activateAccountUrl, data);
+    const res = await axios.get(profileUrl, headers);
     const response = res.data;
 
     console.log(response);
@@ -42,26 +69,63 @@ export const activateAccount = createAsyncThunk("activateAccount", async (data) 
   }
 });
 
-export const getProfile = createAsyncThunk("profile", async () => {
-    try {
-      const res = await axios.get(profileUrl, headers);
-      const response = res.data;
-  
-      console.log(response);
-      return response;
-    } catch (error) {
-      console.log(error);
-    }
-  });
+export const getlogHistory = createAsyncThunk("logHistory", async () => {
+  try {
+    const res = await axios.get(logHistoryUrl, headers);
+    const response = res.data;
 
-  export const getlogHistory = createAsyncThunk("logHistory", async () => {
-    try {
-      const res = await axios.get(logHistoryUrl, headers);
-      const response = res.data;
-  
-      console.log(response);
-      return response;
-    } catch (error) {
-      console.log(error);
-    }
-  });
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+export const updateProfile = createAsyncThunk("updateProfile", async (data) => {
+  try {
+    const res = await axios.post(updateProfileUrl, data, headers);
+    const response = res.data;
+    toast.success(response.message);
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+export const kycUpdate = createAsyncThunk("kycUpdate", async (data) => {
+  try {
+    const res = await axios.post(kycUpdateUrl, data, headers);
+    const response = res.data;
+    toast.success(response.message);
+
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+export const removeBank = createAsyncThunk("removeBank", async (data) => {
+  try {
+    const res = await axios.post(removeBankUrl, data, headers);
+    const response = res.data;
+
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+export const updateBank = createAsyncThunk("updateBank", async (data) => {
+  try {
+    const res = await axios.post(updateBankUrl, data, headers);
+    const response = res.data;
+    toast.success(res.data.message);
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+});

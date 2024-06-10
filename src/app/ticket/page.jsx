@@ -5,33 +5,27 @@ import DashBoardHeader from "@/components/header";
 import React, { useEffect } from "react";
 import { z } from "zod";
 import OrderTab from "./ticketComp";
-import { useDispatch } from "react-redux";
-import { getProfile } from "@/redux/reducer/user/userApi";
+import { useDispatch, useSelector } from "react-redux";
+import { createTicket, supportTicket } from "@/redux/reducer/utils/utilsApi";
 
 const page = () => {
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(getProfile());
+    dispatch(supportTicket());
   }, [dispatch]);
+
+  const { loading, error } = useSelector((state) => state.utils);
   const onSubmit = async (data) => {
-    console.log(data, "adsfdafas");
+    dispatch(createTicket(data));
   };
 
-  const loading = false;
-
   const formFieldData = [
-    { id: "8", name: "issueType", title: "Issue Type", type: "drop" },
-
-    {
-      id: "2",
-      name: "subject",
-      title: "Subject",
-    },
-    {
-      id: "3",
-      name: "description",
-      title: "Description",
-    },
+    { name: "issue_type", title: "Issue Type", type: "drop" },
+    { name: "query", title: "Query" },
+    {name: "subject",title: "Subject"  },
+    {name: "description",
+      title: "Description"},
   ];
   const dropdownOptions = [
     { value: "", label: "Select issue type" },
@@ -43,10 +37,11 @@ const page = () => {
     { value: "bugReports", label: "Bug Reports" },
   ];
   const schema = z.object({
-    issueType: z.string().nonempty({ message: "Issue type is required" }),
+    issue_type: z.string().nonempty({ message: "Issue type is required" }),
+    query: z.string().nonempty({ message: "Description is required" }),
     subject: z.string().nonempty({ message: "Subject is required" }),
     description: z.string().nonempty({ message: "Description is required" }),
-    image: z.any().optional(),
+    images: z.any().optional(),
   });
   return (
     <>
@@ -63,6 +58,7 @@ const page = () => {
                 fileUpload={true}
                 formSchema={schema}
                 dropdownOptions={dropdownOptions}
+                imgName="images"
                 // defaultValues={defaultValues}
                 classBame={"w-full px-5"}
               />

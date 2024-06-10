@@ -5,8 +5,8 @@ import DashBoardHeader from "@/components/header";
 import React, { useEffect } from "react";
 import { bankFormSchema } from "@/utils/formSchema";
 import OrderTab from "./comp";
-import { useDispatch } from "react-redux";
-import { getProfile } from "@/redux/reducer/user/userApi";
+import { useDispatch, useSelector } from "react-redux";
+import { getProfile, updateBank } from "@/redux/reducer/user/userApi";
 
 
 const page = () => {
@@ -14,41 +14,38 @@ const page = () => {
   useEffect(() => {
     dispatch(getProfile());
   }, [dispatch]);
+
+  const{loading,error}=useSelector((state)=>state.user);
+
   const onSubmit = async (data) => {
     console.log(data,"mydata");
+    dispatch(updateBank(data));
 
   };
-  const loading = false;
-
   const formFieldData = [
-    // { id: "1", name: "username", title: "Username", placeholder: "username" },
     {
-      id: "1",
+
       name: "holder",
       title: " Holder Name ",
-      // placeholder: "manjukairaa@gmail.com",
     },
-    { id: "6", name: "bank", title: " Bank Name " },
+    { name: "bankname", title: " Bank Name " },
     {
-      id: "2",
-      name: "account",
+      name: "accNumber",
       title: " Account No ",
-      // placeholder: "7092774422",
     },
+    // {
+    //   id: "3",
+    //   name: "confirmaccount",
+    //   title: " Confirm Account ",
+    //   // placeholder: "7092774422",
+    // },
+    { name: "ibanCode", title: " IFSC Code " },
     {
-      id: "3",
-      name: "confirmaccount",
-      title: " Confirm Account ",
-      // placeholder: "7092774422",
-    },
-    { id: "4", name: "ifsc", title: " IFSC Code " },
-    {
-      id: "5",
       name: "branch",
       title: " Branch Name ",
     },
-    { id: "8", name: "accountType", title: "Account Type", type: "drop" },
-    { id: "7", name: "upi", title: " UPI (Optional) " },
+    { name: "account_type", title: "Account Type", type: "drop" },
+    { name: "Upi_id", title: " UPI (Optional) " },
   ];
   const dropdownOptions = [
     { value: "", label: "Select Account type" },
@@ -71,6 +68,7 @@ const page = () => {
                 fileUpload={true}
                 formSchema={bankFormSchema}
                 dropdownOptions={dropdownOptions}
+                imgName="proof"
                 // defaultValues={defaultValues}
                 classBame={"w-full px-5"}
               />

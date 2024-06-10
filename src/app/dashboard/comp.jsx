@@ -333,10 +333,10 @@ const EditProfile = () => {
                     <h6 className="title">Recent Activity</h6>
                   </div>
                   <ul className="">
-                    {logData?.data.length === 0 ? (
+                    {logData?.data?.length === 0 ? (
                       <span> No recent records</span>
                     ) : (
-                      logData?.data.slice(0, 2).map((e, i) => (
+                      logData?.data?.slice(0, 2).map((e, i) => (
                         <div className="flex flex-col border-b-1 ml-3 p-3 items-start justify-start">
                           <span className=" flex  items-center justify-center text-[#004DEC] font-semibold">
                             <IoLocationSharp scale={20} /> {e.location}

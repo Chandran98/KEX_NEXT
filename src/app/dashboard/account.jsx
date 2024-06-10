@@ -3,22 +3,20 @@ import React from 'react'
 import { accountUpdateSchema } from '@/utils/formSchema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { updateProfile } from '@/redux/reducer/user/userApi';
+import { useDispatch, useSelector } from 'react-redux';
 
-const onSubmit = async (data) => {
-    console.log(data,"update mydata");
 
-  };
-  const loading = false;
-
+ 
 const formFieldData = [
     { title: "User Name",  name:"username",type:"text"},
-    { title: "First Name",  name:"fname",type:"text"},
-    { title: "Last Name",  name:"lname",type:"text"},
+    { title: "First Name",  name:"firstname",type:"text"},
+    { title: "Last Name",  name:"lastname",type:"text"},
     { title: "Age",  name:"age",type:"text"},
     { title: "Address",  name:"address",type:"text"},
     { title: "City",  name:"city",type:"text"},
     { title: "State", name:"state",type:"text"},
-    { title: "Postal Code", name:"postalcode",type:"text"},
+    { title: "Postal Code", name:"pincode",type:"text"},
     { title: "DOB", name:"dob",type:"date"},
   ];
   
@@ -35,9 +33,16 @@ const formFieldData = [
   ];
 
 const account = () => {
+
+  const dispatch = useDispatch();
     const{register,handleSubmit,formState:{errors}}= useForm({
         resolver:zodResolver(accountUpdateSchema)
     })
+
+    const { loading, error } = useSelector((state) => state.user);
+    const onSubmit = async (data) => {
+      dispatch(updateProfile(data));
+    };
 
     return (
     <div className="col-xl-9 col-lg-8">
@@ -115,7 +120,7 @@ const account = () => {
           </div>
         </div>
         <div className="card-footer">
-          <button className="btn btn-primary ">UPDATE</button>
+          <button className="btn btn-primary ">{loading?"Updating":"UPDATE"}</button>
         
         </div>
       </form>
