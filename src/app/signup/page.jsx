@@ -1,13 +1,10 @@
 "use client";
 /* eslint-disable react-hooks/rules-of-hooks */
 import Image from "next/image";
-import React, { useState } from "react";
-// import Modal from "./modal";
-import { Row, Card, Col, Button, Modal } from "react-bootstrap";
 import Authform from "../signin/loginComp";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
-import { signUp } from "@/redux/reducer/user/userApi";
+import { signUp } from "@/redux/reducer/auth/authReducer";
 import { z } from "zod";
 
 const page = () => {
@@ -38,13 +35,13 @@ const page = () => {
   };
   const dispatch = useDispatch();
 
-  const { authData, loading, error } = useSelector((state) => state.user);
+  const { authData, loading, error } = useSelector((state) => state.auth);
 
   // console.log("sttatte", authData);
 
   async function onSubmit(values) {
     console.log(values, "datadata");
-    localStorage.setItem("regemail",values.email)
+    localStorage.setItem("email",values.email)
     let data = {
       email: values.email,
       mobile: values.phone,

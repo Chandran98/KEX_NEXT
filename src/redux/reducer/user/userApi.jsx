@@ -1,6 +1,8 @@
 import {
   activateAccountUrl,
   bankDetailsUrl,
+  forgotPasswordOtpVerificationUrl,
+  forgotPasswordUrl,
   headers,
   kycUpdateUrl,
   logHistoryUrl,
@@ -8,6 +10,7 @@ import {
   profileUrl,
   registerUrl,
   removeBankUrl,
+  resetPasswordUrl,
   updateBankUrl,
   updateProfileUrl,
 } from "@/constant/apiUrl";
@@ -21,7 +24,7 @@ export const signIn = createAsyncThunk("signIn", async (data) => {
     const res = await axios.post(loginUrl, data);
     const response = res.data;
     localStorage.setItem("auth-token", response.token);
-    toast.success(res.data.message)
+    toast.success(res.data.message);
 
     console.log(response);
     return response;
@@ -49,7 +52,7 @@ export const activateAccount = createAsyncThunk(
     try {
       const res = await axios.post(activateAccountUrl, data);
       const response = res.data;
-toast.success(res.data.message)
+      toast.success(res.data.message);
       console.log(response);
       return response;
     } catch (error) {
@@ -57,6 +60,55 @@ toast.success(res.data.message)
     }
   }
 );
+export const forgotPassword = createAsyncThunk(
+  "forgotPassword",
+  async (data) => {
+    console.log(data, "otpemailx");
+    try {
+      const res = await axios.post(forgotPasswordUrl, data);
+      const response = res.data;
+      localStorage.setItem("auth-token", res.data.token);
+      toast.success(res.data.message);
+      console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const forgotPasswordVerify = createAsyncThunk(
+  "forgotPasswordVerify",
+  async (data) => {
+    console.log(localStorage.getItem("auth-token"),"auth-token");
+    try {
+      const res = await axios.post(
+        forgotPasswordOtpVerificationUrl,
+        data,
+        headers
+      );
+      const response = res.data;
+      toast.success(res.data.message);
+      console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const passwordReset = createAsyncThunk("passwordReset", async (data) => {
+  console.log(localStorage.getItem("auth-token"),"auth-token");
+  try {
+    const res = await axios.post(resetPasswordUrl, data, headers);
+    const response = res.data;
+    toast.success(res.data.message);
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 export const getProfile = createAsyncThunk("profile", async () => {
   try {

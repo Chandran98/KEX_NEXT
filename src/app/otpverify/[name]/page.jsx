@@ -1,7 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
-import { activateAccount, signUp } from "@/redux/reducer/user/userApi";
-import { useRouter } from "next/navigation";
+import {
+  activateAccount,
+  forgotPasswordVerify,
+  signUp,
+} from "@/redux/reducer/auth/authReducer";
+import { useParams, useRouter } from "next/navigation";
 import React, { useState, useRef } from "react";
 import { Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
@@ -10,7 +14,8 @@ const Page = () => {
   const [codes, setCodes] = useState(Array(6).fill(""));
   const [error, setError] = useState("");
   const inputRefs = useRef([]);
-const router=useRouter();
+  const router = useRouter();
+  const params = useParams();
   const handleChange = (e, index) => {
     const { value } = e.target;
 
@@ -23,8 +28,8 @@ const router=useRouter();
         inputRefs.current[index + 1].focus();
       }
     }
-  }; 
-const dispatch=useDispatch();
+  };
+  const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -35,14 +40,21 @@ const dispatch=useDispatch();
     } else {
       setError("");
       const verificationCode = codes.join("");
-      console.log("Verification Code Submitted: ", verificationCode);
-const data={
-  'email':localStorage.getItem("regemail"),
-  "code":verificationCode
-}
-    dispatch(activateAccount(data)).then((res)=>{
-      res.payload.status==true&& router.push("/signin");
-    })
+      const data = {
+        // email: localStorage.getItem("regemail"),
+        code: verificationCode,
+      };
+      if (params.name === "register") {
+        dispatch(activateAccount(data)).then((res) => {
+          res.payload.status == true && router.push("/signin");
+        });
+      } else if (params.name === "forgototpverify") {
+        console.log(" reds eewewe");
+        dispatch(forgotPasswordVerify(data)).then((res) => {
+          console.log(res, "eewewe");
+          res.payload.status == true && router.push("/resetpassword");
+        });
+      }
     }
   };
 
@@ -51,10 +63,14 @@ const data={
       <div className="relative max-w-md mx-auto mt-8 md:mt-16">
         <div className="grid grid-cols-1 bg-white rounded-lg shadow-md">
           <div className="px-4 py-6 sm:px-8 sm:py-7">
-            <form onSubmit={handleSubmit} className="card-body flex flex-col text-center items-center justify-center">
+            <form
+              onSubmit={handleSubmit}
+              className="card-body flex flex-col text-center items-center justify-center"
+            >
               <h2>Security Verification</h2>
               <span>
-                To secure your account, please complete the following verification.
+                To secure your account, please complete the following
+                verification.
               </span>
               <h5 className="mt-5">Email Verification Code</h5>
               <div className="flex justify-between gap-2 mb-4">
@@ -73,7 +89,9 @@ const data={
               {error && <div className="text-red-500 mb-4">{error}</div>}
               <div className="gap-2">
                 <span>Enter the six digit code received by</span>
-                <span className="text-blue-600 font-bold">{localStorage.getItem("regemail")}</span>
+                <span className="text-blue-600 font-bold">
+                  {localStorage.getItem("email")}
+                </span>
                 <span>.</span>
               </div>
               <Button className="w-[20vw] mt-3" type="submit">

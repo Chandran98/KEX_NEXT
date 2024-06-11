@@ -20,6 +20,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { kycFormSchema } from "@/utils/formSchema";
 import KycVerification from "./kycVerification";
 import AccountData from "./account";
+import profileImage from "../../../public/user.png";
+
+import Modal from "./utils/modal";
 // import { Input } from "@/components/ui/input";
 
 const inputBlog = [
@@ -57,7 +60,6 @@ const options3 = [
 const EditProfile = () => {
   const dispatch = useDispatch();
 
-
   useEffect(() => {
     dispatch(getProfile());
     dispatch(getlogHistory());
@@ -65,6 +67,11 @@ const EditProfile = () => {
   const { loading, error, logData, userData } = useSelector(
     (state) => state.user
   );
+  const [showModal, setShowModal] = useState(false);
+
+  // const openModal = () => {
+  //   setShowModal(true);
+  // };
   return (
     <>
       <div className="mx-4">
@@ -73,7 +80,12 @@ const EditProfile = () => {
             <div className="card-body d-flex">
               <div className="">
                 <Image
-                  src={userData?.data?.avatar}
+                  // src={profileImage}
+                  src={
+                    userData?.data?.avatar === ""
+                      ? profileImage
+                      : userData?.data?.avatar
+                  }
                   className=" rounded-full object-height"
                   // fill={true}
                   height={200}
@@ -86,9 +98,11 @@ const EditProfile = () => {
                   <div className="">
                     <h4 className="font-w700"> {userData?.data?.username} </h4>
                     <h5> {userData?.data?.unique_id} </h5>
-                    <span>
-                      {userData?.data?.address}, {userData?.data?.country}{" "}
-                    </span>
+                    {userData && (
+                      <span>
+                        {userData?.data?.address}, {userData?.data?.country}
+                      </span>
+                    )}
                   </div>
                   <div className="">
                     <div className=" p-2 rounded-lg  bg-primary-light text-center">
@@ -122,53 +136,6 @@ const EditProfile = () => {
                         </svg>
                       </Link>
                     </div>
-                    {/* <Dropdown className="dropdown ms-auto">
-                    <Dropdown.Toggle
-                      as="div"
-                      className="icon-box icon-box-sm bg-primary-light i-false"
-                    >
-                      <svg
-                        width="32"
-                        height="32"
-                        viewBox="0 0 32 32"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M27.3925 4.60647C26.1493 3.36576 24.4647 2.66895 22.7083 2.66895C20.9519 2.66895 19.2673 3.36576 18.0241 4.60647L15.5295 7.10101L4.30461 18.3265C4.10055 18.5303 3.96826 18.7948 3.92767 19.0803L2.67994 27.8109C2.65288 28 2.66679 28.1927 2.72072 28.376C2.77465 28.5593 2.86735 28.7289 2.99252 28.8732C3.11769 29.0176 3.27243 29.1333 3.44624 29.2126C3.62005 29.292 3.80888 29.333 3.99994 29.333C4.06311 29.3331 4.12621 29.3287 4.18874 29.3197L12.9199 28.0726C13.2054 28.0313 13.4698 27.8989 13.6738 27.695L27.3938 13.9762C28.0091 13.361 28.4972 12.6307 28.8302 11.8268C29.1632 11.023 29.3346 10.1614 29.3346 9.29134C29.3346 8.42126 29.1632 7.5597 28.8302 6.75586C28.4972 5.95202 28.0091 5.22166 27.3938 4.60647H27.3925ZM12.1022 25.4958L5.57154 26.4281L6.50487 19.8981L16.4726 9.92954L22.0709 15.5274L12.1022 25.4958ZM25.5066 12.0909L23.9559 13.6421L18.3574 8.04394L19.9094 6.49181C20.6635 5.77219 21.6659 5.3707 22.7083 5.3707C23.7507 5.3707 24.753 5.77219 25.5071 6.49181C26.2494 7.2344 26.6664 8.24138 26.6664 9.29134C26.6664 10.3413 26.2494 11.3483 25.5071 12.0909H25.5066Z"
-                          fill="#A098AE"
-                        />
-                      </svg>
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu
-                      className="dropdown-menu dropdown-menu-end"
-                      align="end"
-                    >
-                      <li className="dropdown-item">
-                        <Link href={"#"}>
-                          <i className="fa fa-user-circle text-primary me-2"></i>{" "}
-                          View profile
-                        </Link>
-                      </li>
-                      <li className="dropdown-item">
-                        <Link href={"#"}>
-                          <i className="fa fa-users text-primary me-2"></i> Add
-                          to btn-close friends{" "}
-                        </Link>
-                      </li>
-                      <li className="dropdown-item">
-                        <Link href={"#"}>
-                          <i className="fa fa-plus text-primary me-2"></i> Add
-                          to group{" "}
-                        </Link>
-                      </li>
-                      <li className="dropdown-item">
-                        <Link href={"#"}>
-                          <i className="fa fa-ban text-primary me-2"></i> Block{" "}
-                        </Link>
-                      </li>
-                    </Dropdown.Menu>
-                  </Dropdown> */}
                   </div>
                 </div>
                 <div className="d-flex flex-wrap pt-4">
@@ -188,7 +155,7 @@ const EditProfile = () => {
                       </svg>
                     }
                     title={userData?.data?.email}
-                  />{" "}
+                  />
                   <UtilsData
                     icon={
                       <svg
@@ -241,7 +208,7 @@ const EditProfile = () => {
                     <li>
                       <Link href={"/app-profile"}>
                         <div className="flex items-center  ">
-                          <MdEmail size={20} className="mr-3 text-[#004DEC] " />{" "}
+                          <MdEmail size={20} className="mr-3 text-[#004DEC] " />
                           Email
                         </div>
                       </Link>
@@ -249,18 +216,15 @@ const EditProfile = () => {
                         <MdVerified className=" text-green-600" />
                       ) : (
                         <MdError className=" text-orange-600" />
-                      )}{" "}
+                      )}
                     </li>
                     <li>
-                      <Link
-                        href={"/uc-lightgallery"}
-                        className="flex items-center  "
-                      >
+                      <Link href={"/banks"} className="flex items-center  ">
                         <div className="flex items-center  ">
                           <RiBankLine
                             size={20}
                             className="text-[#004DEC] mr-3"
-                          />{" "}
+                          />
                           Bank Details
                         </div>
                       </Link>
@@ -272,18 +236,23 @@ const EditProfile = () => {
                       )}
                     </li>
                     <li>
-                      <Link
+                      {/* <Link
                         href={"/app-profile"}
                         className="flex items-center "
+                      > */}
+                      <div
+                        className="flex items-center"
+                        onClick={() => {
+                          setShowModal(!showModal);
+                        }}
                       >
-                        <div className="flex items-center">
-                          <MdMobileFriendly
-                            size={20}
-                            className="text-[#004DEC] mr-3 "
-                          />{" "}
-                          Mobile Verification
-                        </div>
-                      </Link>
+                        <MdMobileFriendly
+                          size={20}
+                          className="text-[#004DEC] mr-3 "
+                        />
+                        Mobile Verification
+                      </div>
+                      {/* </Link> */}
 
                       {userData?.data?.phoneVerified ? (
                         <MdVerified className=" text-green-600" />
@@ -300,7 +269,7 @@ const EditProfile = () => {
                           <AiOutlineFileProtect
                             size={20}
                             className="text-[#004DEC] mr-3"
-                          />{" "}
+                          />
                           Funds PassCode
                         </div>
                       </Link>
@@ -342,7 +311,7 @@ const EditProfile = () => {
                             <IoLocationSharp scale={20} /> {e.location}
                           </span>
                           <span className=" text-sm ml-5">
-                            {new Date(e.date).toLocaleDateString()} @{" "}
+                            {new Date(e.date).toLocaleDateString()} @
                             {new Date(e.date).toLocaleTimeString()}
                           </span>
                         </div>
@@ -354,9 +323,11 @@ const EditProfile = () => {
             </div>
           </div>
         </div>
-      <AccountData/>
+        <AccountData />
       </div>
-     <KycVerification/>
+      <KycVerification />
+      {/* {showModal && <Modal modal={showModal} setModal={setShowModal} />} */}
+      <Modal modal={showModal} setModal={setShowModal} />
     </>
   );
 };

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 /* eslint-disable react-hooks/rules-of-hooks */
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
@@ -7,58 +7,59 @@ import { useForm } from "react-hook-form";
 import Authform from "./loginComp";
 import { useDispatch, useSelector } from "react-redux";
 import { z } from "zod";
-import { signIn } from "@/redux/reducer/user/userApi";
+import { signIn } from "@/redux/reducer/auth/authReducer";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const page = () => {
-    const router = useRouter();
+  const router = useRouter();
 
-    const formSchema = z.object({
-        email: z.string().email("Invalid email"),
-        password: z.string().min(6).max(20),
-      });
+  const formSchema = z.object({
+    email: z.string().email("Invalid email"),
+    password: z.string().min(6).max(20),
+  });
 
-      useEffect(()=>{
-        localStorage.clear();
-      },[])
-    const defaultValues = {
-        email: "",
-        password: "",
-      };
-      const dispatch = useDispatch();
-    
-      const { authData, loading, error } = useSelector((state) => state.user);
-    
-      console.log("sttatte", authData);
-    
-      async function onSubmit(values) {
-        let data = {
-          deviceInfo: {
-            browser: "",
-            browser_version: "",
-            os: "",
-            device: "mobile",
-          },
-          browser: "Chrome",
-          browser_version: "116.0.0.0",
-          device: "PC", //mobile,
-          os: "Linux", //others,
-          ipaddress: "123.45.678.900",
-          password: values.password,
-          username: values.email,
-        };
-        console.log(data,"datadata");
-        dispatch(signIn(data)).then((res) => {
-          if (res.payload.status == true) {
-            router.push("/");
-          }
-        });
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
+  const defaultValues = {
+    email: "",
+    password: "",
+  };
+  const dispatch = useDispatch();
+
+  const { authData, loading, error } = useSelector((state) => state.auth);
+
+  console.log("sttatte", authData);
+
+  async function onSubmit(values) {
+    let data = {
+      deviceInfo: {
+        browser: "",
+        browser_version: "",
+        os: "",
+        device: "mobile",
+      },
+      browser: "Chrome",
+      browser_version: "116.0.0.0",
+      device: "PC", //mobile,
+      os: "Linux", //others,
+      ipaddress: "123.45.678.900",
+      password: values.password,
+      username: values.email,
+    };
+    console.log(data, "datadata");
+    dispatch(signIn(data)).then((res) => {
+      if (res.payload.status == true) {
+        router.push("/");
       }
-    
-      const formFieldData = [
-        { id: "1", name: "email", title: "Email", placeholder: "adad@gmail.com" },
-        { id: "2", name: "password", title: "Password", placeholder: "........" },
-      ];
+    });
+  }
+
+  const formFieldData = [
+    { id: "1", name: "email", title: "Email", placeholder: "adad@gmail.com" },
+    { id: "2", name: "password", title: "Password", placeholder: "........" },
+  ];
 
   return (
     <section className="bg-white h-screen">
@@ -79,13 +80,20 @@ const page = () => {
               </a>
             </p>
             <Authform
-            onSubmit={() => onSubmit}
-            loading={loading}
-            formFieldData={formFieldData}
-            formSchema={formSchema}
-            defaultValues={defaultValues}
-            classBame={"w-full"}
-          />
+              onSubmit={() => onSubmit}
+              loading={loading}
+              formFieldData={formFieldData}
+              formSchema={formSchema}
+              defaultValues={defaultValues}
+              classBame={"w-full"}
+            />
+            <Link
+              href={"/forgotpassword"}
+              className="font-medium text-blue-600 mt-24 transition-all duration-200 hover:text-blue-700 hover:underline focus:text-blue-700"
+            >
+              {" "}
+              Forgot Password?
+            </Link>
 
             {/* <form  className="mt-8">
               <div className="space-y-5">

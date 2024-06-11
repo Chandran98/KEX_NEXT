@@ -6,6 +6,7 @@ import React from "react";
 const header = () => {
   // const headerData = ["Market", "Trade", "P2p", "Swap", "Referal"];
   const headerData = [
+    { name: "Dashboard", link: "/dashboard" },
     { name: "Market", link: "/market" },
     { name: "Trade", link: "/trade" },
     { name: "P2p", link: "/p2p" },
@@ -42,7 +43,7 @@ const header = () => {
               <div className="flex gap-8 items-center">
                 <ThemeSwitcher/>
                 <a
-                  href="#"
+                  href="/signin"
                   title=""
                   className="hidden lg:inline-flex items-center justify-center px-5 py-2.5 text-base transition-all duration-200 hover:bg-yellow-300 hover:text-black focus:text-black focus:bg-yellow-300 font-semibold text-white bg-black rounded-full"
                   role="button"
