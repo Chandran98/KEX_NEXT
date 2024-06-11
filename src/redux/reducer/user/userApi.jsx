@@ -21,6 +21,7 @@ export const signIn = createAsyncThunk("signIn", async (data) => {
     const res = await axios.post(loginUrl, data);
     const response = res.data;
     localStorage.setItem("auth-token", response.token);
+    toast.success(res.data.message)
 
     console.log(response);
     return response;
@@ -48,7 +49,7 @@ export const activateAccount = createAsyncThunk(
     try {
       const res = await axios.post(activateAccountUrl, data);
       const response = res.data;
-
+toast.success(res.data.message)
       console.log(response);
       return response;
     } catch (error) {

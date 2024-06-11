@@ -50,7 +50,7 @@ const page = () => {
         console.log(data,"datadata");
         dispatch(signIn(data)).then((res) => {
           if (res.payload.status == true) {
-            router.push("/dashboard");
+            router.push("/");
           }
         });
       }

@@ -1,9 +1,16 @@
 "use client"
 export const BaseUrl = "http://localhost:8290/api/v1/";
 
-export const headers = {
-  headers: {
-    Authorization: localStorage.getItem("auth-token") },
+// export const headers = {
+//   headers: {
+//     Authorization: localStorage.getItem("auth-token") },
+// };
+export const headers = () => {
+  return {
+    headers: {
+      Authorization: localStorage.getItem("auth-token"),
+    },
+  };
 };
 
 // USER API //
