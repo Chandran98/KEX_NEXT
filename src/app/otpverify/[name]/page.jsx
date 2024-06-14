@@ -4,7 +4,7 @@ import {
   activateAccount,
   forgotPasswordVerify,
   signUp,
-} from "@/redux/reducer/auth/authReducer";
+} from "@/redux/reducer/auth/authApi";
 import { useParams, useRouter } from "next/navigation";
 import React, { useState, useRef } from "react";
 import { Button } from "react-bootstrap";

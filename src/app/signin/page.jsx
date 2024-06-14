@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import Authform from "./loginComp";
 import { useDispatch, useSelector } from "react-redux";
 import { z } from "zod";
-import { signIn } from "@/redux/reducer/auth/authReducer";
+import { signIn } from "@/redux/reducer/auth/authApi";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 

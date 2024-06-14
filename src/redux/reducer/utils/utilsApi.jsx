@@ -4,7 +4,9 @@ import {
   createTicketUrl,
   headers,
   referralDetailsUrl,
+  sendSMSUrl,
   supportTicketUrl,
+  verifySMSOtpUrl,
 } from "@/constant/apiUrl";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
@@ -77,6 +79,33 @@ export const supportTicket = createAsyncThunk("supportTicket", async () => {
     const res = await axios.get(supportTicketUrl, headers);
     const response = res.data;
 
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+/// OTP ///
+
+export const sendSMS = createAsyncThunk("sendSMS", async () => {
+  try {
+    const res = await axios.get(sendSMSUrl, headers);
+    const response = res.data;
+toast.success(res.data.message);
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+
+export const verifySMSOtp = createAsyncThunk("verifySMSotp", async () => {
+  try {
+    const res = await axios.get(verifySMSOtpUrl, headers);
+    const response = res.data;
+toast.success(res.data.message);
     console.log(response);
     return response;
   } catch (error) {

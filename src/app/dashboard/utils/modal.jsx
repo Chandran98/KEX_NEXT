@@ -1,11 +1,31 @@
+"use client"
+import { getProfile } from "@/redux/reducer/user/userApi";
+import { sendSMS } from "@/redux/reducer/utils/utilsApi";
+import { useEffect, useState } from "react";
+import { IoCloseCircleOutline } from "react-icons/io5";
+import { useDispatch, useSelector } from "react-redux";
+
+
 function Modal({ modal, setModal }) {
+  const [staate, seetState] = useState(false);
   const openModal = () => {
+    // seetState(true);
     setModal(!modal);
     console.log(modal, "modal");
   };
+  const dispatch=useDispatch();
+  useEffect(()=>{
+    dispatch(getProfile());
+  },[dispatch])
+
+  const sendOtpFunc=()=>{
+    dispatch(sendSMS())
+  }
+
+const{loading,userData}=  useSelector((state)=>state.user);
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
-      <div className="p-8 border  shadow-lg rounded-md bg-white">
+      <div className="p-8 border  shadow-lg rounded-md bg-white w-[30%]">
         <div className="">
           <div className="flex justify-between">
             <h3 className="text-2xl font-bold text-gray-900 mr-10">
@@ -13,24 +33,39 @@ function Modal({ modal, setModal }) {
             </h3>
             <button
               onClick={openModal}
-              className="px-4 py-2 bg-blue-500 text-white text-base font-medium rounded-md shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300"
+              className=" bg-blue-600 rounded-lg p-1 align-middle "
             >
-              Close
+              <IoCloseCircleOutline color="white" />
             </button>
           </div>
 
-          <div className="mt-2 px-7 py-3">
-            
+          <div className="my-2 ">
+            <form action="">
+              <span> We will send OTP to your registered mobile no. to {userData?.data?.phone}. Please enter OTP below flied to verify your mobile no. </span>
+            {/* <input type="text" className="form-control" defaultValue={userData?.data?.phone}/> */}
+            <input
+                  type="text"
+                  className="form-control mt-3"
+                />
+         <button
+                
+                type="submit"
+                className=" btn w-full text-white bg-primary mt-2"
+              >
+                Submit
+              </button>
+            </form>
+           
           </div>
-          <div className="flex justify-center mt-4 gap-8">
-            <button
-              // onClick={openModal}
-              className="px-4 py-2 w-full bg-blue-500 text-white text-base font-medium rounded-md shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300"
-            >
-              Submit
-            </button>
-          </div>
-        </div>
+          <span className="mt-4">Didn't  receive OTP ? <strong className="  text-primary font-semibold"> Resend OTP</strong></span>
+        </div> 
+        {/* {staate?<></>: <button
+                onClick={openModal}
+                type="submit"
+                className=" btn w-full text-white bg-primary mt-2"
+              >
+                Send OTP
+              </button>} */}
       </div>
     </div>
   );

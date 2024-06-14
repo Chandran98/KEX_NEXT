@@ -327,7 +327,7 @@ const EditProfile = () => {
       </div>
       <KycVerification />
       {/* {showModal && <Modal modal={showModal} setModal={setShowModal} />} */}
-      <Modal modal={showModal} setModal={setShowModal} />
+{    <Modal modal={showModal} setModal={setShowModal} />}
     </>
   );
 };

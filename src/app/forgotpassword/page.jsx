@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-import { forgotPassword } from "@/redux/reducer/auth/authReducer";
+import { forgotPassword } from "@/redux/reducer/auth/authApi";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";

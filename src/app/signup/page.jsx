@@ -4,7 +4,7 @@ import Image from "next/image";
 import Authform from "../signin/loginComp";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
-import { signUp } from "@/redux/reducer/auth/authReducer";
+import { signUp } from "@/redux/reducer/auth/authApi";
 import { z } from "zod";
 
 const page = () => {
