@@ -23,6 +23,8 @@ import AccountData from "./account";
 import profileImage from "../../../public/user.png";
 
 import Modal from "./utils/modal";
+import { sendSMS } from "@/redux/reducer/utils/utilsApi";
+import { useRouter } from "next/navigation";
 // import { Input } from "@/components/ui/input";
 
 const inputBlog = [
@@ -64,10 +66,12 @@ const EditProfile = () => {
     dispatch(getProfile());
     dispatch(getlogHistory());
   }, [dispatch]);
+  const router = useRouter();
   const { loading, error, logData, userData } = useSelector(
     (state) => state.user
   );
   const [showModal, setShowModal] = useState(false);
+  const [modalName, setmodalName] = useState("");
 
   // const openModal = () => {
   //   setShowModal(true);
@@ -206,12 +210,10 @@ const EditProfile = () => {
                   </div>
                   <ul className=" font-semibold m-2">
                     <li>
-                      <Link href={"/app-profile"}>
-                        <div className="flex items-center  ">
-                          <MdEmail size={20} className="mr-3 text-[#004DEC] " />
-                          Email
-                        </div>
-                      </Link>
+                      <div className="flex items-center  ">
+                        <MdEmail size={20} className="mr-3 text-[#004DEC] " />
+                        Email
+                      </div>
                       {userData?.data?.emailVerified ? (
                         <MdVerified className=" text-green-600" />
                       ) : (
@@ -219,15 +221,24 @@ const EditProfile = () => {
                       )}
                     </li>
                     <li>
-                      <Link href={"/banks"} className="flex items-center  ">
-                        <div className="flex items-center  ">
-                          <RiBankLine
-                            size={20}
-                            className="text-[#004DEC] mr-3"
-                          />
-                          Bank Details
+                      <div className="flex items-center ">
+                        <RiBankLine
+                          size={20}
+                          className="text-[#004DEC] mr-3 "
+                        />
+
+                        <div className="flex flex-col items-start">
+                          <div> Bank Details</div>
+                          <div
+                            onClick={() => {
+                              router.push("/banks");
+                            }}
+                            className=" text-xs text-primary"
+                          >
+                            Add Bank Details
+                          </div>
                         </div>
-                      </Link>
+                      </div>
 
                       {userData?.data?.bank_status ? (
                         <MdVerified className=" text-green-600" />
@@ -240,18 +251,49 @@ const EditProfile = () => {
                         href={"/app-profile"}
                         className="flex items-center "
                       > */}
-                      <div
-                        className="flex items-center"
-                        onClick={() => {
-                          setShowModal(!showModal);
-                        }}
-                      >
+                      {/* <div>
+                        <div className="flex items-center">
+                          <MdMobileFriendly
+                            size={20}
+                            className="text-[#004DEC] mr-3 "
+                          />
+                          Mobile Verification
+                        </div>
+                        <div
+                          onClick={() => {
+                            setShowModal(!showModal);
+                            dispatch(sendSMS(userData?.data?.phone));
+                          }}
+                          className=" text-xs text-primary"
+                        >
+                          {userData?.data?.bank_status
+                            ? "Update mobile no."
+                            : "Verify your mobile no."}
+                        </div>
+                      </div> */}
+                      <div className="flex items-center">
                         <MdMobileFriendly
                           size={20}
                           className="text-[#004DEC] mr-3 "
                         />
-                        Mobile Verification
+
+                        <div className="flex flex-col items-start">
+                          <div>Mobile Verification</div>
+                          <div
+                            onClick={() => {
+                              setShowModal(!showModal);
+                              setmodalName("mobile");
+                              dispatch(sendSMS(userData?.data?.phone));
+                            }}
+                            className=" text-xs text-primary"
+                          >
+                            {userData?.data?.bank_status
+                              ? "Update mobile no."
+                              : "Verify your mobile no."}
+                          </div>
+                        </div>
                       </div>
+
                       {/* </Link> */}
 
                       {userData?.data?.phoneVerified ? (
@@ -261,18 +303,26 @@ const EditProfile = () => {
                       )}
                     </li>
                     <li>
-                      <Link
-                        href={"/app-profile"}
-                        className="flex items-center "
-                      >
-                        <div className="flex items-center ">
-                          <AiOutlineFileProtect
-                            size={20}
-                            className="text-[#004DEC] mr-3"
-                          />
-                          Funds PassCode
+                      <div className="flex items-center">
+                        <AiOutlineFileProtect
+                          size={20}
+                          className="text-[#004DEC] mr-3 "
+                        />
+
+                        <div className=" flex flex-col items-start">
+                          <div> Funds PassCode</div>
+                          <div
+                            onClick={() => {
+                              setShowModal(!showModal);
+                              setmodalName("passcode");
+                              dispatch(sendSMS(userData?.data?.phone));
+                            }}
+                            className=" text-xs text-primary"
+                          >
+                            {userData?.data?.passcodeStatus ?"Update passcode":"Set Passcode"}
+                          </div>
                         </div>
-                      </Link>
+                      </div>
 
                       {userData?.data?.passcodeStatus ? (
                         <MdVerified className=" text-green-600" />
@@ -326,8 +376,8 @@ const EditProfile = () => {
         <AccountData />
       </div>
       <KycVerification />
-      {/* {showModal && <Modal modal={showModal} setModal={setShowModal} />} */}
-{    <Modal modal={showModal} setModal={setShowModal} />}
+      {showModal && <Modal modalName={modalName} modal={showModal} setModal={setShowModal} />}
+      {/* {    <Modal modal={showModal} setModal={setShowModal} />} */}
     </>
   );
 };

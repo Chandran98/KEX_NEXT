@@ -21,20 +21,23 @@ const page = () => {
   };
 
   const formFieldData = [
-    { name: "issue_type", title: "Issue Type", type: "drop" },
+    {
+      name: "issue_type",
+      title: "Issue Type",
+      data: [
+        { value: "", label: "Select issue type" },
+        { value: "deposit", label: "Deposit" },
+        { value: "withdrawal", label: "Withdrawal" },
+        { value: "accountSecurity", label: "Account Security" },
+        { value: "kycVerification", label: "KYC Verification" },
+        { value: "complaints", label: "Complaints" },
+        { value: "bugReports", label: "Bug Reports" },
+      ],
+      type: "drop",
+    },
     { name: "query", title: "Query" },
-    {name: "subject",title: "Subject"  },
-    {name: "description",
-      title: "Description"},
-  ];
-  const dropdownOptions = [
-    { value: "", label: "Select issue type" },
-    { value: "deposit", label: "Deposit" },
-    { value: "withdrawal", label: "Withdrawal" },
-    { value: "accountSecurity", label: "Account Security" },
-    { value: "kycVerification", label: "KYC Verification" },
-    { value: "complaints", label: "Complaints" },
-    { value: "bugReports", label: "Bug Reports" },
+    { name: "subject", title: "Subject" },
+    { name: "description", title: "Description" },
   ];
   const schema = z.object({
     issue_type: z.string().nonempty({ message: "Issue type is required" }),
@@ -57,7 +60,7 @@ const page = () => {
                 formFiledData={formFieldData}
                 fileUpload={true}
                 formSchema={schema}
-                dropdownOptions={dropdownOptions}
+                // dropdownOptions={dropdownOptions}
                 imgName="images"
                 // defaultValues={defaultValues}
                 classBame={"w-full px-5"}

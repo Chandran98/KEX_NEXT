@@ -34,12 +34,12 @@ const formFieldData = [
 
 const account = () => {
 
+  const { loading, error,userData } = useSelector((state) => state.user);
   const dispatch = useDispatch();
     const{register,handleSubmit,formState:{errors}}= useForm({
         resolver:zodResolver(accountUpdateSchema)
     })
 
-    const { loading, error } = useSelector((state) => state.user);
     const onSubmit = async (data) => {
       dispatch(updateProfile(data));
     };

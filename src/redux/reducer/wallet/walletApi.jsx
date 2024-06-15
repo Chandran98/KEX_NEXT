@@ -3,6 +3,7 @@ import {
   cryptoAssetUrl,
   cryptoHistoryUrl,
   cryptoWithdrawalUrl,
+  depositUrl,
   fiatAssetUrl,
   fiatHistoryUrl,
   headers,
@@ -10,12 +11,14 @@ import {
 } from "@/constant/apiUrl";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 //// Deposit ////
 
 export const fiatDeposit = createAsyncThunk("fiatDeposit", async (data) => {
-  const res = await axios.post(fiatDeposit, data, headers);
+  const res = await axios.post(depositUrl, data, headers);
   const response = await res.data;
+  toast.success(response.message);
   console.log(response);
   return response;
 });

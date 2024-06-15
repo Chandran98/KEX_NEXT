@@ -44,13 +44,12 @@ const page = () => {
       name: "branch",
       title: " Branch Name ",
     },
-    { name: "account_type", title: "Account Type", type: "drop" },
+    { name: "account_type", title: "Account Type",data:[
+      { value: "", label: "Select Account type" },
+      { value: "current", label: "Current Account" },
+      { value: "savings", label: "Savings Account" },
+    ], type: "drop" },
     { name: "Upi_id", title: " UPI (Optional) " },
-  ];
-  const dropdownOptions = [
-    { value: "", label: "Select Account type" },
-    { value: "current", label: "Current Account" },
-    { value: "savings", label: "Savings Account" },
   ];
   return (
     <div className=" ">
@@ -67,7 +66,7 @@ const page = () => {
                 formFiledData={formFieldData}
                 fileUpload={true}
                 formSchema={bankFormSchema}
-                dropdownOptions={dropdownOptions}
+                // dropdownOptions={dropdownOptions}
                 imgName="proof"
                 // defaultValues={defaultValues}
                 classBame={"w-full px-5"}

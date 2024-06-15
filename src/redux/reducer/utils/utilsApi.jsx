@@ -5,7 +5,9 @@ import {
   headers,
   referralDetailsUrl,
   sendSMSUrl,
+  setPassCodeUrl,
   supportTicketUrl,
+  verifyPasscodeUrl,
   verifySMSOtpUrl,
 } from "@/constant/apiUrl";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
@@ -60,9 +62,9 @@ export const bankDetails = createAsyncThunk("bankDetails", async () => {
 
 /// User Tickets ///
 export const createTicket = createAsyncThunk("createTicket", async (data) => {
-  console.log("createTicket" ,data);
+  console.log("createTicket", data);
   try {
-    const res = await axios.post(createTicketUrl, data,headers);
+    const res = await axios.post(createTicketUrl, data, headers);
     const response = res.data;
     console.log("adsfdsf", response.message);
     toast.success(response.message);
@@ -72,7 +74,6 @@ export const createTicket = createAsyncThunk("createTicket", async (data) => {
     console.log(error);
   }
 });
-
 
 export const supportTicket = createAsyncThunk("supportTicket", async () => {
   try {
@@ -88,11 +89,13 @@ export const supportTicket = createAsyncThunk("supportTicket", async () => {
 
 /// OTP ///
 
-export const sendSMS = createAsyncThunk("sendSMS", async () => {
+export const sendSMS = createAsyncThunk("sendSMS", async (data) => {
+  const datapass = { mobile: data };
+  console.log(datapass, "datapass");
   try {
-    const res = await axios.get(sendSMSUrl, headers);
+    const res = await axios.post(sendSMSUrl, datapass, headers);
     const response = res.data;
-toast.success(res.data.message);
+    toast.success(res.data.message);
     console.log(response);
     return response;
   } catch (error) {
@@ -100,12 +103,34 @@ toast.success(res.data.message);
   }
 });
 
-
-export const verifySMSOtp = createAsyncThunk("verifySMSotp", async () => {
+export const verifySMSOtp = createAsyncThunk("verifySMSotp", async (data) => {
   try {
-    const res = await axios.get(verifySMSOtpUrl, headers);
+    const res = await axios.post(verifySMSOtpUrl, data, headers);
     const response = res.data;
-toast.success(res.data.message);
+    toast.success(res.data.message);
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+export const setPasscode = createAsyncThunk("setPasscode", async (data) => {
+  try {
+    const res = await axios.post(setPassCodeUrl, data, headers);
+    const response = res.data;
+    toast.success(res.data.message);
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+});
+export const verifyPasscode = createAsyncThunk("verifyPasscode", async (data) => {
+  try {
+    const res = await axios.post(verifyPasscodeUrl, data, headers);
+    const response = res.data;
+    toast.success(res.data.message);
     console.log(response);
     return response;
   } catch (error) {

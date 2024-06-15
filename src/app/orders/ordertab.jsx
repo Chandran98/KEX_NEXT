@@ -5,10 +5,10 @@ import { useSelector } from "react-redux";
 import React, { useState, useEffect, useRef } from "react";
 
 const OrderData = ({ e }) => {
-  console.log(e,"referess")
+  console.log(e, "referess");
   const [currentpage, setCurrentPage] = useState(0);
   const historyperPage = 10;
-  const fiatFilterData = e === (null || undefined)? [] : e;
+  const fiatFilterData = e === (null || undefined) ? [] : e;
   //   ?.filter((e)=>e.status==="deposit");
   const totalPages = Math.ceil(fiatFilterData.length / historyperPage);
   function handelSetPage(page) {
@@ -41,23 +41,21 @@ const OrderData = ({ e }) => {
                 )
                 .map((item, index) => (
                   <tr key={index}>
-                                <td>{item.pair}</td>
-                                <td>{item.price}</td>
-                                <td
-                                  className={`${
-                                    item.type === "sell"
-                                      ? "text-red-700 font-semibold"
-                                      : "text-green-700 font-semibold"
-                                  }`}
-                                >
-                                  {item.type}
-                                </td>
-                                <td className="">{item.amount.toFixed(4)}</td>
-                                <td>{item.total.toFixed(4)}</td>
-                                <td>
-                                  {new Date(item.date).toLocaleDateString()}
-                                </td>
-                              </tr>
+                    <td>{item.pair}</td>
+                    <td>{item.price}</td>
+                    <td
+                      className={`${
+                        item.type === "sell"
+                          ? "text-red-700 font-semibold"
+                          : "text-green-700 font-semibold"
+                      }`}
+                    >
+                      {item.type}
+                    </td>
+                    <td className="">{item.amount.toFixed(4)}</td>
+                    <td>{item.total.toFixed(4)}</td>
+                    <td>{new Date(item.date).toLocaleDateString()}</td>
+                  </tr>
                 ))}
             </tbody>
           </table>
@@ -70,6 +68,7 @@ const OrderData = ({ e }) => {
               )}{" "}
               of {fiatFilterData.length} entries
             </div>
+            {/* {Paginator({ totalPages })} */}
             <div
               className="dataTables_paginate paging_simple_numbers mb-0"
               id="application-tbl1_paginate"
@@ -123,3 +122,49 @@ const OrderData = ({ e }) => {
 };
 
 export default OrderData;
+
+function Paginator({ totalPages }) {
+  const pagination = [];
+
+  function createLink(i) {
+    const page = `?=${i}`;
+    return (
+      <div className=" bg-red-500 p-2 w-8">
+        <a href={page} key={i}>
+          {i}
+        </a>
+      </div>
+    );
+  }
+
+  function createDots() {
+    return <div className="">...</div>;
+  }
+
+  // If there are no pages return a message
+  if (!totalPages) return <div>No pages</div>;
+
+  // If totalPages is less than seven, iterate
+  // over that number and return the page links
+  if (totalPages < 7) {
+    for (let i = 1; i <= totalPages; i++) {
+      pagination.push(createLink(i));
+    }
+    return pagination;
+  }
+
+  // Otherwise create the first three page links
+  for (let i = 1; i <= 3; i++) {
+    pagination.push(createLink(i));
+  }
+
+  // Create the dots
+  pagination.push(createDots());
+
+  // Last three page links
+  for (let i = totalPages - 2; i <= totalPages; i++) {
+    pagination.push(createLink(i));
+  }
+
+  return pagination;
+}

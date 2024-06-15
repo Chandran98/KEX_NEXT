@@ -3,11 +3,18 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { cryptoBalance, fiatBalance } from "@/redux/reducer/wallet/walletApi";
+import {
+  cryptoBalance,
+  fiatBalance,
+  fiatDeposit,
+} from "@/redux/reducer/wallet/walletApi";
 import { GlobalFilter } from "@/components/referal/referalcomp";
 import Image from "next/image";
 import DashBoardHeader from "@/components/header";
 import Inform from "@/utils/form/customForm";
+import { z } from "zod";
+import { getProfile } from "@/redux/reducer/user/userApi";
+import { bankDetails } from "@/redux/reducer/utils/utilsApi";
 
 const Page = () => {
   const dispatch = useDispatch();
@@ -15,16 +22,21 @@ const Page = () => {
   useEffect(() => {
     dispatch(cryptoBalance());
     dispatch(fiatBalance());
+    dispatch(getProfile());
+    dispatch(bankDetails());
   }, [dispatch]);
 
   const [globalFilter, setGlobalFilter] = useState("");
   const [openInrDeposit, setOpenInrDeposit] = useState(false);
+  const [openInrWithdrawal, setOpenInrWithdrawal] = useState(false);
   const [openDeposit, setOpenDeposit] = useState(-1);
   const [hideZero, setHideZero] = useState(false);
 
   const { loading, cryptoBalanceData, fiatBalannceData, error } = useSelector(
     (state) => state.wallet
   );
+  const { userData } = useSelector((state) => state.user);
+  const { bankData } = useSelector((state) => state.utils);
 
   const toggleHideZero = () => {
     setHideZero(!hideZero);
@@ -42,13 +54,83 @@ const Page = () => {
     return matchesName && matchesAmount;
   });
   const formFieldData = [
-    { name: "issue_type", title: "Issue Type", type: "drop" },
-    { name: "query", title: "Query" },
-    {name: "subject",title: "Subject"  },
-    {name: "description",
-      title: "Description"},
+    { name: "amount", title: "Amount" },
+    {
+      name: "method",
+      title: "Payment Way",
+      data: [
+        { value: "IMPS", label: "IMPS" },
+        { value: "NEFT", label: "NEFT" },
+        { value: "UPI", label: "UPI" },
+        { value: "RTGS", label: "RTGS" },
+      ],
+      type: "drop",
+    },
+    { name: "transactionid", title: "Transaction ID" },
+    { name: "comment", title: "Comment" },
+    {
+      name: "bankname",
+      title: "Select Your Bank",
+      data: userData?.data?.bank_info,
+      type: "drop",
+      bank: "bank",
+    },
+  ];
+  const withdrawalformFieldData = [
+    { name: "amount", title: "Amount" },
+    {
+      name: "method",
+      title: "Payment Way",
+      data: userData?.data?.bank_info.map((option) => ({
+        value: option.bankname,
+        label: option.bankname,
+      })),
+      type: "drop",
+    },
+    { name: "transactionid", title: "Transaction ID" },
+  ];
+  const depositSchema = z.object({
+    amount: z.string().min(1, { message: "minimum 100$ " }),
+    method: z.string().min(1, { message: "required" }),
+    transactionid: z.string().min(1, { message: "required" }),
+    comment: z.string().min(1, { message: "required" }),
+    bankname: z.string().min(1, { message: "required" }),
+    proof: z.any(),
+  });
+
+  const withdrawalSchema = z.object({
+    amount: z.string(),
+    holder: z.string(),
+    branch: z.string(),
+    country: z.string(),
+    accNumber: z.string(),
+    accounttype: z.string(),
+    bankname: z.string(),
+    ifsc: z.string(),
+    description: z.string(),
+    transfer_option: z.string(),
+    fee: z.string(),
+  });
+
+  const noteDetails = [
+    "Please deposit funds from verified bank account",
+
+    "Otherwise your deposit will not reflected on this wallet.",
+
+    "Transfer using only your banking app NEFT or IMPS.",
+    "Minimum deposit amount : 100 INR",
+  ];
+  const withdrawalNoteDetails = [
+    "Please don't deposit any other digital assets in this currency",
+
+    "Minimum Withdrawal Amount 1000 INR",
   ];
 
+  const onSubmit = async (data) => {
+    const fiatData = { ...data, ...{ currency: "inr" } };
+    console.log(fiatData, "fiatballnce");
+    dispatch(fiatDeposit(fiatData));
+  };
   return (
     <>
       <DashBoardHeader />
@@ -87,45 +169,134 @@ const Page = () => {
                         <td className="gap-2 flex justify-center text-white">
                           <div
                             className="bg-green-500 rounded-md px-3"
-                            onClick={() => setOpenInrDeposit(!openInrDeposit)}
+                            onClick={() => {
+                              setOpenInrDeposit(!openInrDeposit);
+
+                              setOpenInrWithdrawal(false);
+                            }}
                           >
                             Deposit
                           </div>
-                          <div className="bg-red-500 rounded-md px-3">
+                          <div
+                            className="bg-red-500 rounded-md px-3"
+                            onClick={() => {
+                              setOpenInrWithdrawal(!openInrWithdrawal);
+                              setOpenInrDeposit(false);
+                            }}
+                          >
                             Withdraw
                           </div>
                         </td>
                       </tr>
                       {openInrDeposit && (
-                              <tr className="bg-blue-200 col-span-6">
-                                <td colSpan="4">
-                                  <div className="flex flex-col items-start justify-start">
-                                    <strong>DESTINATION ADDRESS</strong>
-                                    <Inform
-                onSubmit={() => onSubmit}
-                loading={loading}
-                formFiledData={formFieldData}
-                fileUpload={true}
-                formSchema={schema}
-                dropdownOptions={dropdownOptions}
-                imgName="images"
-                // defaultValues={defaultValues}
-                classBame={"w-full px-5"}
-              />
+                        <tr className="bg-blue-200 col-span-6">
+                          <td colSpan="4">
+                            <div className=" grid grid-cols-2">
+                              <div className="flex flex-col items-start justify-start">
+                                <h1>Deposit</h1>
+                                <Inform
+                                  onSubmit={() => onSubmit}
+                                  loading={loading}
+                                  formFiledData={formFieldData}
+                                  fileUpload={true}
+                                  formSchema={depositSchema}
+                                  // dropdownOptions={dropdownOptions}
+                                  imgName="proof"
+                                  className="w-[65%]"
+                                />
+                              </div>
+                              <div className="card-body">
+                                <div>
+                                  <h1 className="">Bank Details</h1>
+                                  <div className=" flex flex-col gap-3 ">
+                                    <span className="mt-2 ">
+                                      Holder Name : {bankData?.data?.holder}
+                                    </span>
+                                    <span>
+                                      Bank Name : {bankData?.data?.bankname}
+                                    </span>
+                                    <span>
+                                      Account No. : {bankData?.data?.acc_number}
+                                    </span>
+                                    <span>
+                                      IFSC code : {bankData?.data?.ifsc_code}
+                                    </span>
+                                    <span>
+                                      Account Type :
+                                      {bankData?.data?.account_type}
+                                    </span>
                                   </div>
-                                </td>
-                              </tr>
-                            )}
+                                  <h6 className="mt-6">Note:</h6>
+                                  <ul className=" flex flex-col gap-3">
+                                    {noteDetails.map((e, i) => (
+                                      <li className=""> {e}</li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      )}
+                      {openInrWithdrawal && (
+                        <tr className="bg-blue-200 col-span-6">
+                          <td colSpan="4">
+                            <div className=" grid grid-cols-2">
+                              <div className="flex flex-col items-start justify-start">
+                                <h1>Withdrawal</h1>
+                                <Inform
+                                  onSubmit={() => onSubmit}
+                                  loading={loading}
+                                  formFiledData={withdrawalformFieldData}
+                                  fileUpload={false}
+                                  formSchema={""}
+                                  // dropdownOptions={dropdownOptions}
+                                  imgName="proof"
+                                  className="w-[65%]"
+                                />
+                              </div>
+                              <div className="card-body">
+                                <div>
+                                  <h1 className="">Bank Details</h1>
+                                  <div className=" flex flex-col gap-3 ">
+                                    <span className="mt-2 ">
+                                      Holder Name : {bankData?.data?.holder}
+                                    </span>
+                                    <span>
+                                      Bank Name : {bankData?.data?.bankname}
+                                    </span>
+                                    <span>
+                                      Account No. : {bankData?.data?.acc_number}
+                                    </span>
+                                    <span>
+                                      IFSC code : {bankData?.data?.ifsc_code}
+                                    </span>
+                                    <span>
+                                      Account Type :
+                                      {bankData?.data?.account_type}
+                                    </span>
+                                  </div>
+                                  <h6 className="mt-6">Note:</h6>
+                                  <ul className=" flex flex-col gap-3">
+                                    {withdrawalNoteDetails.map((e, i) => (
+                                      <li className=""> {e}</li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      )}
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
           </div>
-         
         </div>
         <div className="card m-2">
-        <div className=" m-6 flex-col md:flex">
+          <div className=" m-6 flex-col md:flex">
             <h4 className="card-title">Crypto Holdings</h4>
             <div className="  mt-3">
               <input
@@ -194,18 +365,18 @@ const Page = () => {
                             </tr>
                             {openDeposit === index && (
                               <tr className="bg-red-200 col-span-6">
-                                <td colSpan="4">
-                                  <div className="flex flex-col items-start justify-start">
-                                    <strong>DESTINATION ADDRESS</strong>
-                                    <div className="flex">
+                                <td>
+                                  <div className=" flex justify-between">
+                                    <div className="flex flex-col items-start  ">
+                                      <h4>DESTINATION ADDRESS</h4>
                                       <div>{item.address}</div>
-                                      <Image
-                                        src={item.address_code}
-                                        height={100}
-                                        width={100}
-                                        alt="#"
-                                      />
                                     </div>
+                                    <Image
+                                      src={item.address_code}
+                                      height={100}
+                                      width={100}
+                                      alt="#"
+                                    />
                                   </div>
                                 </td>
                               </tr>
@@ -214,7 +385,7 @@ const Page = () => {
                         ))
                       ) : (
                         <tr>
-                          <td colSpan="6">No Open orders available</td>
+                          <td colSpan="6">Loading</td>
                         </tr>
                       )}
                     </tbody>
