@@ -78,3 +78,11 @@ export const kycFormSchema = z.object({
   pan: z.any({ message: "Required" }),
   selfie:z.any({ message: "Required" }),
 });
+
+export const swapSchema = z.object({
+  spend_amt: z.string().trim().min(1, { message: "Required" }),
+  buyamount: z.string().trim().min(1, { message: "Required" }),
+  buycurrency: z.string().trim().min(1, { message: "Required" }),
+  spentcurrency: z.string().trim().min(1, { message: "Required" }),
+  
+});

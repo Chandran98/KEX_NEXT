@@ -4,6 +4,9 @@ import {
   fetchUsdtPrice,
   marketDepthBuy,
   marketDepthSell,
+  swapConversion,
+  swapHistory,
+  swapcoins,
 } from "./cryptoApi";
 
 const cryptoSlice = createSlice({
@@ -11,6 +14,8 @@ const cryptoSlice = createSlice({
     loading: false,
     usdt: null,
     sellsocket: null,
+    swapHistoryData:null,
+    swapCoinList:null,
     coin: null,
     error: null,
   },
@@ -47,12 +52,46 @@ const cryptoSlice = createSlice({
       .addCase(marketDepthSell.fulfilled, (state, action) => {
         state.loading = false;
         state.sellsocket = action.payload;
-        console.log("state.data  sell order  ", action.payload);
+        
       })
       .addCase(marketDepthSell.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      });
+      })
+      
+      .addCase(swapHistory.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(swapHistory.fulfilled, (state, action) => {
+        state.loading = false;
+        state.swapHistoryData = action.payload;
+      })
+      .addCase(swapHistory.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(swapcoins.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(swapcoins.fulfilled, (state, action) => {
+        state.loading = false;
+        state.swapCoinList = action.payload;
+      })
+      .addCase(swapcoins.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(swapConversion.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(swapConversion.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(swapConversion.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      ;
   },
 });
 

@@ -42,6 +42,7 @@ const header = () => {
               </div>
               <div className="flex gap-8 items-center">
                 <ThemeSwitcher/>
+                {}
                 <a
                   href="/signin"
                   title=""
