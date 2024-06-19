@@ -3,12 +3,12 @@ import React from "react";
 
 const DashBoardHeader = () => {
   const headerTile = [
-    { page: "/dashboard", title: "My profile" },
-    { page: "/mywallet", title: "Wallet" },
-    { page: "/banks", title: "Banks" },
-    { page: "/walletHistory", title: "Wallet history" },
-    { page: "/orders", title: " Orders History" },
-    { page: "/ticket", title: "Tickets" },
+    { page: "/user/dashboard", title: "My profile" },
+    { page: "/user/mywallet", title: "Wallet" },
+    { page: "/user/banks", title: "Banks" },
+    { page: "/user/walletHistory", title: "Wallet history" },
+    { page: "/user/orders", title: " Orders History" },
+    { page: "/user/ticket", title: "Tickets" },
   ];
   return (
     <div>

@@ -6,7 +6,7 @@ import React from "react";
 const header = () => {
   // const headerData = ["Market", "Trade", "P2p", "Swap", "Referal"];
   const headerData = [
-    { name: "Dashboard", link: "/dashboard" },
+    { name: "Dashboard", link: "/user/dashboard" },
     { name: "Market", link: "/market" },
     { name: "Trade", link: "/trade" },
     { name: "P2p", link: "/p2p" },

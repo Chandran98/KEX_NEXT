@@ -47,7 +47,7 @@ const page = () => {
           <div className="col-xl-12">
             <div className="auth-form">
               <div className="text-center mb-3">
-                <Link href="/dashboard"></Link>
+                <Link href="/user/dashboard"></Link>
               </div>
               <h4 className="text-center mb-4">Reset Login Password</h4>
               <form onSubmit={handleSubmit(onSubmit)}>

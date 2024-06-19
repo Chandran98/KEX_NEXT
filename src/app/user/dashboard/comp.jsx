@@ -231,7 +231,7 @@ const EditProfile = () => {
                           <div> Bank Details</div>
                           <div
                             onClick={() => {
-                              router.push("/banks");
+                              router.push("/user/banks");
                             }}
                             className=" text-xs text-primary"
                           >
