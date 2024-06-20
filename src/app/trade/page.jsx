@@ -124,7 +124,7 @@ const page = () => {
       </div>
       <div className="relative col-span-1  ">
         <OrderBook crypto={crypto} />
-        <BuySell2 />
+        <BuySell2 crypto={crypto} />
       </div>
     </div>
   );

@@ -86,3 +86,13 @@ export const swapSchema = z.object({
   spentcurrency: z.string().trim().min(1, { message: "Required" }),
   
 });
+
+ 
+export const tradeschema = z.object({
+  price: z.any().optional(),
+  amount: z.number({ message: "Required" }),
+  ordertype: z.string().optional(),
+  pair: z.string().optional(),
+  type: z.string().optional(),
+  total: z.number({ message: "Required" }),
+});
