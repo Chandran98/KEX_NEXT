@@ -39,17 +39,17 @@ const isUserAuthenticated = () => {
 
 };
 const middleware = (request) => {
-  const isUserAuth = isUserAuthenticated();
-  console.log(isUserAuth, "isUserAuth");
-  if (isUserAuth) {
-    return NextResponse.next();
-  }
+  // const isUserAuth = isUserAuthenticated();
+  // console.log(isUserAuth, "isUserAuth");
+  // if (isUserAuth) {
+  //   return NextResponse.next();
+  // }
 
-  return NextResponse.redirect(new URL("/", request.url));
+  // return NextResponse.redirect(new URL("/", request.url));
 };
 
-export const config = {
-  matcher: ["/user/:path*", "/swap/:path*"],
-};
+// export const config = {
+//   matcher: ["/user/:path*", "/swap/:path*"],
+// };
 
 export default middleware;

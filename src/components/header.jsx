@@ -14,7 +14,7 @@ const DashBoardHeader = () => {
     <div>
       <div className="bg-white rounded-md md:flex   p-2 m-4">
         {headerTile.map((e, i) => (
-          <Link  className=" flex-1" key={i} href={e.page}>
+          <Link className=" flex-1" key={i} href={e.page}>
             <div className=" hover:bg-black bg-[#004dec]  text-center p-2 m-2 text-white  rounded-md">
               {e.title}
             </div>

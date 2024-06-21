@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 import ReactSlider from "react-slider";
 import Link from "next/link";
@@ -11,14 +11,8 @@ import { tradeschema } from "@/utils/formSchema";
 const OrderForm = ({ crypto, type }) => {
   const dispatch = useDispatch();
   const [price, setPrice] = useState(crypto?.lastprice);
-  const [amount, setAmount] = useState(0);
-  const [total, setTotal] = useState(0);
-
-  useEffect(() => {
-    const priceValue = parseFloat(price) || 0;
-    const amountValue = parseFloat(amount) || 0;
-    setTotal(priceValue * amountValue);
-  }, [price, amount]);
+  const [amount, setAmount] = useState("");
+  const [total, setTotal] = useState("");
 
   const handlePriceChange = (e) => {
     setPrice(e.target.value);
@@ -26,19 +20,24 @@ const OrderForm = ({ crypto, type }) => {
 
   const handleAmountChange = (e) => {
     setAmount(e.target.value);
+    setTotal(parseFloat(e.target.value) * parseFloat(crypto?.lastprice));
   };
-
-  const placeData = (data) => {
+  const handleTotalChange = (e) => {
+    setTotal(e.target.value);
+    setAmount(parseFloat(e.target.value) / parseFloat(crypto?.lastprice));
+  };
+  const placeData = () => {
     const params = {
-      price: data.price || crypto?.lastprice || 0,
-      amount: data.amount,
+      price: crypto?.lastprice,
+      amount: amount,
       ordertype: "limit",
       pair: crypto.pair,
       type: type,
       total: total,
     };
-    // dispatch(placeOrder(params));
     console.log("Place order with params:", params);
+
+    dispatch(placeOrder(params));
   };
 
   const { loading } = useSelector((state) => state.order);
@@ -67,7 +66,8 @@ const OrderForm = ({ crypto, type }) => {
               type="text"
               className="form-control"
               placeholder="0.00"
-              value={price}
+              value={crypto?.lastprice}
+              defaultValue={crypto?.lastprice}
               onChange={handlePriceChange}
             />
             <span className="input-group-text">
@@ -86,7 +86,7 @@ const OrderForm = ({ crypto, type }) => {
               type="text"
               className="form-control"
               placeholder="Amount"
-              value={amount}
+              value={Number(amount).toFixed(5)}
               onChange={handleAmountChange}
             />
             <span className="input-group-text">
@@ -104,11 +104,12 @@ const OrderForm = ({ crypto, type }) => {
           <div className="input-group">
             <input
               {...register("total", { valueAsNumber: true })}
-              type="number"
+              type="text"
               className="form-control"
               placeholder="Total"
               value={total}
-              readOnly
+              onChange={handleTotalChange}
+              // readOnly
             />
             <span className="input-group-text">
               {crypto?.secondcurrency.toUpperCase()}
