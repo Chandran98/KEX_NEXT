@@ -201,11 +201,11 @@ const Swap = () => {
   };
   const swapSchema = z.object({
     spend_amt: z
-      .number({message:"Required"})
+      .number({ message: "Required" })
       .min(coin2.minSwap, { message: `${coin2.minSwap} Min Required` })
       .max(coin2.maxSwap, { message: `${coin2.maxSwap} Max Allowed` }),
     buyamount: z
-      .number({message:"Required"})
+      .number({ message: "Required" })
       .min(coin1.minSwap, { message: `${coin1.minSwap} Min Required` })
       .max(coin1.maxSwap, { message: `${coin1.maxSwap} Max Allowed` }),
     buycurrency: z.string().trim().min(1, { message: "Required" }),
@@ -237,7 +237,6 @@ const Swap = () => {
                 <div className="text-center mt-3 row justify-content-center">
                   <div className="col-xl-5">
                     <div className="row">
-                    
                       <div className="col-xl-6">
                         <Controller
                           name="buycurrency"
@@ -265,8 +264,7 @@ const Swap = () => {
                       </div>
                       <div className="col-xl-6">
                         <input
-                        
-                          {...register("buyamount",{ valueAsNumber: true })}
+                          {...register("buyamount", { valueAsNumber: true })}
                           type="number"
                           className="form-control mb-3"
                           value={amount1}
@@ -285,7 +283,6 @@ const Swap = () => {
                   </div>
                   <div className="col-xl-5">
                     <div className="row">
-                      
                       <div className="col-xl-6">
                         <Controller
                           name="spentcurrency"
@@ -313,7 +310,7 @@ const Swap = () => {
                       </div>
                       <div className="col-xl-6">
                         <input
-                          {...register("spend_amt",{ valueAsNumber: true })}
+                          {...register("spend_amt", { valueAsNumber: true })}
                           type="number"
                           className="form-control mb-3"
                           value={amount2}
@@ -325,7 +322,7 @@ const Swap = () => {
                 </div>
                 <div className="text-center mt-4 mb-4">
                   <button type="submit" className="btn btn-warning mx-auto">
-                    {loading?"Loading...":"SWAP NOW"}
+                    {loading ? "Loading..." : "SWAP NOW"}
                   </button>
                 </div>
               </div>

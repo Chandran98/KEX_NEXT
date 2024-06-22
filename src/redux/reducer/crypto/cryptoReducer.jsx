@@ -7,6 +7,7 @@ import {
   swapConversion,
   swapHistory,
   swapcoins,
+  usdtPrice,
 } from "./cryptoApi";
 
 const cryptoSlice = createSlice({
@@ -16,6 +17,7 @@ const cryptoSlice = createSlice({
     sellsocket: null,
     swapHistoryData:null,
     swapCoinList:null,
+    usdtPrice:null,
     coin: null,
     error: null,
   },
@@ -39,7 +41,7 @@ const cryptoSlice = createSlice({
       })
       .addCase(fetchUsdtPrice.fulfilled, (state, action) => {
         state.loading = false;
-        state.buysocket = action.payload;
+        state.usdtPrice = action.payload;
         console.log("state.data fetchUsdtPrice  ", action.payload);
       })
       .addCase(fetchUsdtPrice.rejected, (state, action) => {

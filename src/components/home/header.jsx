@@ -2,13 +2,15 @@ import ThemeSwitcher from "@/utils/themes/themes";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { RiProfileFill } from "react-icons/ri";
+import { CgProfile } from "react-icons/cg";
 
 const header = () => {
   // const headerData = ["Market", "Trade", "P2p", "Swap", "Referal"];
   const headerData = [
     { name: "Dashboard", link: "/user/dashboard" },
     { name: "Market", link: "/market" },
-    { name: "Trade", link: "/trade" },
+    { name: "Trade", link: "/trade/kaitcoin-inr" },
     { name: "P2p", link: "/p2p" },
     { name: "Swap", link: "/swap" },
     { name: "Referal", link: "/referal" },
@@ -41,8 +43,8 @@ const header = () => {
                 })}
               </div>
               <div className="flex gap-8 items-center">
-                <ThemeSwitcher/>
-                {}
+                <ThemeSwitcher />
+                {localStorage.getItem("auth-token")?<CgProfile className=" text-black  text-xl"/>:
                 <a
                   href="/signin"
                   title=""
@@ -50,7 +52,7 @@ const header = () => {
                   role="button"
                 >
                   Join Now
-                </a>
+                </a>}
               </div>
             </div>
           </div>

@@ -5,13 +5,14 @@ import React, { useEffect, useState } from "react";
 import {
   fetchCryptoList,
   fetchUsdtPrice,
-} from "../../redux/reducer/crypto/cryptoApi";
+} from "../../../redux/reducer/crypto/cryptoApi";
 import { useDispatch, useSelector } from "react-redux";
-import MainChart from "../../components/trade/chart/mainchart";
-import OrderBook from "../../components/trade/orderBook/orderbook";
-import OrderStatus from "../../components/trade/orderstatus/orderstatus";
-import BuySell2 from "../../components/trade/buysell/buysell2";
+import MainChart from "../../../components/trade/chart/mainchart";
+import OrderBook from "../../../components/trade/orderBook/orderbook";
+import OrderStatus from "../../../components/trade/orderstatus/orderstatus";
+import BuySell2 from "../../../components/trade/buysell/buysell2";
 import { myOrderDetails } from "@/redux/reducer/order/orderApi";
+import Link from "next/link";
 
 const page = () => {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const page = () => {
   }, [dispatch]);
 
   const data = useSelector((state) => state.crypto);
-  const usdtList = useSelector((state) => state.crypto);
+  const usdtList = useSelector((state) => state.crypto.usdtPrice);
   const [tabValue, setTab] = useState("INR");
   const [crypto, setCrypto] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -49,10 +50,9 @@ const page = () => {
         // const matchesAmount = Number(crypto.lastprice)>=parseFloat(searchLower);
 
         return matchesFirstCurrency;
-        // || matchesSecondCurrency || matchesAmount;
       })
     : filteredPairs;
-
+  console.log("filteredCryptos", filteredCryptos);
   return (
     <div className="relative grid lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-2  bg-white">
       <div className="col-span-1 ">
@@ -87,39 +87,60 @@ const page = () => {
             <div className="relative h-[120vh] overflow-y-scroll">
               {data.loading && <div>Loading...</div>}
 
-              {filteredCryptos.map((e, i) => (
-                <div
-                  onClick={() => {
-                    setCrypto(e);
-                  }}
-                  key={i}
-                  className=" justify-between "
-                >
-                  <div className="previews-info-list" key={i}>
-                    <div className="pre-icon">
-                      <div className="ms-2">
-                        <h6>{e.firstcurrency.toUpperCase()}</h6>
-                        <span>
-                          {e.firstcurrency.toUpperCase()}/
-                          {e.secondcurrency.toUpperCase()}
-                        </span>
+              {filteredCryptos.map((e) => {
+                const usdtValue = usdtList?.find(
+                  (value) =>
+                    value.symbol ===
+                    `${e.firstcurrency.toUpperCase()}${e.secondcurrency.toUpperCase()}`
+                );
+                console.log("USDT value:", usdtValue);
+
+                // console.log(usdtList?.firstWhere((value)=>value.symbol===`${e.firstcurrency.toUpperCase()}${e.secondcurrency.toUpperCase()}`))
+                return (
+                  <div
+                    key={e.id}
+                    onClick={() => {
+                      setCrypto(e);
+                    }}
+                    className=" justify-between "
+                  >
+                    <Link
+                      // href={"/"}
+                      href={`/trade/${e.firstcurrency.toUpperCase()}-${e.secondcurrency.toUpperCase()}`}
+                    >
+                      <div className="previews-info-list">
+                        <div className="pre-icon">
+                          <div className="ms-2">
+                            <h6>{e.firstcurrency.toUpperCase()}</h6>
+                            <span>
+                              {e.firstcurrency.toUpperCase()}/
+                              {e.secondcurrency.toUpperCase()}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="count text-right">
+                          {/* <h6>
+                            {usdtList?.find(
+                              (value) =>
+                                value.symbol ===
+                                `${e.firstcurrency.toUpperCase()}${e.secondcurrency.toUpperCase()}`
+                            )}
+                          </h6> */}
+                          <span className={e.change >= 0 ? "text-success" : ""}>
+                            {e.change.toFixed(2)}%
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                    <div className="count text-right">
-                      <h6>{e.lastprice}</h6>
-                      <span className={e.change >= 0 ? "text-success" : ""}>
-                        {e.change.toFixed(2)}%
-                      </span>
-                    </div>
+                    </Link>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
       </div>
       <div className="lg:col-span-2 w-full relative">
-        <MainChart crypto={crypto} />
+        <MainChart />
         <OrderStatus />
       </div>
       <div className="relative col-span-1  ">

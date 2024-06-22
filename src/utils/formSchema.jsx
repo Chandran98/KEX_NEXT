@@ -96,3 +96,9 @@ export const tradeschema = z.object({
   type: z.string().optional(),
   total: z.number({ message: "Required" }),
 });
+
+export const cryptoWithdrawalSchema = z.object({
+  amount: z.string().min(1, { message: "required" }),
+  address: z.string().min(1, { message: "required" }),
+  description: z.string().min(1, { message: "required" }),
+});
