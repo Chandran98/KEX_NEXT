@@ -67,6 +67,7 @@ export const cryptoAddressUrl = `${BaseUrl}get-crypto-address`;
 
 export const chartUrl =
   "https://bxnzaopdi.kairaaexchange.com/trade/chart/history";
+  export const usdtPriceUrl="https://api-gcp.binance.com/api/v3/ticker/24hr";
 export const placeOrderUrl = `${BaseUrl}place-order`;
 export const cancelOrderUrl = `${BaseUrl}cancel-order/`;
 export const myOrderUrl = `${BaseUrl}my-order-details`;

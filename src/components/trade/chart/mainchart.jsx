@@ -3,14 +3,18 @@
 import { useState } from "react";
 import Script from "next/script";
 import TVChartContainer from "./TVChartContainer/index";
+import { useParams } from "next/navigation";
 
 export default function mainchart({ crypto }) {
   const [isScriptReady, setIsScriptReady] = useState(false);
-  console.log(crypto,"dsfadf");
+  const params= useParams();
+  const pairData=params.name.split("-");
+  console.log(`${pairData[0]}/${pairData[1]}`,"main chart");
+  const pair=`${pairData[0]}/${pairData[1]}`;
 
-  const pair =crypto===null?"/": `${crypto.firstcurrency}/${crypto.secondcurrency}`;
   const defaultWidgetProps = {
-    symbol: pair == "/" ? "BTC/USDT" : pair,
+    // symbol: pair == "/" ? "BTC/USDT" : pair,
+    symbol:pair,
     interval: "15",
     library_path: "/static/charting_library/",
     locale: "en",

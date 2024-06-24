@@ -11,15 +11,21 @@ import useLocalStorage from "@/utils/useLocalstorage";
   import { createAsyncThunk } from "@reduxjs/toolkit";
   import axios from "axios";
   import { toast } from "react-toastify";
-  
+  import { setCookie } from 'cookies-next';
+
   export const signIn = createAsyncThunk("signIn", async (data) => {
     console.log(`dfsfasf${data}`);
 
     try {
       const res = await axios.post(loginUrl, data);
       const response = res.data;
+<<<<<<< HEAD
       // localStorage.setItem("auth-token", response.token);
       // setName(response.token)
+=======
+      localStorage.setItem("auth-token", response.token);
+      setCookie("auth-token", response.token);
+>>>>>>> a29c79d1f8d46776eca2d93633360f4c131bb84d
       toast.success(res.data.message);
   
       console.log("response7897",response);

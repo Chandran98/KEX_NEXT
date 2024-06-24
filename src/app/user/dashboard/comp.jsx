@@ -20,7 +20,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { kycFormSchema } from "@/utils/formSchema";
 import KycVerification from "./kycVerification";
 import AccountData from "./account";
-import profileImage from "../../../public/user.png";
+import profileImage from "../../../../public/profile.jpeg";
 
 import Modal from "./utils/modal";
 import { sendSMS } from "@/redux/reducer/utils/utilsApi";

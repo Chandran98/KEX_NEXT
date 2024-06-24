@@ -3,6 +3,7 @@ import {
   swapcoinsUrl,
   swaphistoryUrl,
   headers,
+  usdtPriceUrl,
 } from "@/constant/apiUrl";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
@@ -23,8 +24,8 @@ export const fetchUsdtPrice = createAsyncThunk("fetchUsdtPrice", async () => {
   console.log("adfsfdas fetch start");
   const res = await axios.get("https://api-gcp.binance.com/api/v3/ticker/24hr");
   const response = await res.data;
-  console.log(response);
-  return response;
+ const responseData = response.filter((item)=>item.symbol.endsWith("USDT"))
+  return responseData;
 });
 
 export const marketDepthBuy = createAsyncThunk(
@@ -81,6 +82,19 @@ export const marketDepthSell = createAsyncThunk(
     }
   }
 );
+
+
+// export const usdtPrice = createAsyncThunk("usdtPrice", async () => {
+//   try {
+//     const res = await axios.get(usdtPriceUrl, headers);
+//     const response = res.data;
+
+//     console.log(response);
+//     return response;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
 
 export const swapHistory = createAsyncThunk("swapHistory", async () => {
   try {

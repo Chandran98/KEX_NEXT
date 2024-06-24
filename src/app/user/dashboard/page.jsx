@@ -1,5 +1,5 @@
 
-import DashBoardHeader from "../../components/header";
+import DashBoardHeader from "@/components/header";
 import Comp from "./comp";
 
 const page = () => {

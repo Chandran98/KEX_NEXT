@@ -16,8 +16,8 @@ export default function ThemeSwitcher() {
 
   return (
     <div>
-      {theme==="dark"? <FiMoon onClick={() => setTheme('light')}/>
-      :<FiSun className=" text-black" onClick={() => setTheme('dark')}/>
+      {theme==="dark"? <FiMoon className=" text-black  text-lg" onClick={() => setTheme('light')}/>
+      :<FiSun className=" text-black   text-lg" onClick={() => setTheme('dark')}/>
     }</div>
   )
 };

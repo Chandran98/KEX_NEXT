@@ -15,6 +15,8 @@ import Inform from "@/utils/form/customForm";
 import { z } from "zod";
 import { getProfile } from "@/redux/reducer/user/userApi";
 import { bankDetails } from "@/redux/reducer/utils/utilsApi";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const Page = () => {
   const dispatch = useDispatch();
@@ -30,6 +32,8 @@ const Page = () => {
   const [openInrDeposit, setOpenInrDeposit] = useState(false);
   const [openInrWithdrawal, setOpenInrWithdrawal] = useState(false);
   const [openDeposit, setOpenDeposit] = useState(-1);
+  const [openCryptoWithdrawal, setopenCryptoWithdrawal] = useState(false);
+
   const [hideZero, setHideZero] = useState(false);
 
   const { loading, cryptoBalanceData, fiatBalannceData, error } = useSelector(
@@ -89,6 +93,12 @@ const Page = () => {
     },
     { name: "transactionid", title: "Transaction ID" },
   ];
+
+  const cryptoWithdrawalformFieldData = [
+    { name: "amount", title: "Amount" },
+    { name: "address", title: "Address" },
+    { name: "description", title: "Notes" },
+  ];
   const depositSchema = z.object({
     amount: z.string().min(1, { message: "minimum 100$ " }),
     method: z.string().min(1, { message: "required" }),
@@ -131,6 +141,11 @@ const Page = () => {
     console.log(fiatData, "fiatballnce");
     dispatch(fiatDeposit(fiatData));
   };
+
+  const onCryptosubmit= async(data)=>{
+    console.log("onCryptosubmit",data)
+  }
+// const{register,handleSubmit,formState:{errors}}=  useForm({resolver:zodResolver(cryptoWithdrawalSchema)})
   return (
     <>
       <DashBoardHeader />
@@ -354,11 +369,18 @@ const Page = () => {
                               <td className="gap-2 flex justify-center text-white">
                                 <div
                                   className="bg-green-500 rounded-md px-3"
-                                  onClick={() => setOpenDeposit(index)}
+                                  onClick={() => {
+                                    setOpenDeposit(index);
+                                  }}
                                 >
                                   Deposit
                                 </div>
-                                <div className="bg-red-500 rounded-md px-3">
+                                <div
+                                  className="bg-red-500 rounded-md px-3"
+                                  onClick={() => {
+                                    setopenCryptoWithdrawal(index);
+                                  }}
+                                >
                                   Withdraw
                                 </div>
                               </td>
@@ -377,6 +399,41 @@ const Page = () => {
                                       width={100}
                                       alt="#"
                                     />
+                                  </div>
+                                </td>
+                              </tr>
+                            )}
+                            {openCryptoWithdrawal === index && (
+                              <tr className="bg-blue-200 col-span-6">
+                                <td colSpan="4">
+                                  <div className=" grid grid-cols-2">
+                                    <div className="flex flex-col items-start justify-start">
+                                      <h1>Withdrawal</h1>
+                                      <Inform
+                                        onSubmit={() => onCryptosubmit}
+                                        loading={loading}
+                                        formFiledData={
+                                          cryptoWithdrawalformFieldData
+                                        }
+                                        fileUpload={false}
+                                        formSchema={cryptoWithdrawalSchema}
+                                        // dropdownOptions={dropdownOptions}
+                                        imgName="proof"
+                                        className="w-[65%]"
+                                      />
+                                    </div>
+                                    <div className="card-body">
+                                      <div>
+                                        {/* <h1 className="">Bank Details</h1> */}
+
+                                        <h6 className="mt-6">Note:</h6>
+                                        <ul className=" flex flex-col gap-3">
+                                          {withdrawalNoteDetails.map((e, i) => (
+                                            <li className=""> {e}</li>
+                                          ))}
+                                        </ul>
+                                      </div>
+                                    </div>
                                   </div>
                                 </td>
                               </tr>

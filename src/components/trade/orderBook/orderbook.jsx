@@ -3,12 +3,17 @@ import React, { useEffect, useState } from "react";
 import * as io from "socket.io-client";
 import { Dropdown, Nav, Tab } from "react-bootstrap";
 import "../../../assets/css/style.css";
+import { useParams } from "next/navigation";
 
 const Orderbook = ({crypto}) => {
   const [recentTrades, setRecentTrades] = useState([]);
   const [buyOrder, setBuyOrder] = useState([]);
   const [sellOrder, setSellOrder] = useState([]);
-  const pair =crypto===null?"/": `${crypto.firstcurrency}/${crypto.secondcurrency}`;
+
+  const params= useParams();
+  const pairData=params.name.split("-");
+  const pair=`${pairData[0]}/${pairData[1]}`;
+
 
   useEffect(() => {
     try {

@@ -3,7 +3,7 @@ import React from 'react'
 import { Tab,Nav } from "react-bootstrap";
 import OrderForm from "./component/orderForm";
 
-const buysell2 = () => {
+const buysell2 = ({crypto}) => {
   return (
     <div className="">
     <div className="card h-auto">
@@ -30,7 +30,7 @@ const buysell2 = () => {
                                     <Tab.Pane  eventKey="Navbuylimit"></Tab.Pane>
                                 </Tab.Content>
                                 <div className="sell-element">
-                                    <OrderForm />
+                                    <OrderForm crypto={crypto}type={"buy"}/>
                                 </div>	
                             </Tab.Container>	
                         </Tab.Pane>
@@ -47,7 +47,7 @@ const buysell2 = () => {
                                     <Tab.Pane  id="Navselllimit" ></Tab.Pane>														
                                 </Tab.Content>
                                 <div className="sell-element">
-                                    <OrderForm />
+                                    <OrderForm crypto={crypto}type={"sell"}/>
                                 </div>	
                             </Tab.Container>
                         </Tab.Pane>
