@@ -7,19 +7,22 @@ import {
     registerUrl,
     resetPasswordUrl,
   } from "@/constant/apiUrl";
+import useLocalStorage from "@/utils/useLocalstorage";
   import { createAsyncThunk } from "@reduxjs/toolkit";
   import axios from "axios";
   import { toast } from "react-toastify";
   
   export const signIn = createAsyncThunk("signIn", async (data) => {
     console.log(`dfsfasf${data}`);
+
     try {
       const res = await axios.post(loginUrl, data);
       const response = res.data;
-      localStorage.setItem("auth-token", response.token);
+      // localStorage.setItem("auth-token", response.token);
+      // setName(response.token)
       toast.success(res.data.message);
   
-      console.log(response);
+      console.log("response7897",response);
       return response;
     } catch (error) {
       console.log(error);

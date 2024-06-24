@@ -10,6 +10,7 @@ import { z } from "zod";
 import { signIn } from "@/redux/reducer/auth/authApi";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import useLocalStorage from "@/utils/useLocalstorage";
 
 const page = () => {
   const router = useRouter();
@@ -29,6 +30,7 @@ const page = () => {
   const dispatch = useDispatch();
 
   const { authData, loading, error } = useSelector((state) => state.auth);
+    const [setValue] = useLocalStorage('Auth');
 
   console.log("sttatte", authData);
 
@@ -51,6 +53,9 @@ const page = () => {
     console.log(data, "datadata");
     dispatch(signIn(data)).then((res) => {
       if (res.payload.status == true) {
+        const token=res.payload.token;
+        console.log("mytoken",token);
+        setValue(token)
         router.push("/");
       }
     });

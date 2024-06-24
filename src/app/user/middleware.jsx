@@ -1,9 +1,13 @@
+"use client";
 import React from 'react'
 import { NextResponse } from "next/server";
 
-const login=false;
+// const login=false;
 const middleware = (request) => {
-    if(login){
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [name, setName, readValue ] = useLocalStorage('Auth', '');
+console.log("middleware",name)
+    if(name){
         
     return NextResponse.next();
     }
@@ -13,7 +17,7 @@ const middleware = (request) => {
 }
 
 export const config={
-    matcher:["/user/:path*"]
+    matcher:["/user/:path*","/swap/:path*"]
 }
 
 export default middleware
