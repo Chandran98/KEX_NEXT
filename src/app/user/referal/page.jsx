@@ -13,9 +13,11 @@ import {
 import {
   GlobalFilter,
   ColumnFilter,
-} from "../../components/referal/referalcomp";
+} from "../../../components/referal/referalcomp";
 
-import "../../assets/css/style.css";
+import "../../../assets/css/style.css";
+import { useDispatch, useSelector } from "react-redux";
+import { referralDetails } from "@/redux/reducer/user/userApi";
 
 function dateFormat(value) {
   let objectDate = new Date(value);
@@ -26,279 +28,52 @@ function dateFormat(value) {
   return day + "/" + month + "/" + year;
 }
 
-const COLUMNS = [
-  {
-    Header: "Id",
-    Footer: "Id",
-    accessor: "id",
-    Filter: ColumnFilter,
-    //disableFilters: true,
-  },
-  {
-    Header: "First Name",
-    Footer: "First Name",
-    accessor: "first_name",
-    Filter: ColumnFilter,
-  },
-  {
-    Header: "Last Name",
-    Footer: "Last Name",
-    accessor: "last_name",
-    Filter: ColumnFilter,
-  },
-  {
-    Header: "Email Id",
-    Footer: "Email Id",
-    accessor: "email",
-    Filter: ColumnFilter,
-  },
-  {
-    Header: "Date of  Birth",
-    Footer: "Date of  Birth",
-    accessor: "date_of_birth",
-    Cell: ({ value }) => {
-      return dateFormat(value);
-    },
-    Filter: ColumnFilter,
-  },
-  {
-    Header: "Country",
-    Footer: "Country",
-    accessor: "country",
-    Filter: ColumnFilter,
-  },
-  {
-    Header: "Phone",
-    Footer: "Phone",
-    accessor: "phone",
-    Filter: ColumnFilter,
-  },
-];
-
-const MOCK_DATA = [
-  {
-    id: 1,
-    first_name: "Genevieve",
-    last_name: "Blind",
-    date_of_birth: "1/24/1996",
-    country: "Afghanistan",
-    phone: "2268978063",
-    age: 82,
-  },
-  {
-    id: 3,
-    first_name: "Caroline",
-    last_name: "Haddock",
-    date_of_birth: "12/5/1989",
-    country: "Afghanistan",
-    phone: "8251841635",
-    age: 52,
-  },
-  {
-    id: 4,
-    first_name: "Susana",
-    last_name: "Tripney",
-    date_of_birth: "6/28/2004",
-    country: "Afghanistan",
-    phone: "8961163082",
-    age: 8,
-  },
-  {
-    id: 2,
-    first_name: "Peggie",
-    last_name: "Ninnoli",
-    date_of_birth: "12/29/1990",
-    country: "Afghanistan",
-    phone: "2211803633",
-    age: 22,
-  },
-  {
-    id: 5,
-    first_name: "Ailina",
-    last_name: "Walkley",
-    date_of_birth: "6/19/2015",
-    country: "Afghanistan",
-    phone: "7514804940",
-    age: 37,
-  },
-  {
-    id: 7,
-    first_name: "Malinda",
-    last_name: "Tollady",
-    date_of_birth: "11/12/2011",
-    country: "Afghanistan",
-    phone: "6911451962",
-    age: 66,
-  },
-  {
-    id: 9,
-    first_name: "Florance",
-    last_name: "Wahlberg",
-    date_of_birth: "7/21/2009",
-    country: "Afghanistan",
-    phone: "4741700349",
-    age: 66,
-  },
-  {
-    id: 6,
-    first_name: "Shae",
-    last_name: "Ranald",
-    date_of_birth: "3/4/1997",
-    country: "Afghanistan",
-    phone: "9551173716",
-    age: 8,
-  },
-  {
-    id: 8,
-    first_name: "Ed",
-    last_name: "Camidge",
-    date_of_birth: "3/4/1982",
-    country: "Afghanistan",
-    phone: "8281579568",
-    age: 65,
-  },
-  {
-    id: 11,
-    first_name: "Minnie",
-    last_name: "Greatreax",
-    date_of_birth: "3/22/1991",
-    country: "Afghanistan",
-    phone: "1247240549",
-    age: 83,
-  },
-  {
-    id: 15,
-    first_name: "Damian",
-    last_name: "Davidof",
-    date_of_birth: "11/17/2008",
-    country: "Afghanistan",
-    phone: "4367200073",
-    age: 68,
-  },
-  {
-    id: 10,
-    first_name: "Celinka",
-    last_name: "Morrison",
-    date_of_birth: "1/12/2000",
-    country: "Afghanistan",
-    phone: "7764595498",
-    age: 10,
-  },
-  {
-    id: 14,
-    first_name: "Claudine",
-    last_name: "Allgood",
-    date_of_birth: "4/15/2007",
-    country: "Afghanistan",
-    phone: "6127875221",
-    age: 90,
-  },
-  {
-    id: 12,
-    first_name: "Cleo",
-    last_name: "Ourtic",
-    date_of_birth: "5/26/1983",
-    country: "Afghanistan",
-    phone: "5821432556",
-    age: 38,
-  },
-  {
-    id: 19,
-    first_name: "Godiva",
-    last_name: "Strettle",
-    date_of_birth: "4/20/2004",
-    country: "Afghanistan",
-    phone: "4456693345",
-    age: 6,
-  },
-  {
-    id: 13,
-    first_name: "Ripley",
-    last_name: "Rusling",
-    date_of_birth: "4/25/1978",
-    country: "Afghanistan",
-    phone: "4527623871",
-    age: 9,
-  },
-  {
-    id: 18,
-    first_name: "Carmencita",
-    last_name: "Giottini",
-    date_of_birth: "1/5/2016",
-    country: "Afghanistan",
-    phone: "6353138726",
-    age: 99,
-  },
-  {
-    id: 16,
-    first_name: "Colline",
-    last_name: "Behnen",
-    date_of_birth: "12/13/1993",
-    country: "Afghanistan",
-    phone: "1891513218",
-    age: 49,
-  },
-  {
-    id: 15,
-    first_name: "Shanan",
-    last_name: "Darcey",
-    date_of_birth: "10/30/1991",
-    country: "Afghanistan",
-    phone: "8361660601",
-    age: 51,
-  },
-  {
-    id: 17,
-    first_name: "Joshuah",
-    last_name: "Cossons",
-    date_of_birth: "2/20/1986",
-    country: "Afghanistan",
-    phone: "5695954134",
-    age: 19,
-  },
-];
 const page = () => {
-  const columns = useMemo(() => COLUMNS, []);
-  const data = useMemo(() => MOCK_DATA, []);
-  const tableInstance = useTable(
-    {
-      columns,
-      data,
-      initialState: { pageIndex: 0 },
-    },
-    useFilters,
-    useGlobalFilter,
-    usePagination
-  );
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(referralDetails());
+  }, []);
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    prepareRow,
-    state,
-    page,
-    gotoPage,
-    pageCount,
-    pageOptions,
-    nextPage,
-    previousPage,
-    canNextPage,
-    canPreviousPage,
-    setGlobalFilter,
-  } = tableInstance;
+  const { loading, referalData } = useSelector((state) => state.user);
 
-  const { globalFilter, pageIndex } = state;
+  // const tableInstance = useTable(
+  //   {
+  //     columns,
+  //     data,
+  //     initialState: { pageIndex: 0 },
+  //   },
+  //   useFilters,
+  //   useGlobalFilter,
+  //   usePagination
+  // );
 
+  // const {
+  //   getTableProps,
+  //   getTableBodyProps,
+  //   headerGroups,
+  //   prepareRow,
+  //   state,
+  //   page,
+  //   gotoPage,
+  //   pageCount,
+  //   pageOptions,
+  //   nextPage,
+  //   previousPage,
+  //   canNextPage,
+  //   canPreviousPage,
+  //   setGlobalFilter,
+  // } = tableInstance;
 
-
+  // const { globalFilter, pageIndex } = state;
 
   return (
     <div className=" m-4 ">
       <section className="card py-10 p-5 m-2 mb-4 bg-white sm:py-16 lg:py-24">
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="text-center">
-            <h2 className="text-xl font-bold text-gray-900">Number of Referrals</h2>
+            <h2 className="text-xl font-bold text-gray-900">
+              Number of Referrals
+            </h2>
           </div>
 
           <div className="grid grid-cols-1 gap-6 px-6 mt-8 sm:px-0 lg:mt-16 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-12">
@@ -420,39 +195,28 @@ const page = () => {
         </div>
         <div className="card-body">
           <div className="table-responsive">
-            <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
-            <table {...getTableProps()} className="table dataTable display">
+            {/* <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} /> */}
+            <table className="table shadow-hover dataTable display">
               <thead>
-                {headerGroups.map((headerGroup) => (
-                  <tr {...headerGroup.getHeaderGroupProps()}>
-                    {headerGroup.headers.map((column) => (
-                      <th {...column.getHeaderProps()}>
-                        {column.render("Header")}
-                        {column.canFilter ? column.render("Filter") : null}
-                      </th>
-                    ))}
+                <tr>
+                  <th>S.No</th>
+                  <th>Unique Id</th>
+                  <th>Email</th>
+                  <th>Date & Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                {referalData?.data?.invite_history.map((e, i) => (
+                  <tr key={i}>
+                    <td>{i + 1}</td>
+                    <td>{e.unique_id}</td>
+                    <td>{e.email}</td>
+                    <td>{e.date}</td>
                   </tr>
                 ))}
-              </thead>
-              <tbody {...getTableBodyProps()} className="">
-                {page.map((row) => {
-                  prepareRow(row);
-                  return (
-                    <tr {...row.getRowProps()}>
-                      {row.cells.map((cell) => {
-                        return (
-                          <td {...cell.getCellProps()}>
-                            {" "}
-                            {cell.render("Cell")}{" "}
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  );
-                })}
               </tbody>
             </table>
-            <div className="d-flex justify-content-between">
+            {/* <div className="d-flex justify-content-between">
               <span>
                 Page{" "}
                 <strong>
@@ -507,11 +271,10 @@ const page = () => {
                   {">>"}
                 </button>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
-
     </div>
   );
 };

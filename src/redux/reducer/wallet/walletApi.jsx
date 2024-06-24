@@ -72,6 +72,7 @@ export const fiatWithdrawal = createAsyncThunk(
   async (data) => {
     const res = await axios.post(withdrawUrl, data, headers);
     const response = await res.data;
+    toast.success(response.message);
     console.log(response);
     return response;
   }
@@ -80,8 +81,9 @@ export const fiatWithdrawal = createAsyncThunk(
 export const cryptoWithdrawal = createAsyncThunk(
   "cryptoWithdrawal",
   async (data) => {
-    const res = await axios.get(cryptoWithdrawalUrl, data, headers);
+    const res = await axios.post(cryptoWithdrawalUrl, data, headers);
     const response = await res.data;
+    toast.success(response.message);
     console.log(response);
     return response;
   }

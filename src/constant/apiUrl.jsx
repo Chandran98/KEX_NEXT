@@ -6,15 +6,6 @@ export const headers = {
     Authorization: localStorage.getItem("auth-token"),
   },
 };
-// export const headers = () => {
-//   console.log(localStorage.getItem("auth-token"),"mydatatoekn");
-//   return {
-//     headers: {
-//       Authorization: localStorage.getItem("auth-token"),
-//     },
-//   };
-// };
-
 // USER API //
 
 export const loginUrl = `${BaseUrl}login`;
@@ -22,6 +13,8 @@ export const registerUrl = `${BaseUrl}register`;
 export const banner = `${BaseUrl}banner-content-get`;
 export const uploadFile = `${BaseUrl}upload-file`;
 export const profileUrl = `${BaseUrl}user/profile`;
+export const referralDetails = `${BaseUrl}user/referral-details`;
+
 export const supportTicketUrl = `${BaseUrl}user/tickets`;
 export const logHistoryUrl = `${BaseUrl}user/log-history`;
 export const updateBankUrl = `${BaseUrl}user/update-bank`;
@@ -65,9 +58,8 @@ export const cryptoAddressUrl = `${BaseUrl}get-crypto-address`;
 
 /// Trade ///
 
-export const chartUrl =
-  "https://bxnzaopdi.kairaaexchange.com/trade/chart/history";
-  export const usdtPriceUrl="https://api-gcp.binance.com/api/v3/ticker/24hr";
+export const chartUrl ="https://bxnzaopdi.kairaaexchange.com/trade/chart/history";
+export const usdtPriceUrl="https://api-gcp.binance.com/api/v3/ticker/24hr";
 export const placeOrderUrl = `${BaseUrl}place-order`;
 export const cancelOrderUrl = `${BaseUrl}cancel-order/`;
 export const myOrderUrl = `${BaseUrl}my-order-details`;

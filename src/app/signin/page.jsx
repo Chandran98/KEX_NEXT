@@ -1,9 +1,7 @@
 "use client";
 /* eslint-disable react-hooks/rules-of-hooks */
-import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
 import Authform from "./loginComp";
 import { useDispatch, useSelector } from "react-redux";
 import { z } from "zod";
@@ -30,7 +28,6 @@ const page = () => {
   const dispatch = useDispatch();
 
   const { authData, loading, error } = useSelector((state) => state.auth);
-    const [setValue] = useLocalStorage('Auth');
 
   console.log("sttatte", authData);
 
@@ -53,9 +50,9 @@ const page = () => {
     console.log(data, "datadata");
     dispatch(signIn(data)).then((res) => {
       if (res.payload.status == true) {
-        const token=res.payload.token;
-        console.log("mytoken",token);
-        setValue(token)
+        const token = res.payload.token;
+        console.log("mytoken", token);
+
         router.push("/");
       }
     });

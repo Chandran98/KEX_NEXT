@@ -12,6 +12,7 @@ import {
   forgotPassword,
   forgotPasswordVerify,
   passwordReset,
+  referralDetails,
 } from "./userApi";
 
 const userSlice = createSlice({
@@ -22,6 +23,7 @@ const userSlice = createSlice({
     userData: null,
     logData: null,
     error: null,
+    referalData:null
   },
   extraReducers: (builder) => {
     builder
@@ -142,6 +144,17 @@ const userSlice = createSlice({
         state.loading = false;
       })
       .addCase(kycUpdate.rejected, (state) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(referralDetails.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(referralDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        state.referalData=action.payload;
+      })
+      .addCase(referralDetails.rejected, (state) => {
         state.loading = false;
         state.error = null;
       });

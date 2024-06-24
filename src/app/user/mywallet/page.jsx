@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   cryptoBalance,
+  cryptoWithdrawal,
   fiatBalance,
   fiatDeposit,
 } from "@/redux/reducer/wallet/walletApi";
@@ -15,8 +16,8 @@ import Inform from "@/utils/form/customForm";
 import { z } from "zod";
 import { getProfile } from "@/redux/reducer/user/userApi";
 import { bankDetails } from "@/redux/reducer/utils/utilsApi";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { cryptoWithdrawalSchema } from "@/utils/formSchema";
+import Fiatwithdrawalform from "./fiatwithdrawalform";
 
 const Page = () => {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ const Page = () => {
   const [openInrWithdrawal, setOpenInrWithdrawal] = useState(false);
   const [openDeposit, setOpenDeposit] = useState(-1);
   const [openCryptoWithdrawal, setopenCryptoWithdrawal] = useState(false);
+  const [cryptoCoin, setCryptoCoin] = useState(null);
 
   const [hideZero, setHideZero] = useState(false);
 
@@ -108,19 +110,7 @@ const Page = () => {
     proof: z.any(),
   });
 
-  const withdrawalSchema = z.object({
-    amount: z.string(),
-    holder: z.string(),
-    branch: z.string(),
-    country: z.string(),
-    accNumber: z.string(),
-    accounttype: z.string(),
-    bankname: z.string(),
-    ifsc: z.string(),
-    description: z.string(),
-    transfer_option: z.string(),
-    fee: z.string(),
-  });
+
 
   const noteDetails = [
     "Please deposit funds from verified bank account",
@@ -130,22 +120,21 @@ const Page = () => {
     "Transfer using only your banking app NEFT or IMPS.",
     "Minimum deposit amount : 100 INR",
   ];
-  const withdrawalNoteDetails = [
-    "Please don't deposit any other digital assets in this currency",
 
-    "Minimum Withdrawal Amount 1000 INR",
-  ];
 
   const onSubmit = async (data) => {
     const fiatData = { ...data, ...{ currency: "inr" } };
-    console.log(fiatData, "fiatballnce");
     dispatch(fiatDeposit(fiatData));
   };
 
-  const onCryptosubmit= async(data)=>{
-    console.log("onCryptosubmit",data)
-  }
-// const{register,handleSubmit,formState:{errors}}=  useForm({resolver:zodResolver(cryptoWithdrawalSchema)})
+  const onCryptosubmit = async (data) => {
+    const cryptoData = {
+      ...data,
+      ...{ currency: cryptoCoin.currency, network: cryptoCoin.coin },
+    };
+    dispatch(cryptoWithdrawal(cryptoData));
+  };
+  // const{register,handleSubmit,formState:{errors}}=  useForm({resolver:zodResolver(cryptoWithdrawalSchema)})
   return (
     <>
       <DashBoardHeader />
@@ -254,54 +243,56 @@ const Page = () => {
                         </tr>
                       )}
                       {openInrWithdrawal && (
-                        <tr className="bg-blue-200 col-span-6">
-                          <td colSpan="4">
-                            <div className=" grid grid-cols-2">
-                              <div className="flex flex-col items-start justify-start">
-                                <h1>Withdrawal</h1>
-                                <Inform
-                                  onSubmit={() => onSubmit}
-                                  loading={loading}
-                                  formFiledData={withdrawalformFieldData}
-                                  fileUpload={false}
-                                  formSchema={""}
-                                  // dropdownOptions={dropdownOptions}
-                                  imgName="proof"
-                                  className="w-[65%]"
-                                />
-                              </div>
-                              <div className="card-body">
-                                <div>
-                                  <h1 className="">Bank Details</h1>
-                                  <div className=" flex flex-col gap-3 ">
-                                    <span className="mt-2 ">
-                                      Holder Name : {bankData?.data?.holder}
-                                    </span>
-                                    <span>
-                                      Bank Name : {bankData?.data?.bankname}
-                                    </span>
-                                    <span>
-                                      Account No. : {bankData?.data?.acc_number}
-                                    </span>
-                                    <span>
-                                      IFSC code : {bankData?.data?.ifsc_code}
-                                    </span>
-                                    <span>
-                                      Account Type :
-                                      {bankData?.data?.account_type}
-                                    </span>
-                                  </div>
-                                  <h6 className="mt-6">Note:</h6>
-                                  <ul className=" flex flex-col gap-3">
-                                    {withdrawalNoteDetails.map((e, i) => (
-                                      <li className=""> {e}</li>
-                                    ))}
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
+                                 <Fiatwithdrawalform/>
+                        // <tr className="bg-blue-200 col-span-6">
+                        //   <td colSpan="4">
+                        //     <div className=" grid grid-cols-2">
+                        //       <div className="flex flex-col items-start justify-start">
+                        //         <h1>Withdrawal</h1>
+                        //         <Fiatwithdrawalform/>
+                        //         {/* <Inform
+                        //           onSubmit={() => onSubmit}
+                        //           loading={loading}
+                        //           formFiledData={withdrawalformFieldData}
+                        //           fileUpload={false}
+                        //           formSchema={""}
+                        //           // dropdownOptions={dropdownOptions}
+                        //           imgName="proof"
+                        //           className="w-[65%]"
+                        //         /> */}
+                        //       </div>
+                        //       <div className="card-body">
+                        //         <div>
+                        //           <h1 className="">Bank Details</h1>
+                        //           <div className=" flex flex-col gap-3 ">
+                        //             <span className="mt-2 ">
+                        //               Holder Name : {bankData?.data?.holder}
+                        //             </span>
+                        //             <span>
+                        //               Bank Name : {bankData?.data?.bankname}
+                        //             </span>
+                        //             <span>
+                        //               Account No. : {bankData?.data?.acc_number}
+                        //             </span>
+                        //             <span>
+                        //               IFSC code : {bankData?.data?.ifsc_code}
+                        //             </span>
+                        //             <span>
+                        //               Account Type :
+                        //               {bankData?.data?.account_type}
+                        //             </span>
+                        //           </div>
+                        //           <h6 className="mt-6">Note:</h6>
+                        //           <ul className=" flex flex-col gap-3">
+                        //             {withdrawalNoteDetails.map((e, i) => (
+                        //               <li className=""> {e}</li>
+                        //             ))}
+                        //           </ul>
+                        //         </div>
+                        //       </div>
+                        //     </div>
+                        //   </td>
+                        // </tr>
                       )}
                     </tbody>
                   </table>
@@ -370,7 +361,12 @@ const Page = () => {
                                 <div
                                   className="bg-green-500 rounded-md px-3"
                                   onClick={() => {
-                                    setOpenDeposit(index);
+                                    if (openDeposit === index) {
+                                      setOpenDeposit(-1);
+                                    } else {
+                                      setopenCryptoWithdrawal(-1);
+                                      setOpenDeposit(index);
+                                    }
                                   }}
                                 >
                                   Deposit
@@ -378,7 +374,13 @@ const Page = () => {
                                 <div
                                   className="bg-red-500 rounded-md px-3"
                                   onClick={() => {
-                                    setopenCryptoWithdrawal(index);
+                                    if (openCryptoWithdrawal === index) {
+                                      setopenCryptoWithdrawal(-1);
+                                    } else {
+                                      setOpenDeposit(-1);
+                                      setopenCryptoWithdrawal(index);
+                                      setCryptoCoin(item);
+                                    }
                                   }}
                                 >
                                   Withdraw

@@ -8,6 +8,7 @@ import {
   logHistoryUrl,
   loginUrl,
   profileUrl,
+  referralDetailsUrl,
   registerUrl,
   removeBankUrl,
   resetPasswordUrl,
@@ -176,6 +177,18 @@ export const updateBank = createAsyncThunk("updateBank", async (data) => {
     const res = await axios.post(updateBankUrl, data, headers);
     const response = res.data;
     toast.success(res.data.message);
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+
+export const referralDetails = createAsyncThunk("referralDetails", async () => {
+  try {
+    const res = await axios.get(referralDetailsUrl, headers);
+    const response = res.data;
     console.log(response);
     return response;
   } catch (error) {
