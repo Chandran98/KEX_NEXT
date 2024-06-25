@@ -1,14 +1,11 @@
-// /* eslint-disable react-hooks/rules-of-hooks */
-// "use client"
-// import useLocalStorage from '@/utils/useLocalstorage';
-// import React from 'react'
+import React from "react";
+import isUserAuthenticated from "@/components/isAuth";
+import {token} from "@/utils/utils";
 
-// const page = () => {
-//     const [name, setName, readValue ] = useLocalStorage('Auth', '');
+const page = () => {
+  const data = isUserAuthenticated();
+  console.log(token(), "data89token");
+  return <div>page{token()}</div>;
+};
 
-//   return (
-//     <div>page {name}</div>
-//   )
-// }
-
-// export default page
+export default page;

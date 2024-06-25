@@ -10,12 +10,6 @@ import {
 } from "react-table";
 // import PageTitle from "../../../layouts/PageTitle";
 
-import {
-  GlobalFilter,
-  ColumnFilter,
-} from "../../../components/referal/referalcomp";
-
-import "../../../assets/css/style.css";
 import { useDispatch, useSelector } from "react-redux";
 import { referralDetails } from "@/redux/reducer/user/userApi";
 
@@ -76,7 +70,7 @@ const page = () => {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 px-6 mt-8 sm:px-0 lg:mt-16 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-12">
+          <div className="grid grid-cols-1 gap-6 px-6 mt-8 sm:px-0 lg:mt-16 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-12">
             <div className="overflow-hidden bg-white border border-gray-200 rounded-lg">
               <div className="px-4 py-6">
                 <div className="flex items-start">
@@ -95,7 +89,7 @@ const page = () => {
                     />
                   </svg>
                   <div className="ml-4">
-                    <h4 className="text-4xl font-bold text-gray-900">6+</h4>
+                    <h4 className="text-4xl font-bold text-gray-900">{referalData?.data?.total_invites}</h4>
                     <p className="mt-1.5 text-lg font-medium leading-tight text-gray-500">
                       Total Invites
                     </p>
@@ -122,7 +116,7 @@ const page = () => {
                     />
                   </svg>
                   <div className="ml-4">
-                    <h4 className="text-4xl font-bold text-gray-900">37+</h4>
+                    <h4 className="text-4xl font-bold text-gray-900">{referalData?.data?.trade_rewards.toFixed(2)}</h4>
                     <p className="mt-1.5 text-lg font-medium leading-tight text-gray-500">
                       Total Rewards
                     </p>
@@ -149,7 +143,7 @@ const page = () => {
                     />
                   </svg>
                   <div className="ml-4">
-                    <h4 className="text-4xl font-bold text-gray-900">3,274</h4>
+                    <h4 className="text-4xl font-bold text-gray-900">{referalData?.data?.code}</h4>
                     <p className="mt-1.5 text-lg font-medium leading-tight text-gray-500">
                       Referal Code
                     </p>
@@ -157,8 +151,8 @@ const page = () => {
                 </div>
               </div>
             </div>
-
-            <div className="overflow-hidden bg-white border border-gray-200 rounded-lg">
+{/* 
+            <div className=" bg-white border border-gray-200 rounded-lg">
               <div className="px-4 py-6">
                 <div className="flex items-start">
                   <svg
@@ -176,23 +170,23 @@ const page = () => {
                     />
                   </svg>
                   <div className="ml-4">
-                    <h4 className="text-4xl font-bold text-gray-900">98%</h4>
+                    <span className=" font-bold text-gray-900">{`https://kairaaexchange.com/register/${referalData?.data?.code}`}</span>
                     <p className="mt-1.5 text-lg font-medium leading-tight text-gray-500">
                       Referral Link
                     </p>
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
 
       {/* <PageTitle activeMenu="Sorting" motherMenu="Table" /> */}
       <div className="card m-2 ">
-        <div className="card-header">
+        {/* <div className="card-header">
           <h4 className="card-title">Table Filtering</h4>
-        </div>
+        </div> */}
         <div className="card-body">
           <div className="table-responsive">
             {/* <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} /> */}

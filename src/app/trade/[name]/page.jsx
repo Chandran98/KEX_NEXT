@@ -93,7 +93,6 @@ const page = () => {
                     value.symbol ===
                     `${e.firstcurrency.toUpperCase()}${e.secondcurrency.toUpperCase()}`
                 );
-                console.log("USDT value:", usdtValue);
 
                 // console.log(usdtList?.firstWhere((value)=>value.symbol===`${e.firstcurrency.toUpperCase()}${e.secondcurrency.toUpperCase()}`))
                 return (
@@ -119,13 +118,14 @@ const page = () => {
                           </div>
                         </div>
                         <div className="count text-right">
-                          {/* <h6>
-                            {usdtList?.find(
+                          <h6>
+                            {/* {usdtList?.find(
                               (value) =>
                                 value.symbol ===
                                 `${e.firstcurrency.toUpperCase()}${e.secondcurrency.toUpperCase()}`
-                            )}
-                          </h6> */}
+                            )} */}
+                            {e.lastprice.toFixed(4)}
+                          </h6>
                           <span className={e.change >= 0 ? "text-success" : ""}>
                             {e.change.toFixed(2)}%
                           </span>

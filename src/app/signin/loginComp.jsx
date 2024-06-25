@@ -27,7 +27,6 @@ const authform = ({
 }) => {
   const form = useForm({
     resolver: zodResolver(formSchema),
-    defaultValues: defaultValues,
   });
 
 

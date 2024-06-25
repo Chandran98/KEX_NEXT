@@ -13,7 +13,7 @@ const hero = () => {
                 Invest in your future! Invest in KAIRAA
               </p>
               <h1 clawss="mt-4 text-4xl font-bold text-black lg:mt-8 sm:text-6xl xl:text-6xl">
-                Faste, better, stronger than your average crypto exchange
+                Faster, better, stronger than your average crypto exchange
               </h1>
               <p class="mt-4 text-base text-black lg:mt-8 sm:text-xl">
                 Coinbase is the most trusted platform in the UK for buying,

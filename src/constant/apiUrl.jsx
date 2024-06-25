@@ -1,9 +1,9 @@
-"use client";
+
 export const BaseUrl = "http://localhost:8290/api/v1/";
 
 export const headers = {
   headers: {
-    Authorization: localStorage.getItem("auth-token"),
+    Authorization:localStorage.getItem("auth-token"),
   },
 };
 // USER API //
@@ -58,8 +58,9 @@ export const cryptoAddressUrl = `${BaseUrl}get-crypto-address`;
 
 /// Trade ///
 
-export const chartUrl ="https://bxnzaopdi.kairaaexchange.com/trade/chart/history";
-export const usdtPriceUrl="https://api-gcp.binance.com/api/v3/ticker/24hr";
+export const chartUrl =
+  "https://bxnzaopdi.kairaaexchange.com/trade/chart/history";
+export const usdtPriceUrl = "https://api-gcp.binance.com/api/v3/ticker/24hr";
 export const placeOrderUrl = `${BaseUrl}place-order`;
 export const cancelOrderUrl = `${BaseUrl}cancel-order/`;
 export const myOrderUrl = `${BaseUrl}my-order-details`;

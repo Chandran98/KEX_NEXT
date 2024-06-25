@@ -4,8 +4,13 @@ import Link from "next/link";
 import React from "react";
 import { RiProfileFill } from "react-icons/ri";
 import { CgProfile } from "react-icons/cg";
+import { token } from "@/utils/utils";
+import { deleteCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
 
 const header = () => {
+  const router = useRouter();
+
   // const headerData = ["Market", "Trade", "P2p", "Swap", "Referal"];
   const headerData = [
     { name: "Dashboard", link: "/user/dashboard" },
@@ -13,8 +18,13 @@ const header = () => {
     { name: "Trade", link: "/trade/kaitcoin-inr" },
     { name: "P2p", link: "/p2p" },
     { name: "Swap", link: "/swap" },
-    { name: "Referal", link: "/referal" },
+    { name: "Referal", link: "/user/referal" },
   ];
+  const onlogout = () => {
+    localStorage.removeItem("auth-token");
+    deleteCookie("auth-token");
+    router.push("/");
+  };
 
   return (
     <div className=" z-10 sticky top-0">
@@ -22,10 +32,11 @@ const header = () => {
         <div className="px-4 mx-auto sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-20">
             <div className="flex-shrink-0">
-            <Link href={"/"}>
-                <Image src={"/kex.png"} width={50} height={50} alt="" /></Link>
+              <Link href={"/"}>
+                <Image src={"/kex.png"} width={50} height={50} alt="" />
+              </Link>
             </div>
-           
+
             <div className=" flex gap-24">
               <div className="hidden lg:flex lg:items-center lg:justify-center lg:space-x-10">
                 {headerData.map((e, i) => {
@@ -38,21 +49,47 @@ const header = () => {
                     // >
                     //   {e.toUpperCase()}
                     // </a>
-                    <Link key={i} href={e.link} className="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80">{e.name}</Link>
+                    <Link
+                      key={i}
+                      href={e.link}
+                      className="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80"
+                    >
+                      {e.name}
+                    </Link>
                   );
                 })}
               </div>
               <div className="flex gap-8 items-center">
                 <ThemeSwitcher />
-                {localStorage.getItem("auth-token")?<CgProfile className=" text-black  text-xl"/>:
-                <a
-                  href="/signin"
-                  title=""
-                  className="hidden lg:inline-flex items-center justify-center px-5 py-2.5 text-base transition-all duration-200 hover:bg-yellow-300 hover:text-black focus:text-black focus:bg-yellow-300 font-semibold text-white bg-black rounded-full"
-                  role="button"
-                >
-                  Join Now
-                </a>}
+                {token() ? (
+                  <>
+                    <CgProfile className=" text-black  text-xl" />
+
+                    <button
+                      onClick={onlogout}
+                      className="hidden lg:inline-flex items-center justify-center px-5 py-2.5 text-base transition-all duration-200 hover:bg-yellow-300 hover:text-black focus:text-black focus:bg-yellow-300 font-semibold text-white bg-black rounded-full"
+                    >
+                      Log Out
+                    </button>
+                    {/* <a
+                      href="/signin"
+                      title=""
+                      className="hidden lg:inline-flex items-center justify-center px-5 py-2.5 text-base transition-all duration-200 hover:bg-yellow-300 hover:text-black focus:text-black focus:bg-yellow-300 font-semibold text-white bg-black rounded-full"
+                      role="button"
+                    >
+                      Log Out
+                    </a> */}
+                  </>
+                ) : (
+                  <a
+                    href="/signin"
+                    title=""
+                    className="hidden lg:inline-flex items-center justify-center px-5 py-2.5 text-base transition-all duration-200 hover:bg-yellow-300 hover:text-black focus:text-black focus:bg-yellow-300 font-semibold text-white bg-black rounded-full"
+                    role="button"
+                  >
+                    Join Now
+                  </a>
+                )}
               </div>
             </div>
           </div>

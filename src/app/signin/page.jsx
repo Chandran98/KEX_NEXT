@@ -8,7 +8,6 @@ import { z } from "zod";
 import { signIn } from "@/redux/reducer/auth/authApi";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import useLocalStorage from "@/utils/useLocalstorage";
 
 const page = () => {
   const router = useRouter();
@@ -18,13 +17,6 @@ const page = () => {
     password: z.string().min(6).max(20),
   });
 
-  useEffect(() => {
-    localStorage.clear();
-  }, []);
-  const defaultValues = {
-    email: "",
-    password: "",
-  };
   const dispatch = useDispatch();
 
   const { authData, loading, error } = useSelector((state) => state.auth);
@@ -47,7 +39,6 @@ const page = () => {
       password: values.password,
       username: values.email,
     };
-    console.log(data, "datadata");
     dispatch(signIn(data)).then((res) => {
       if (res.payload.status == true) {
         const token = res.payload.token;
@@ -86,70 +77,14 @@ const page = () => {
               loading={loading}
               formFieldData={formFieldData}
               formSchema={formSchema}
-              defaultValues={defaultValues}
-              classBame={"w-full"}
+              classBame={"w-full mb-2"}
             />
             <Link
               href={"/forgotpassword"}
               className="font-medium text-blue-600 mt-24 transition-all duration-200 hover:text-blue-700 hover:underline focus:text-blue-700"
             >
-              {" "}
               Forgot Password?
             </Link>
-
-            {/* <form  className="mt-8">
-              <div className="space-y-5">
-                <div>
-                  <label for="" className="text-base font-medium text-gray-900">
-                    Email address
-                  </label>
-                  <div className="mt-2.5">
-                    <input
-                      type="email"
-                    
-                      placeholder="Enter email to get started"
-                      className="block w-full p-4 text-black placeholder-gray-500 transition-all duration-200 border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-blue-600 focus:bg-white caret-blue-600"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <div className="flex items-center justify-between">
-                    <label
-                      for=""
-                      className="text-base font-medium text-gray-900"
-                    >
-                      Password
-                    </label>
-
-                    <a
-                      href="#"
-                      title=""
-                      className="text-sm font-medium text-blue-600 hover:underline hover:text-blue-700 focus:text-blue-700"
-                    >
-                      Forgot password?
-                    </a>
-                  </div>
-                  <div className="mt-2.5">
-                    <input
-                      type="password"
-                   
-                      placeholder="Enter your password"
-                      className="block w-full p-4 text-black placeholder-gray-500 transition-all duration-200 border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-blue-600 focus:bg-white caret-blue-600"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <button
-                    type="submit"
-                    className="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md focus:outline-none hover:bg-blue-700 focus:bg-blue-700"
-                  >
-                    Log in
-                  </button>
-                </div>
-              </div>
-            </form> */}
           </div>
         </div>
 

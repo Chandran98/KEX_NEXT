@@ -1,3 +1,4 @@
+"use client";
 import {
   activateAccountUrl,
   bankDetailsUrl,
@@ -17,14 +18,18 @@ import {
 } from "@/constant/apiUrl";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { setCookie } from "cookies-next";
 import { toast } from "react-toastify";
 
 export const signIn = createAsyncThunk("signIn", async (data) => {
+
+
   console.log(`dfsfasf${data}`);
   try {
     const res = await axios.post(loginUrl, data);
     const response = res.data;
     localStorage.setItem("auth-token", response.token);
+    setCookie("authtoken", response.token);
     toast.success(res.data.message);
 
     console.log(response);

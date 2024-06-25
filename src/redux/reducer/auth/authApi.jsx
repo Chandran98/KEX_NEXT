@@ -6,8 +6,7 @@ import {
     loginUrl,
     registerUrl,
     resetPasswordUrl,
-  } from "@/constant/apiUrl";
-import useLocalStorage from "@/utils/useLocalstorage";
+  } from "@/constant/apiUrl"
   import { createAsyncThunk } from "@reduxjs/toolkit";
   import axios from "axios";
   import { toast } from "react-toastify";
@@ -19,9 +18,11 @@ import useLocalStorage from "@/utils/useLocalstorage";
     try {
       const res = await axios.post(loginUrl, data);
       const response = res.data;
+      console.log(response);
 
       localStorage.setItem("auth-token", response.token);
       setCookie("auth-token", response.token);
+      
       toast.success(res.data.message);
   
       console.log("response7897",response);
