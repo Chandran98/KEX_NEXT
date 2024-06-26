@@ -8,7 +8,7 @@ const OrderData = ({ e }) => {
   console.log(e, "referess");
   const [currentpage, setCurrentPage] = useState(0);
   const historyperPage = 10;
-  const fiatFilterData = e === (null || undefined) ? [] : e;
+  const fiatFilterData = e === (null ) ? [] : e;
   //   ?.filter((e)=>e.status==="deposit");
   const totalPages = Math.ceil(fiatFilterData.length / historyperPage);
   function handelSetPage(page) {

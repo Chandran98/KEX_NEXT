@@ -1,4 +1,6 @@
+import Image from "next/image";
 import React from "react";
+
 
 const hero = () => {
   return (
@@ -56,10 +58,11 @@ const hero = () => {
             </div>
 
             <div>
-              <img
+              <Image
                 class="w-full"
                 src="https://images.ctfassets.net/o10es7wu5gm1/6hY7NCjeaBrrcDqnY7Ad0j/8e92c63dd463c9c729722c070f6df0b3/UK-EN-GBP_2x.png"
                 alt=""
+              width={300}height={100}
               />
             </div>
           </div>

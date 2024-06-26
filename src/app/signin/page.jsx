@@ -21,7 +21,6 @@ const page = () => {
 
   const { authData, loading, error } = useSelector((state) => state.auth);
 
-  console.log("sttatte", authData);
 
   async function onSubmit(values) {
     let data = {

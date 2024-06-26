@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
 import { fiatWithdrawal } from "@/redux/reducer/wallet/walletApi";
 
-const fiatwithdrawalform = () => {
+const Fiatwithdrawalform = () => {
   const withdrawalSchema = z.object({
     amount: z.number({ message: "required" }).gte(100, "minimum 100 "),
     bank: z.string().min(1, { message: "Required" }),
@@ -146,7 +146,7 @@ const fiatwithdrawalform = () => {
               <h6 className="mt-6">Note:</h6>
               <ul className=" flex flex-col gap-3">
                 {withdrawalNoteDetails.map((e, i) => (
-                  <li className=""> {e}</li>
+                  <li key={i} className=""> {e}</li>
                 ))}
               </ul>
             </div>
@@ -157,4 +157,4 @@ const fiatwithdrawalform = () => {
   );
 };
 
-export default fiatwithdrawalform;
+export default Fiatwithdrawalform;

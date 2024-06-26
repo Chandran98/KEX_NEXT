@@ -3,7 +3,7 @@ export const BaseUrl = "http://localhost:8290/api/v1/";
 
 export const headers = {
   headers: {
-    Authorization:localStorage.getItem("auth-token"),
+    // Authorization:localStorage.getItem("auth-token"),
   },
 };
 // USER API //

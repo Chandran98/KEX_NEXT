@@ -8,7 +8,7 @@ import { token } from "@/utils/utils";
 import { deleteCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 
-const header = () => {
+const Header = () => {
   const router = useRouter();
 
   // const headerData = ["Market", "Trade", "P2p", "Swap", "Referal"];
@@ -61,7 +61,7 @@ const header = () => {
               </div>
               <div className="flex gap-8 items-center">
                 <ThemeSwitcher />
-                {token() ? (
+                {/* {token() ? (
                   <>
                     <CgProfile className=" text-black  text-xl" />
 
@@ -71,14 +71,7 @@ const header = () => {
                     >
                       Log Out
                     </button>
-                    {/* <a
-                      href="/signin"
-                      title=""
-                      className="hidden lg:inline-flex items-center justify-center px-5 py-2.5 text-base transition-all duration-200 hover:bg-yellow-300 hover:text-black focus:text-black focus:bg-yellow-300 font-semibold text-white bg-black rounded-full"
-                      role="button"
-                    >
-                      Log Out
-                    </a> */}
+                   
                   </>
                 ) : (
                   <a
@@ -89,7 +82,15 @@ const header = () => {
                   >
                     Join Now
                   </a>
-                )}
+                )} */}
+                <a
+                  href="/"
+                  title=""
+                  className="hidden lg:inline-flex items-center justify-center px-5 py-2.5 text-base transition-all duration-200 hover:bg-yellow-300 hover:text-black focus:text-black focus:bg-yellow-300 font-semibold text-white bg-black rounded-full"
+                  role="button"
+                >
+                  Join Now
+                </a>
               </div>
             </div>
           </div>
@@ -99,7 +100,7 @@ const header = () => {
   );
 };
 
-export default header;
+export default Header;
 
 {
   /* <template>

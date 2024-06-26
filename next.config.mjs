@@ -10,6 +10,8 @@ const nextConfig = {
         hostname: "kairaaexchange.s3.amazonaws.com",
       },
       { protocol: "https", pathname: "**", hostname: "api.qrserver.com" },
+      { protocol: "https", pathname: "**", hostname: "images.ctfassets.net" },
+      
     ],
   },
 };

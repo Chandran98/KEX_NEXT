@@ -13,11 +13,14 @@ import "../assets/css/style.css";
 import AuthGuard from "@/utils/authRoute";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Suspense } from "react";
 
 const rootlayout = ({ children }) => {
   return (
     <ThemeProviders attribute="class" defaultTheme="light" enableSystem>
       <Provider store={store}>
+
+
         <ToastContainer
           position="bottom-right"
           // className="bg-green-300"
@@ -34,7 +37,9 @@ const rootlayout = ({ children }) => {
         <Header />
 
         {children}
+
       </Provider>
+      
     </ThemeProviders>
   );
 };

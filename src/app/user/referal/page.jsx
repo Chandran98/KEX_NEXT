@@ -26,7 +26,7 @@ const page = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(referralDetails());
-  }, []);
+  }, [dispatch]);
 
   const { loading, referalData } = useSelector((state) => state.user);
 

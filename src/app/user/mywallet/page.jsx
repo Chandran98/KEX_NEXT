@@ -9,7 +9,6 @@ import {
   fiatBalance,
   fiatDeposit,
 } from "@/redux/reducer/wallet/walletApi";
-import { GlobalFilter } from "@/components/referal/referalcomp";
 import Image from "next/image";
 import DashBoardHeader from "@/components/header";
 import Inform from "@/utils/form/customForm";
@@ -17,7 +16,7 @@ import { z } from "zod";
 import { getProfile } from "@/redux/reducer/user/userApi";
 import { bankDetails } from "@/redux/reducer/utils/utilsApi";
 import { cryptoWithdrawalSchema } from "@/utils/formSchema";
-import Fiatwithdrawalform from "./fiatwithdrawalform";
+import Fiatwithdrawalform from "../../../components/fiatwithdrawalform";
 
 const Page = () => {
   const dispatch = useDispatch();
