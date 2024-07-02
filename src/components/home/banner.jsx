@@ -29,7 +29,7 @@ const banner = () => {
               return (
                 <div
                   key={i}
-                  className="overflow-hidden bg-white rounded shadow"
+                  className="overflow-hidden bg-white rounded hover:scale-110  duration-300 shadow"
                 >
                   <div className="p-8">
                     <div className="flex items-center">
@@ -52,9 +52,9 @@ const banner = () => {
                         stroke="currentColor"
                       >
                         <path
-                          stroke-linecap="round"
+                          strokeLinecap="round"
                           strokeLinejoin="round"
-                          stroke-width="2"
+                          strokeWidth="2"
                           d="M14 5l7 7m0 0l-7 7m7-7H3"
                         />
                       </svg>
@@ -91,9 +91,9 @@ const banner = () => {
                     stroke="currentColor"
                   >
                     <path
-                      stroke-linecap="round"
+                      strokeLinecap="round"
                       strokeLinejoin="round"
-                      stroke-width="2"
+                      strokeWidth="2"
                       d="M14 5l7 7m0 0l-7 7m7-7H3"
                     />
                   </svg>
@@ -127,9 +127,9 @@ const banner = () => {
                     stroke="currentColor"
                   >
                     <path
-                      stroke-linecap="round"
+                      strokeLinecap="round"
                       strokeLinejoin="round"
-                      stroke-width="2"
+                      strokeWidth="2"
                       d="M14 5l7 7m0 0l-7 7m7-7H3"
                     />
                   </svg>
@@ -165,9 +165,9 @@ const banner = () => {
                     stroke="currentColor"
                   >
                     <path
-                      stroke-linecap="round"
+                      strokeLinecap="round"
                       strokeLinejoin="round"
-                      stroke-width="2"
+                      strokeWidth="2"
                       d="M14 5l7 7m0 0l-7 7m7-7H3"
                     />
                   </svg>
@@ -203,9 +203,9 @@ const banner = () => {
                     stroke="currentColor"
                   >
                     <path
-                      stroke-linecap="round"
+                      strokeLinecap="round"
                       strokeLinejoin="round"
-                      stroke-width="2"
+                      strokeWidth="2"
                       d="M14 5l7 7m0 0l-7 7m7-7H3"
                     />
                   </svg>
@@ -241,9 +241,9 @@ const banner = () => {
                     stroke="currentColor"
                   >
                     <path
-                      stroke-linecap="round"
+                      strokeLinecap="round"
                       strokeLinejoin="round"
-                      stroke-width="2"
+                      strokeWidth="2"
                       d="M14 5l7 7m0 0l-7 7m7-7H3"
                     />
                   </svg>
@@ -306,7 +306,7 @@ const banner = () => {
             </div>
             <div>
               <img
-                class="w-full"
+                className="w-full"
                 src="https://hbg-fed-static-prd.hbfile.net/enhome/_next/static/media/leftImg.79bf1f9e.png"
                 alt=""
               />
@@ -363,14 +363,14 @@ const banner = () => {
           </div>
         </div>
       </section>
-      <section class=" bg-white w-full flex justify-center   h-[220px]  bg-kcoin md:bg-[url('/banner.svg')] ">
-        <div class="w-full flex flex-col items-center mt-[3rem]">
-          <h1 class="xl:text-[2.3rem] lg:text-[2rem] text-[1.6rem] text-white mb-2 text-center font-semibold">
+      <section className=" bg-white w-full flex justify-center   h-[220px]  bg-kcoin md:bg-[url('/banner.svg')] ">
+        <div className="w-full flex flex-col items-center mt-[3rem]">
+          <h1 className="xl:text-[2.3rem] lg:text-[2rem] text-[1.6rem] text-white mb-2 text-center font-semibold">
             Start Your Crypto Journey Now!
           </h1>
           <a
             href="#"
-            class="xl:text-xl text-md  p-4 text-center bg-black  rounded-full font-semibold leading-6 text-gray-100"
+            className="xl:text-xl text-md  p-4 text-center bg-black  rounded-full font-semibold leading-6 text-gray-100"
           >
             Sign Up Now
           </a>

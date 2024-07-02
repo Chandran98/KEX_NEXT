@@ -53,7 +53,7 @@ export const bankDetails = createAsyncThunk("bankDetails", async () => {
     const res = await axios.get(bankDetailsUrl, headers);
     const response = res.data;
 
-    console.log(response);
+    console.log(response,"sfddfs");
     return response;
   } catch (error) {
     console.log(error);

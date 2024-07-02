@@ -55,7 +55,7 @@ import {
         console.log(response);
         return response;
       } catch (error) {
-        console.log(error);
+        console.log(error,'act');
       }
     }
   );
@@ -79,8 +79,7 @@ import {
   export const forgotPasswordVerify = createAsyncThunk(
     "forgotPasswordVerify",
     async (data) => {
-      console.log(localStorage.getItem("auth-token"),"auth-token");
-      try {
+     try {
         const res = await axios.post(
           forgotPasswordOtpVerificationUrl,
           data,
@@ -97,7 +96,6 @@ import {
   );
   
   export const passwordReset = createAsyncThunk("passwordReset", async (data) => {
-    console.log(localStorage.getItem("auth-token"),"auth-token");
     try {
       const res = await axios.post(resetPasswordUrl, data, headers);
       const response = res.data;

@@ -6,6 +6,8 @@ import { kycFormSchema } from '@/utils/formSchema';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProfile, kycUpdate } from '@/redux/reducer/user/userApi';
+import { getCookie } from 'cookies-next';
+import { headers } from '@/constant/apiUrl';
 const kycVerification = () => {
 const dispatch=useDispatch();
   useEffect(()=>{
@@ -36,9 +38,7 @@ const dispatch=useDispatch();
         "http://localhost:8290/upload-file",
         formData,
         {
-          headers: {
-            Authorization: localStorage.getItem("auth-token"),
-          },
+          headers: headers,
         }
       );
       console.log(response.data.data,"response.data.data")

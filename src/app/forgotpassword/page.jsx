@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
+import { setCookie } from "cookies-next";
 const page = () => {
   const router = useRouter();
 
@@ -24,7 +24,7 @@ const page = () => {
     // let data = {
     //   email: values,
     // };
-    localStorage.setItem("email",values.email)
+    setCookie("email",values.email)
     dispatch(forgotPassword(values)).then((res) => {
       if (res.payload.status == true) {
         router.push("/otpverify/forgototpverify");

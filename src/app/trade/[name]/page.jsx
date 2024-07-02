@@ -2,6 +2,8 @@
 
 "use client";
 import React, { useEffect, useState } from "react";
+import Header from "@/components/home/header";
+
 import {
   fetchCryptoList,
   fetchUsdtPrice,
@@ -54,7 +56,9 @@ const page = () => {
     : filteredPairs;
   console.log("filteredCryptos", filteredCryptos);
   return (
-    <div className="relative grid lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-2  bg-white">
+    <>
+       <Header />
+       <div className="relative grid lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-2  bg-white">
       <div className="col-span-1 ">
         <div className="bg-white h-[120vh]">
           <div className=" flex justify-evenly p-2 mb-2 ">
@@ -148,6 +152,8 @@ const page = () => {
         <BuySell2 crypto={crypto} />
       </div>
     </div>
+       </>
+   
   );
 };
 

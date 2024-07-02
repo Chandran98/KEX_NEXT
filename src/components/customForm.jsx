@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
+import { headers } from "@/constant/apiUrl";
 
 const customForm = ({
   onSubmit,
@@ -39,9 +40,7 @@ console.log(data);
     try {
       const response = await axios
         .post("http://localhost:8290/upload-file", formData, {
-          headers: {
-            Authorization: localStorage.getItem("auth-token"),
-          },
+          headers: headers,
         })
         .then((res) => {
           const data= form.setValue("image", res.data);

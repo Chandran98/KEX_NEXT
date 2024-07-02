@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "@/redux/reducer/auth/authApi";
 import { z } from "zod";
+import { setCookie } from "cookies-next";
 
 const page = () => {
   const router = useRouter();
@@ -14,7 +15,7 @@ const page = () => {
     email: z.string().email("Invalid email"),
     password: z.string().min(6).max(20),
     phone: z.string().min(10).max(10),
-    referral: z.string(),
+    referral: z.string().optional(),
     confirm_password: z
       .string()
 
@@ -41,7 +42,7 @@ const page = () => {
 
   async function onSubmit(values) {
     console.log(values, "datadata");
-    localStorage.setItem("email",values.email)
+    setCookie("email",values.email)
     let data = {
       email: values.email,
       mobile: values.phone,
@@ -52,7 +53,7 @@ const page = () => {
     console.log(data, "datadata");
     dispatch(signUp(data)).then((res) => {
       if (res.payload.status == true) {
-        router.push("/otpverify");
+        router.push("/otpverify/register");
       }
     });
   }

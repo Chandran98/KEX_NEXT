@@ -6,6 +6,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import Image from "next/image";
+import { headers } from "@/constant/apiUrl";
 
 const CustomForm = ({
   onSubmit,
@@ -37,9 +38,7 @@ const CustomForm = ({
         "http://localhost:8290/upload-file",
         formData,
         {
-          headers: {
-            Authorization: localStorage.getItem("auth-token"),
-          },
+          headers:headers,
         }
       );
       setImageData(response.data.data);

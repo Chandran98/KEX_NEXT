@@ -6,7 +6,7 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700");
 @import url("https://fonts.googleapis.com/css?family=Nunito:400,600,700");
 @import url("https://fonts.googleapis.com/css2?family=Material+Icons");
-@import url("./../icons/simple-line-icons/css/simple-line-icons.css");
+/* @import url("./../icons/simple-line-icons/css/simple-line-icons.css");
 @import url("./../icons/fontawesome6/css/all.min.css");
 @import url("./../icons/fontawesome/css/all.min.css");
 @import url("./../icons/material-design-iconic-font/css/materialdesignicons.min.css");
@@ -20,7 +20,7 @@
 @import url(./../vendor/animate/animate.min.css);
 @import url(./../vendor/aos/css/aos.min.css);
 @import url(./../vendor/perfect-scrollbar/css/perfect-scrollbar.css);
-@import url(./../vendor/metismenu/css/metisMenu.min.css);
+@import url(./../vendor/metismenu/css/metisMenu.min.css); */
 :root {
   --primary: #004DEC;
   --secondary: #362465;

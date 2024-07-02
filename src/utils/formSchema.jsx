@@ -54,7 +54,7 @@ export const ticketFormSchema = z.object({
   subject: z.string().trim().min(1, { message: "Required" }),
   description: z.string().trim().min(1, { message: "Required" }),
   image: z
-    .instanceof(File)
+    .any()
     .refine((file) => ACCEPTED_IMAGE_TYPES.includes(file.type), {
       message: ".jpg, .jpeg, .png and .webp files are accepted.",
     })

@@ -8,23 +8,20 @@ import OrderTab from "./comp";
 import { useDispatch, useSelector } from "react-redux";
 import { getProfile, updateBank } from "@/redux/reducer/user/userApi";
 
-
 const page = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProfile());
   }, [dispatch]);
 
-  const{loading,error}=useSelector((state)=>state.user);
+  const { loading, error } = useSelector((state) => state.user);
 
   const onSubmit = async (data) => {
-    console.log(data,"mydata");
+    console.log(data, "mydata");
     dispatch(updateBank(data));
-
   };
   const formFieldData = [
     {
-
       name: "holder",
       title: " Holder Name ",
     },
@@ -33,22 +30,21 @@ const page = () => {
       name: "accNumber",
       title: " Account No ",
     },
-    // {
-    //   id: "3",
-    //   name: "confirmaccount",
-    //   title: " Confirm Account ",
-    //   // placeholder: "7092774422",
-    // },
     { name: "ibanCode", title: " IFSC Code " },
     {
       name: "branch",
       title: " Branch Name ",
     },
-    { name: "account_type", title: "Account Type",data:[
-      { value: "", label: "Select Account type" },
-      { value: "current", label: "Current Account" },
-      { value: "savings", label: "Savings Account" },
-    ], type: "drop" },
+    {
+      name: "account_type",
+      title: "Account Type",
+      data: [
+        { value: "", label: "Select Account type" },
+        { value: "current", label: "Current Account" },
+        { value: "savings", label: "Savings Account" },
+      ],
+      type: "drop",
+    },
     { name: "Upi_id", title: " UPI (Optional) " },
   ];
   return (
@@ -59,8 +55,7 @@ const page = () => {
           <h1>Add Bank</h1>
           <div className=" grid lg:grid-cols-3 grid-cols-1 gap-4">
             <div className=" col-span-1 ">
-              
-                 <Inform
+              <Inform
                 onSubmit={() => onSubmit}
                 loading={loading}
                 formFiledData={formFieldData}

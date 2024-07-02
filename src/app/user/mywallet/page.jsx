@@ -120,7 +120,11 @@ const Page = () => {
     "Minimum deposit amount : 100 INR",
   ];
 
+  const withdrawalNoteDetails = [
+    "Please don't deposit any other digital assets in this currency",
 
+    "Minimum Withdrawal Amount 1000 INR",
+  ];
   const onSubmit = async (data) => {
     const fiatData = { ...data, ...{ currency: "inr" } };
     dispatch(fiatDeposit(fiatData));
@@ -133,7 +137,6 @@ const Page = () => {
     };
     dispatch(cryptoWithdrawal(cryptoData));
   };
-  // const{register,handleSubmit,formState:{errors}}=  useForm({resolver:zodResolver(cryptoWithdrawalSchema)})
   return (
     <>
       <DashBoardHeader />

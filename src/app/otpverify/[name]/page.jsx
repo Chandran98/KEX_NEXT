@@ -9,6 +9,7 @@ import { useParams, useRouter } from "next/navigation";
 import React, { useState, useRef } from "react";
 import { Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
+import { getCookie } from "cookies-next";
 
 const Page = () => {
   const [codes, setCodes] = useState(Array(6).fill(""));
@@ -41,7 +42,6 @@ const Page = () => {
       setError("");
       const verificationCode = codes.join("");
       const data = {
-        // email: localStorage.getItem("regemail"),
         code: verificationCode,
       };
       if (params.name === "register") {
@@ -51,7 +51,7 @@ const Page = () => {
       } else if (params.name === "forgototpverify") {
         console.log(" reds eewewe");
         dispatch(forgotPasswordVerify(data)).then((res) => {
-          console.log(res, "eewewe");
+         
           res.payload.status == true && router.push("/resetpassword");
         });
       }
@@ -90,7 +90,7 @@ const Page = () => {
               <div className="gap-2">
                 <span>Enter the six digit code received by</span>
                 <span className="text-blue-600 font-bold">
-                  {localStorage.getItem("email")}
+                  {getCookie("email")}
                 </span>
                 <span>.</span>
               </div>

@@ -86,8 +86,7 @@ export const forgotPassword = createAsyncThunk(
 export const forgotPasswordVerify = createAsyncThunk(
   "forgotPasswordVerify",
   async (data) => {
-    console.log(localStorage.getItem("auth-token"),"auth-token");
-    try {
+   try {
       const res = await axios.post(
         forgotPasswordOtpVerificationUrl,
         data,
@@ -104,7 +103,6 @@ export const forgotPasswordVerify = createAsyncThunk(
 );
 
 export const passwordReset = createAsyncThunk("passwordReset", async (data) => {
-  console.log(localStorage.getItem("auth-token"),"auth-token");
   try {
     const res = await axios.post(resetPasswordUrl, data, headers);
     const response = res.data;

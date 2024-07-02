@@ -21,7 +21,6 @@ const page = () => {
 
   const { authData, loading, error } = useSelector((state) => state.auth);
 
-
   async function onSubmit(values) {
     let data = {
       deviceInfo: {
@@ -44,6 +43,7 @@ const page = () => {
         console.log("mytoken", token);
 
         router.push("/");
+        router.refresh();
       }
     });
   }

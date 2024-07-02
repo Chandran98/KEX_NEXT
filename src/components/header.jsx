@@ -1,5 +1,7 @@
 import Link from "next/link";
 import React from "react";
+import Header from "@/components/home/header";
+
 
 const DashBoardHeader = () => {
   const headerTile = [
@@ -12,6 +14,8 @@ const DashBoardHeader = () => {
   ];
   return (
     <div>
+            <Header />
+
       <div className="bg-white rounded-md md:flex   p-2 m-4">
         {headerTile.map((e, i) => (
           <Link className=" flex-1" key={i} href={e.page}>

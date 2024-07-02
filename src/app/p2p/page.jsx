@@ -1,7 +1,12 @@
+import { getCookie } from "cookies-next";
 import React from "react";
+import Header from "@/components/home/header";
 
 const page = () => {
-  return <div>p2p</div>;
+  // console.log("p2p token",getCookie("auth-token"))
+  return <div>
+  <Header />
+    p2p</div>;
 };
 
 export default page;
