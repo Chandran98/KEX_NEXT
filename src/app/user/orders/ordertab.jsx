@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import React, { useState, useEffect, useRef } from "react";
 
 const OrderData = ({ e }) => {
-  console.log(e, "referess");
   const [currentpage, setCurrentPage] = useState(0);
   const historyperPage = 10;
   const fiatFilterData = e === (null || undefined) ? [] : e;

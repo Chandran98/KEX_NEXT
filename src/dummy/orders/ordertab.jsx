@@ -5,10 +5,9 @@ import { useSelector } from "react-redux";
 import React, { useState, useEffect, useRef } from "react";
 
 const OrderData = ({ e }) => {
-  console.log(e, "referess");
   const [currentpage, setCurrentPage] = useState(0);
   const historyperPage = 10;
-  const fiatFilterData = e === (null ) ? [] : e;
+  const fiatFilterData = e === null ? [] : e;
   //   ?.filter((e)=>e.status==="deposit");
   const totalPages = Math.ceil(fiatFilterData.length / historyperPage);
   function handelSetPage(page) {
@@ -28,7 +27,7 @@ const OrderData = ({ e }) => {
                 <th>Pair</th>
                 <th>Price</th>
                 <th>Side</th>
-                <th className="">Amount</th>
+                <th>Amount</th>
                 <th>Total</th>
                 <th>Date</th>
               </tr>
