@@ -13,7 +13,8 @@ const Header = () => {
     { name: "Dashboard", link: "/user/dashboard" },
     { name: "Market", link: "/market" },
     { name: "Trade", link: "/trade/kaitcoin-inr" },
-    { name: "P2p", link: "/p2p" },
+    // { name: "P2p", link: "/p2p" },
+    { name: "LaunchPad", link: "/icolisting" },
     { name: "Swap", link: "/swap" },
     { name: "Referal", link: "/user/referal" },
   ];

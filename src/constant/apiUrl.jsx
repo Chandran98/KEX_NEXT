@@ -1,9 +1,5 @@
-import { authToken, token } from "@/utils/utils";
 import { getCookie } from 'cookies-next';
-
 export const BaseUrl = "http://localhost:8290/api/v1/";
-
-
 export const headers = {
   headers: {
     Authorization: getCookie("auth-token"),
