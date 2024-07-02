@@ -20,7 +20,7 @@ import {
       const response = res.data;
       console.log(response);
 
-      localStorage.setItem("auth-token", response.token);
+      // localStorage.setItem("auth-token", response.token);
       setCookie("auth-token", response.token);
       
       toast.success(res.data.message);
@@ -66,7 +66,8 @@ import {
       try {
         const res = await axios.post(forgotPasswordUrl, data);
         const response = res.data;
-        localStorage.setItem("auth-token", res.data.token);
+        setCookie("auth-token", res.data.token);
+        // localStorage.setItem("auth-token", res.data.token);
         toast.success(res.data.message);
         console.log(response);
         return response;

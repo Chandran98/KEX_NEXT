@@ -11,3 +11,6 @@ docker run -d -p 3000:3000 kairaanext
 
 
 docker ps
+
+
+git add .;git commit -m "gghf";git push origin main
