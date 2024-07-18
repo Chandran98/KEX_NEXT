@@ -97,8 +97,6 @@ const page = () => {
                     value.symbol ===
                     `${e.firstcurrency.toUpperCase()}${e.secondcurrency.toUpperCase()}`
                 );
-
-                // console.log(usdtList?.firstWhere((value)=>value.symbol===`${e.firstcurrency.toUpperCase()}${e.secondcurrency.toUpperCase()}`))
                 return (
                   <div
                     key={e.id}

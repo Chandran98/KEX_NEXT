@@ -7,13 +7,14 @@ import { placeOrder } from "@/redux/reducer/order/orderApi";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { tradeschema } from "@/utils/formSchema";
+import { useParams } from "next/navigation";
 
 const OrderForm = ({ crypto, type }) => {
   const dispatch = useDispatch();
   const [price, setPrice] = useState(crypto?.lastprice);
   const [amount, setAmount] = useState("");
   const [total, setTotal] = useState("");
-
+const params=useParams();
   const handlePriceChange = (e) => {
     setPrice(e.target.value);
   };
@@ -35,9 +36,7 @@ const OrderForm = ({ crypto, type }) => {
       type: type,
       total: total,
     };
-    console.log("Place order with params:", params);
-
-    dispatch(placeOrder(params));
+    // dispatch(placeOrder(params));
   };
 
   const { loading } = useSelector((state) => state.order);
@@ -47,6 +46,8 @@ const OrderForm = ({ crypto, type }) => {
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: zodResolver(tradeschema) });
+
+  console.log(params.name,"params")
 
   return (
     <>
@@ -65,7 +66,7 @@ const OrderForm = ({ crypto, type }) => {
               })}
               type="text"
               className="form-control"
-              placeholder="0.00"
+              placeholder="0"
               value={crypto?.lastprice}
               defaultValue={crypto?.lastprice}
               onChange={handlePriceChange}
