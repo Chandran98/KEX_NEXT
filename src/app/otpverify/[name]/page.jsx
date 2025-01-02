@@ -51,7 +51,6 @@ const Page = () => {
       } else if (params.name === "forgototpverify") {
         console.log(" reds eewewe");
         dispatch(forgotPasswordVerify(data)).then((res) => {
-         
           res.payload.status == true && router.push("/resetpassword");
         });
       }

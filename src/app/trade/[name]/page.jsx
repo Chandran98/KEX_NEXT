@@ -19,14 +19,14 @@ import Link from "next/link";
 const page = () => {
   const dispatch = useDispatch();
 
+  const data = useSelector((state) => state.crypto);
+  const usdtList = useSelector((state) => state.crypto.usdtPrice);
   useEffect(() => {
     dispatch(fetchCryptoList());
     dispatch(fetchUsdtPrice());
     dispatch(myOrderDetails());
   }, [dispatch]);
 
-  const data = useSelector((state) => state.crypto);
-  const usdtList = useSelector((state) => state.crypto.usdtPrice);
   const [tabValue, setTab] = useState("INR");
   const [crypto, setCrypto] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -54,61 +54,61 @@ const page = () => {
         return matchesFirstCurrency;
       })
     : filteredPairs;
-  console.log("filteredCryptos", filteredCryptos);
+  console.log("filteredCryptos", crypto);
   return (
     <>
-       <Header />
-       <div className="relative grid lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-2  bg-white">
-      <div className="col-span-1 ">
-        <div className="bg-white h-[120vh]">
-          <div className=" flex justify-evenly p-2 mb-2 ">
-            {tabList.map((e, i) => (
-              <div
-                key={i}
-                onClick={() => setTab(e.title.toUpperCase())}
-                className={`rounded-lg p-2 cursor-pointer flex-1 text-center font-semibold mx-3 ${
-                  tabValue === e.title
-                    ? "bg-[#004DEC] text-white"
-                    : " bg-gray-200  text-black"
-                }`}
-              >
-                {e.title}
-              </div>
-            ))}
-          </div>
-          <div class="relative bg-[#F4F0FF] flex w-full p-2">
-            <input
-              type="text"
-              id="simple-search"
-              class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Search your crypto..."
-              onChange={(event) => {
-                setSearchTerm(event.target.value);
-              }}
-            />
-          </div>
-          <div className=" relative pt-0 px-0 overflow-auto ">
-            <div className="relative h-[120vh] overflow-y-scroll">
-              {data.loading && <div>Loading...</div>}
+      <Header />
+      <div className="relative grid lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-2  bg-white">
+        <div className="col-span-1 ">
+          <div className="bg-white h-[120vh]">
+            <div className=" flex justify-evenly p-2 mb-2 ">
+              {tabList.map((e, i) => (
+                <div
+                  key={i}
+                  onClick={() => setTab(e.title.toUpperCase())}
+                  className={`rounded-lg p-2 cursor-pointer flex-1 text-center font-semibold mx-3 ${
+                    tabValue === e.title
+                      ? "bg-[#004DEC] text-white"
+                      : " bg-gray-200  text-black"
+                  }`}
+                >
+                  {e.title}
+                </div>
+              ))}
+            </div>
+            <div class="relative bg-[#F4F0FF] flex w-full p-2">
+              <input
+                type="text"
+                id="simple-search"
+                class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Search your crypto..."
+                onChange={(event) => {
+                  setSearchTerm(event.target.value);
+                }}
+              />
+            </div>
+            <div className=" relative pt-0 px-0 overflow-auto ">
+              <div className="relative h-[120vh] overflow-y-scroll">
+                {data.loading && <div>Loading...</div>}
 
-              {filteredCryptos.map((e) => {
-                const usdtValue = usdtList?.find(
-                  (value) =>
-                    value.symbol ===
-                    `${e.firstcurrency.toUpperCase()}${e.secondcurrency.toUpperCase()}`
-                );
-                return (
-                  <div
-                    key={e.id}
-                    onClick={() => {
-                      setCrypto(e);
-                    }}
-                    className=" justify-between "
-                  >
-                    <Link
+                {filteredCryptos.map((e) => {
+                  const usdtValue = usdtList?.find(
+                    (value) =>
+                      value.symbol ===
+                      `${e.firstcurrency.toUpperCase()}${e.secondcurrency.toUpperCase()}`
+                  );
+                  return (
+                    <div
+                      key={e.id}
+                      onClick={() => {
+                        setCrypto(e);
+                      }}
+                      className=" justify-between "
+                    >
+                      {/* <Link
                       // href={"/"}
                       href={`/trade/${e.firstcurrency.toUpperCase()}-${e.secondcurrency.toUpperCase()}`}
-                    >
+                    > */}
                       <div className="previews-info-list">
                         <div className="pre-icon">
                           <div className="ms-2">
@@ -133,25 +133,24 @@ const page = () => {
                           </span>
                         </div>
                       </div>
-                    </Link>
-                  </div>
-                );
-              })}
+                      {/* </Link> */}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
+        <div className="lg:col-span-2 w-full relative">
+          <MainChart crypto={crypto}/>
+          <OrderStatus />
+        </div>
+        <div className="relative col-span-1  ">
+          <OrderBook crypto={crypto} />
+          <BuySell2 crypto={crypto} />
+        </div>
       </div>
-      <div className="lg:col-span-2 w-full relative">
-        <MainChart />
-        <OrderStatus />
-      </div>
-      <div className="relative col-span-1  ">
-        <OrderBook crypto={crypto} />
-        <BuySell2 crypto={crypto} />
-      </div>
-    </div>
-       </>
-   
+    </>
   );
 };
 

@@ -1,5 +1,6 @@
 import { getCookie } from 'cookies-next';
 export const BaseUrl = "http://localhost:8290/api/v1/";
+// export const BaseUrl = "https://demoback.kairaaexchange.com/api/v1/";
 export const headers = {
   headers: {
     Authorization: getCookie("auth-token"),

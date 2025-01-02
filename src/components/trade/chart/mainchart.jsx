@@ -9,12 +9,13 @@ export default function mainchart({ crypto }) {
   const [isScriptReady, setIsScriptReady] = useState(false);
   const params= useParams();
   const pairData=params.name.split("-");
+  console.log(crypto,"sdfdsfs")
   console.log(`${pairData[0]}/${pairData[1]}`,"main chart");
-  const pair=`${pairData[0]}/${pairData[1]}`;
-
+  // const pair=`${pairData[0]}/${pairData[1]}`;
+  const pair=`${crypto?.firstcurrency.toUpperCase()}/${crypto?.secondcurrency.toUpperCase()}`;
   const defaultWidgetProps = {
-    // symbol: pair == "/" ? "BTC/USDT" : pair,
-    symbol:pair,
+    symbol: pair == "/" ? "BTC/USDT" : pair,
+    // symbol:pair,
     interval: "15",
     library_path: "/static/charting_library/",
     locale: "en",
